@@ -20,6 +20,7 @@ ViewHelper::loadHeader($title ?? 'Shop · Products');
                     <div class="card h-100 shadow-sm">
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title mb-1"><?= htmlspecialchars((string) $product['name']) ?></h5>
+                            <small class="text-muted mb-2"><?= htmlspecialchars(ucwords((string) $product['type'])) ?> - <?= htmlspecialchars((string) $product['brand']) ?></small>
                             <p class="mb-2 fw-bold">$<?= htmlspecialchars((string) $product['price']) ?></p>
                             <p class="mb-3 text-muted" style="font-size: 0.85rem;">In stock: <?= htmlspecialchars((string) $product['stock']) ?></p>
                             <div class="mt-auto">
