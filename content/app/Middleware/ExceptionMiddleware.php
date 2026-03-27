@@ -57,7 +57,6 @@ final class ExceptionMiddleware implements MiddlewareInterface
         $httpStatusCode = $this->getHttpStatusCode($exception);
         $response = $this->responseFactory->createResponse($httpStatusCode);
 
-        // Log error
         if (isset($this->logger)) {
             $this->logger->error(
                 sprintf(
@@ -71,15 +70,11 @@ final class ExceptionMiddleware implements MiddlewareInterface
             );
         }
 
-        // Content negotiation
         if (str_contains($request->getHeaderLine('Accept'), 'application/json')) {
             $response = $response->withAddedHeader('Content-Type', 'application/json');
-
-            // JSON
             return $this->renderJson($exception, $response);
         }
 
-        // HTML
         return $this->renderHtml($response, $exception);
     }
 
@@ -98,7 +93,6 @@ final class ExceptionMiddleware implements MiddlewareInterface
     {
         $response = $response->withHeader('Content-Type', 'text/html');
 
-        // Use custom 404 view for HttpNotFoundException.
         if ($exception instanceof HttpNotFoundException) {
             return $this->viewRenderer->render($response, 'errors/404.php');
         }
