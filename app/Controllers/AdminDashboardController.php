@@ -23,6 +23,7 @@ class AdminDashboardController extends BaseController
      */
     public function dashboard(Request $request, Response $response, array $args): Response
     {
+
         $data = [
             'title' => 'Admin Dashboard',
             'totalProducts' => $this->dashboardModel->getTotalProducts(),

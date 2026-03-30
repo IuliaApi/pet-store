@@ -13,6 +13,7 @@ use App\Controllers\AdminOrdersController;
 use App\Controllers\AdminUsersController;
 use App\Controllers\ProductsController;
 use App\Middleware\AdminAuthMiddleware;
+use App\Controllers\TestController;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -34,6 +35,8 @@ return static function (Slim\App $app): void {
     // Admin Panel Routes
     $app->group('/admin', function ($group) {
         // Dashboard route
+        $group->get('', [AdminDashboardController::class, 'dashboard'])
+            ->setName('admin.dashboard');
         $group->get('/dashboard', [AdminDashboardController::class, 'dashboard'])
             ->setName('admin.dashboard');
 
@@ -56,7 +59,8 @@ return static function (Slim\App $app): void {
         // Users
         $group->get('/users', [AdminUsersController::class, 'index'])
             ->setName('admin.users.index');
-    })->add(AdminAuthMiddleware::class);
+    });
+    // })->add(AdminAuthMiddleware::class);
 
     // A route to display PHP configuration information.
     $app->get('/phpinfo', function (Request $request, Response $response, $args) {
@@ -66,6 +70,8 @@ return static function (Slim\App $app): void {
         $response->getBody()->write($phpinfo);
         return $response;
     });
+    $app->get('/test_contacts', [TestController::class, 'contact'])
+        ->setName('contacts_Views.php');
 
     // A route to test runtime error handling and custom exceptions.
     $app->get('/error', function (Request $request, Response $response, $args) {
