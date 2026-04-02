@@ -27,7 +27,7 @@ class HomeController extends BaseController
 
         //dd($data);
         //var_dump($this->session); exit;
-        return $this->render($response, 'index_View.php', $data);
+        return $this->render($response, '/base/index_View.php', $data);
     }
 
     public function error(Request $request, Response $response, array $args): Response

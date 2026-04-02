@@ -13,13 +13,13 @@ use App\Controllers\AdminOrdersController;
 use App\Controllers\AdminUsersController;
 use App\Controllers\ProductsController;
 use App\Middleware\AdminAuthMiddleware;
+use App\Controllers\user\accounts\Login_Controller;
 use App\Controllers\TestController;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 
 return static function (Slim\App $app): void {
-
 
     //* NOTE: Route naming pattern: [controller_name].[method_name]
     $app->get('/', [HomeController::class, 'index'])
@@ -31,6 +31,12 @@ return static function (Slim\App $app): void {
     // Public products listing (user-facing)
     $app->get('/products', [ProductsController::class, 'index'])
         ->setName('products.index');
+
+    //Login route
+    $app->get('/login', [Login_Controller::class, 'index'])
+        ->setName('login.index');
+
+    //TODO: User Panel Routes
 
     // Admin Panel Routes
     $app->group('/admin', function ($group) {
