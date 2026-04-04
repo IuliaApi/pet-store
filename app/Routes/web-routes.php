@@ -12,18 +12,24 @@ use App\Controllers\AdminProductsController;
 use App\Controllers\AdminOrdersController;
 use App\Controllers\AdminUsersController;
 use App\Controllers\ProductsController;
-use App\Middleware\AdminAuthMiddleware;
+use App\Controllers\Base\Product_List_Controller;
+use App\Controllers\Base\Product_Details_Controller;
 use App\Controllers\Base\Contacts_Controller;
 use App\Controllers\User\Accounts\Login_Controller;
 use App\Controllers\User\Accounts\Register_Controller;
 use App\Controllers\User\Accounts\Verif_Code_Controller;
 use App\Controllers\User\Accounts\Account_Details_Controller;
+use App\Controllers\User\Orders\Checkout_Controller;
+use App\Controllers\User\Orders\Booking_Controller;
+use App\Controllers\User\Saves\Cart_Controller;
 use App\Controllers\TestController;
+use App\Middleware\AdminAuthMiddleware;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 
 return static function (Slim\App $app): void {
+    //?Would it help to have a group for base pages?
 
     //* NOTE: Route naming pattern: [controller_name].[method_name]
     $app->get('/', [HomeController::class, 'index'])
@@ -33,15 +39,25 @@ return static function (Slim\App $app): void {
         ->setName('home.index');
 
     // Public products listing (user-facing)
+    //? What is this for exactly? Page's for admins, but listed as public.
     $app->get('/products', [ProductsController::class, 'index'])
         ->setName('products.index');
 
-    //Contact route
+    //Lists of products based on a search page route
+    $app->get('/search_result', [Product_List_Controller::class, 'index'])
+        ->setName('search_result.index');
+
+    //Contacts page route
+    $app->get('/item', [Product_Details_Controller::class, 'index'])
+        ->setName('item.index');
+
+    //Contacts page route
     $app->get('/contacts', [Contacts_Controller::class, 'index'])
         ->setName('contacts.index');
 
-    //TODO: User Panel Routes
     $app->group('/user', function ($group) {
+        //? groups inside groups?
+
         //default landing page for /user
         $group->get('', [Login_Controller::class, 'index'])
             ->setName('user.login.index');
@@ -61,6 +77,20 @@ return static function (Slim\App $app): void {
         //Account page route
         $group->get('/profile', [Account_Details_Controller::class, 'index'])
             ->setName('user.profile.index');
+
+        //checkout page route
+        $group->get('/checkout', [Checkout_Controller::class, 'index'])
+            ->setName('user.checkout.index');
+
+        //appointment booking page route
+        $group->get('/booking', [Booking_Controller::class, 'index'])
+            ->setName('user.booking.index');
+
+        //Shopping cart page route
+        $group->get('/cart', [Cart_Controller::class, 'index'])
+            ->setName('user.cart.index');
+
+        //? Scheduled appointments page route?
     });
 
     // Admin Panel Routes
