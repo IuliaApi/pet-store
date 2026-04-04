@@ -13,7 +13,11 @@ use App\Controllers\AdminOrdersController;
 use App\Controllers\AdminUsersController;
 use App\Controllers\ProductsController;
 use App\Middleware\AdminAuthMiddleware;
-use App\Controllers\user\accounts\Login_Controller;
+use App\Controllers\Base\Contacts_Controller;
+use App\Controllers\User\Accounts\Login_Controller;
+use App\Controllers\User\Accounts\Register_Controller;
+use App\Controllers\User\Accounts\Verif_Code_Controller;
+use App\Controllers\User\Accounts\Account_Details_Controller;
 use App\Controllers\TestController;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -32,11 +36,32 @@ return static function (Slim\App $app): void {
     $app->get('/products', [ProductsController::class, 'index'])
         ->setName('products.index');
 
-    //Login route
-    $app->get('/login', [Login_Controller::class, 'index'])
-        ->setName('login.index');
+    //Contact route
+    $app->get('/contacts', [Contacts_Controller::class, 'index'])
+        ->setName('contacts.index');
 
     //TODO: User Panel Routes
+    $app->group('/user', function ($group) {
+        //default landing page for /user
+        $group->get('', [Login_Controller::class, 'index'])
+            ->setName('user.login.index');
+
+        //Login page route
+        $group->get('/login', [Login_Controller::class, 'index'])
+            ->setName('user.login.index');
+
+        //Registration page route
+        $group->get('/registration', [Register_Controller::class, 'index'])
+            ->setName('user.registration.index');
+
+        //Verification code page route
+        $group->get('/verification', [Verif_Code_Controller::class, 'index'])
+            ->setName('user.verification.index');
+
+        //Account page route
+        $group->get('/profile', [Account_Details_Controller::class, 'index'])
+            ->setName('user.profile.index');
+    });
 
     // Admin Panel Routes
     $app->group('/admin', function ($group) {

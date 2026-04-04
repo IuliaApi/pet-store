@@ -7,11 +7,11 @@ ViewHelper::loadHeader($page_title);
 ?>
 
 <article class="card m-4">
-    <h1 class="card-header">Account</h1>
+    <h1 class="card-header">Contact Us</h1>
     <section class="card-body">
         <form method="POST" action="">
 
-            <h4>Contact Us:</h4>
+            <h4>Find Us Here:</h4>
             <a href="">example of a street name here</a>
             <a href="">example of an email here</a>
 
