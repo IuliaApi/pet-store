@@ -1,0 +1,12 @@
+{
+    "json-sets": [
+        "heroicons",
+        "lucide",
+        "tabler"
+    ],
+    "versions": {
+        "heroicons": "1.2.3",
+        "lucide": "1.2.101",
+        "tabler": "1.2.33"
+    }
+}
