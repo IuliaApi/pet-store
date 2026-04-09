@@ -16,7 +16,7 @@ class Cart_Controller extends BaseController
         parent::__construct($container);
     }
 
-    //default loading of appointment booking view page
+    //default loading of product cart view page
     public function index(Request $request, Response $response, array $args): Response
     {
         $data['data'] = [
