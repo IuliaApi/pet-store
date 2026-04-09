@@ -22,6 +22,7 @@ use App\Controllers\User\Accounts\Account_Details_Controller;
 use App\Controllers\User\Orders\Checkout_Controller;
 use App\Controllers\User\Orders\Booking_Controller;
 use App\Controllers\User\Saves\Cart_Controller;
+use App\Controllers\User\Saves\Schedule_Controller;
 use App\Controllers\TestController;
 use App\Middleware\AdminAuthMiddleware;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -29,8 +30,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 
 return static function (Slim\App $app): void {
-    //?Would it help to have a group for base pages?
-
     //* NOTE: Route naming pattern: [controller_name].[method_name]
     $app->get('/', [HomeController::class, 'index'])
         ->setName('home.index');
@@ -39,7 +38,6 @@ return static function (Slim\App $app): void {
         ->setName('home.index');
 
     // Public products listing (user-facing)
-    //? What is this for exactly? Page's for admins, but listed as public.
     $app->get('/products', [ProductsController::class, 'index'])
         ->setName('products.index');
 
@@ -56,7 +54,6 @@ return static function (Slim\App $app): void {
         ->setName('contacts.index');
 
     $app->group('/user', function ($group) {
-        //? groups inside groups?
 
         //default landing page for /user
         $group->get('', [Login_Controller::class, 'index'])
@@ -90,7 +87,9 @@ return static function (Slim\App $app): void {
         $group->get('/cart', [Cart_Controller::class, 'index'])
             ->setName('user.cart.index');
 
-        //? Scheduled appointments page route?
+        //Scheduled appointments page route
+        $group->get('/schedule', [Schedule_Controller::class, 'index'])
+            ->setName('user.schedule.index');
     });
 
     // Admin Panel Routes
