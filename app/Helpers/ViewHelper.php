@@ -42,6 +42,9 @@ class ViewHelper
     public static function loadAdminHeader(string $page_title): void
     {
         $page_title = $page_title ?? 'Admin Panel';
+        // Expose variables expected by adminHeader.php
+        $title = $page_title;
+        $username = $_SESSION['username'] ?? 'Admin';
         require_once APP_VIEWS_PATH . '/admin/adminHeader.php';
     }
 

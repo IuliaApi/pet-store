@@ -1,19 +1,10 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Helpers;
 
 class FlashMessage
 {
     private const FLASH_KEY = 'flash_messages';
-
-    private static function ensureSessionStarted(): void
-    {
-        if (session_status() !== PHP_SESSION_ACTIVE) {
-            @session_start();
-        }
-    }
 
     /**
      * Add a success message.
@@ -52,15 +43,13 @@ class FlashMessage
      */
     public static function add(string $type, string $message): void
     {
-        self::ensureSessionStarted();
-
         if (!isset($_SESSION[self::FLASH_KEY])) {
             $_SESSION[self::FLASH_KEY] = [];
         }
 
         $_SESSION[self::FLASH_KEY][] = [
             'type' => $type,
-            'message' => $message,
+            'message' => $message
         ];
     }
 
@@ -69,8 +58,6 @@ class FlashMessage
      */
     public static function get(): array
     {
-        self::ensureSessionStarted();
-
         $messages = $_SESSION[self::FLASH_KEY] ?? [];
         unset($_SESSION[self::FLASH_KEY]);
         return $messages;
@@ -81,7 +68,6 @@ class FlashMessage
      */
     public static function has(): bool
     {
-        self::ensureSessionStarted();
         return !empty($_SESSION[self::FLASH_KEY]);
     }
 
@@ -90,7 +76,6 @@ class FlashMessage
      */
     public static function clear(): void
     {
-        self::ensureSessionStarted();
         unset($_SESSION[self::FLASH_KEY]);
     }
 
@@ -108,7 +93,30 @@ class FlashMessage
             'success' => 'success',
             'error' => 'danger',
             'info' => 'info',
-            'warning' => 'warning',
+            'warning' => 'warning'
         ];
+
+        $html = '';
+        foreach ($messages as $flash) {
+            $type = $bootstrapTypes[$flash['type']] ?? 'info';
+            $message = htmlspecialchars($flash['message']);
+
+            if ($dismissible) {
+                $html .= <<<HTML
+                <div class="alert alert-{$type} alert-dismissible fade show" role="alert">
+                    {$message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                HTML;
+            } else {
+                $html .= <<<HTML
+                <div class="alert alert-{$type}" role="alert">
+                    {$message}
+                </div>
+                HTML;
+            }
+        }
+
+        return $html;
     }
 }

@@ -20,7 +20,7 @@ ViewHelper::loadAdminHeader($title ?? 'Admin · Edit Product');
                     </div>
                 </div>
 
-                <form method="post" action="<?= APP_BASE_URL ?>/admin/products/<?= urlencode((string) $product['product_id']) ?>" novalidate>
+                <form method="post" action="<?= APP_BASE_URL ?>/admin/products/<?= urlencode((string) $product['id']) ?>" novalidate>
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
                         <input type="text" class="form-control" id="name" name="name" maxlength="50" required value="<?= htmlspecialchars((string) $product['name']) ?>">

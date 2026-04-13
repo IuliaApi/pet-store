@@ -16,12 +16,12 @@ class ProductsModel extends BaseModel
 
     public function getAll(): array
     {
-        return $this->selectAll('SELECT * FROM products ORDER BY product_id DESC');
+        return $this->selectAll('SELECT * FROM products ORDER BY id DESC');
     }
 
     public function getById(int $id): array|false
     {
-        return $this->selectOne('SELECT * FROM products WHERE product_id = :id', [
+        return $this->selectOne('SELECT * FROM products WHERE id = :id', [
             'id' => $id,
         ]);
     }
@@ -51,7 +51,7 @@ class ProductsModel extends BaseModel
                     brand = :brand,
                     price = :price,
                     thumbnail = :thumbnail
-                WHERE product_id = :id';
+                WHERE id = :id';
         return $this->execute($sql, [
             'name' => $data['name'],
             'stock' => $data['stock'],
@@ -65,7 +65,7 @@ class ProductsModel extends BaseModel
 
     public function delete(int $id): int
     {
-        $sql = 'DELETE FROM products WHERE product_id = :id';
+        $sql = 'DELETE FROM products WHERE id = :id';
         return $this->execute($sql, [
             'id' => $id,
         ]);

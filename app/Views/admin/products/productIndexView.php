@@ -49,16 +49,16 @@ ViewHelper::loadAdminHeader($title ?? 'Admin · Products');
                     <?php else : ?>
                         <?php foreach ($products as $product) : ?>
                             <tr>
-                                <th scope="row"><?= htmlspecialchars((string) $product['product_id']) ?></th>
+                                <th scope="row"><?= htmlspecialchars((string) $product['id']) ?></th>
                                 <td><?= htmlspecialchars((string) $product['name']) ?></td>
                                 <td><?= htmlspecialchars((string) $product['type']) ?></td>
                                 <td><?= htmlspecialchars((string) $product['brand']) ?></td>
                                 <td class="text-end"><?= htmlspecialchars((string) $product['stock']) ?></td>
                                 <td class="text-end">$<?= htmlspecialchars((string) $product['price']) ?></td>
                                 <td class="text-end">
-                                    <a href="<?= APP_BASE_URL ?>/admin/products/<?= urlencode((string) $product['product_id']) 
+                                    <a href="<?= APP_BASE_URL ?>/admin/products/<?= urlencode((string) $product['id']) 
                                     ?>/edit" class="btn btn-sm btn-outline-light">Edit</a>
-                                    <a href="<?= APP_BASE_URL ?>/admin/products/<?= urlencode((string) $product['product_id']
+                                    <a href="<?= APP_BASE_URL ?>/admin/products/<?= urlencode((string) $product['id']
                                     ) ?>/delete" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this product?');">Delete</a>
                                 </td>
                             </tr>
