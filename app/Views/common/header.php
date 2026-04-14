@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"> <!-- data-bs-theme="dark" (want dark mode?) -->
+<html lang="en"> <!-- data-bs-theme="dark" //?(want dark mode?) -->
 
 <head>
     <meta charset="UTF-8">
@@ -11,29 +11,55 @@
 </head>
 
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg bg-success" data-bs-theme="dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">Pet Store</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+    <header data-bs-theme="dark">
+        <nav class="navbar navbar-expand-lg bg-success d-flex px-3 py-2">
+
+            <a class="navbar-brand fw-bold" href="">
+                Pet Shop Express
+            </a>
+
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search Pet Shop Express Catalogs" data-bs-theme="light">
+
+                <button class="btn btn-warning">
+                    Search
                 </button>
-                <div class="collapse navbar-collapse" id="navbarText">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="">Sample text</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="">Sample text</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="">Sample text</a>
-                        </li>
-                    </ul>
-                    <span class="navbar-text">
-                        by Alan, Ehsan & Iulia
-                    </span>
-                </div>
             </div>
+
+            <ul class="navbar-nav px-2">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="">
+                        Account
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="">
+                        Cart
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <nav class="navbar navbar-expand-lg bg-warning d-flex px-3 py-2">
+
+            <!-- //TODO: add categories here -->
+            <ul class="navbar-nav text-white">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="">
+                        sample category
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="">
+                        sample category
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="">
+                        sample category
+                    </a>
+                </li>
+            </ul>
+
         </nav>
     </header>
