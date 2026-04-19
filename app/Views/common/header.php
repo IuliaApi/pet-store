@@ -14,7 +14,7 @@
     <header data-bs-theme="dark">
         <nav class="navbar navbar-expand-lg bg-success d-flex px-3 py-2">
 
-            <a class="navbar-brand fw-bold" href="">
+            <a class="navbar-brand fw-bold" href="/pet-store/">
                 Pet Shop Express
             </a>
 
@@ -28,12 +28,12 @@
 
             <ul class="navbar-nav px-2">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="">
+                    <a class="nav-link active" aria-current="page" href="/pet-store/user/">
                         Account
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="">
+                    <a class="nav-link active" href="/pet-store/user/cart">
                         Cart
                     </a>
                 </li>

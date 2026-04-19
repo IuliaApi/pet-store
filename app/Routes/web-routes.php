@@ -29,7 +29,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 
-return static function (Slim\App $app): void { 
+return static function (Slim\App $app): void {
     //* NOTE: Route naming pattern: [controller_name].[method_name]
     $app->get('/', [HomeController::class, 'index'])
         ->setName('home.index');
@@ -45,7 +45,7 @@ return static function (Slim\App $app): void {
     $app->get('/search_result', [Product_List_Controller::class, 'index'])
         ->setName('search_result.index');
 
-    //Contacts page route
+    //specific item page route
     $app->get('/item', [Product_Details_Controller::class, 'index'])
         ->setName('item.index');
 
@@ -56,7 +56,7 @@ return static function (Slim\App $app): void {
     $app->group('/user', function ($group) {
 
         //default landing page for /user
-        $group->get('', [Login_Controller::class, 'index'])
+        $group->get('/', [Login_Controller::class, 'index'])
             ->setName('user.login.index');
 
         //Login page route

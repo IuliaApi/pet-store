@@ -42,7 +42,7 @@ ViewHelper::loadHeader($page_title);
 
             <br>
 
-            <a href="">Already have an Account?</a>
+            <a href="/pet-store/user/">Already have an Account?</a>
 
         </form>
     </article>

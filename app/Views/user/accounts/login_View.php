@@ -22,12 +22,16 @@ ViewHelper::loadHeader($page_title);
             <br>
             <br>
 
+            <a href="">Forgot Password</a>
+
+            <br>
+
             <button type="submit" class="btn btn-primary">Register</button>
             <button type="submit" class="btn btn-danger">Cancel</button>
 
             <br>
 
-            <a href="">Forgot Password</a>
+            <a href="/pet-store/user/registration">Create an Account</a>
 
         </form>
     </article>
