@@ -81,4 +81,47 @@ class ProductsModel extends BaseModel
         return ProductCategory::values();
     }
 
+    public function searchProducts(string $searchTerm = '', ?int $categoryId = null): array
+    {
+        // TODO: Create base SQL query with LEFT JOINs
+        // - LEFT JOIN categories (c) ON p.category_id = c.id
+        // - LEFT JOIN product_images (pi) ON p.id = pi.product_id AND pi.is_primary = 1
+        //   (the is_primary condition must be in the ON clause, not WHERE, to keep products without images)
+        // - Select: p.id, p.name, p.description, p.price, p.stock_quantity,
+        //          c.name AS category_name, c.id AS category_id, pi.file_path AS image_path
+        // - Start with WHERE 1=1 to make adding conditions easier
+
+        $sql = "SELECT p.id, p.name, p.description, p.price, p.stock_quantity,
+              c.name AS category_name, c.id AS category_id, pi.file_path AS image_path FROM products p
+
+     LEFT JOIN categories c ON p.category_id = c.id
+     LEFT JOIN product_images pi ON p.id = pi.product_id AND pi.is_primary = 1
+     WHERE 1=1";
+
+
+
+        // TODO: Initialize empty params array
+        // - Add condition: (p.name LIKE CONCAT('%', :search, '%') OR p.description LIKE CONCAT('%', :search, '%'))
+        // - Add to params: 'search' => $searchTerm
+
+        $params = [];
+        // TODO: If searchTerm is not empty:
+        if (!empty($searchTerm)) {
+            $sql .= " AND (p.name LIKE CONCAT('%', :search, '%') OR p.description LIKE CONCAT('%', :search, '%'))";
+            $params = ['search' => $searchTerm];
+        }
+
+        // TODO: If categoryId is provided and > 0:
+        if ($categoryId !== null && $categoryId > 0) {
+            $sql .= " AND .category_id = :category_id";
+            $params = ['category_id' => $categoryId];
+        }
+        // - Add condition: p.category_id = :category_id
+        // - Add to params: 'category_id' => $categoryId
+
+        // TODO: Add GROUP BY p.id and ORDER BY p.name ASC
+        $sql .= " GROUP BY p.id ORDER BY p.name ASC";
+        // TODO: Return results using $this->selectAll($sql, $params)
+        return $this->selectAll($sql, $params);
+    }
 }

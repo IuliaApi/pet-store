@@ -122,6 +122,8 @@ return static function (Slim\App $app): void {
     });
     // })->add(AdminAuthMiddleware::class);
 
+    $app->get('/api/products/search', [ProductsController::class, 'search'])
+    ->setName('api.products.search');
     // A route to display PHP configuration information.
     $app->get('/phpinfo', function (Request $request, Response $response, $args) {
         ob_start();
