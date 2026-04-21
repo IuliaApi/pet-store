@@ -88,9 +88,8 @@
 					</div>
 				</div>
 
-				<!-- Flash Messages (uncomment when FlashMessage helper is available) -->
-				<!-- <div class="mb-3">
+				<div class="mb-3">
 					<?= App\Helpers\FlashMessage::render() ?>
-				</div> -->
+				</div>
 
 				<!-- Page content starts here -->

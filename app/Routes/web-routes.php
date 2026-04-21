@@ -11,6 +11,7 @@ use App\Controllers\AdminDashboardController;
 use App\Controllers\AdminProductsController;
 use App\Controllers\AdminOrdersController;
 use App\Controllers\AdminUsersController;
+use App\Controllers\AdminCategoriesController;
 use App\Controllers\ProductsController;
 use App\Controllers\Base\Product_List_Controller;
 use App\Controllers\Base\Product_Details_Controller;
@@ -119,6 +120,10 @@ return static function (Slim\App $app): void {
         // Users
         $group->get('/users', [AdminUsersController::class, 'index'])
             ->setName('admin.users.index');
+
+        // Categories
+        $group->get('/categories', [AdminCategoriesController::class, 'index'])
+            ->setName('admin.categories.index');
     });
     // })->add(AdminAuthMiddleware::class);
 
