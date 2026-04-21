@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 20, 2026 at 02:45 PM
+-- Generation Time: Apr 21, 2026 at 02:18 AM
 -- Server version: 11.8.5-MariaDB-log
 -- PHP Version: 8.5.1
 
@@ -20,6 +20,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `pet_store_db`
 --
+DROP DATABASE IF EXISTS `pet_store_db`;
 CREATE DATABASE IF NOT EXISTS `pet_store_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE `pet_store_db`;
 
@@ -29,15 +30,14 @@ USE `pet_store_db`;
 -- Table structure for table `admins`
 --
 
-CREATE TABLE IF NOT EXISTS `admins` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `admins` (
+  `id` int(11) NOT NULL,
   `fname` varchar(200) NOT NULL,
   `lname` varchar(200) NOT NULL,
   `email` text NOT NULL,
   `hashed_pass` tinytext NOT NULL,
-  `salt` char(22) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `salt` char(22) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `admins`
@@ -61,15 +61,12 @@ INSERT INTO `admins` (`id`, `fname`, `lname`, `email`, `hashed_pass`, `salt`) VA
 -- Table structure for table `appointments`
 --
 
-CREATE TABLE IF NOT EXISTS `appointments` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `appointments` (
+  `id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `pet_id` int(11) NOT NULL,
-  `service_type` enum('nail clipping','fur styling','clean up') NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_pet_id` (`pet_id`),
-  KEY `fk_appointments_customer_id` (`customer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `service_type` enum('nail clipping','fur styling','clean up') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `appointments`
@@ -93,15 +90,12 @@ INSERT INTO `appointments` (`id`, `customer_id`, `pet_id`, `service_type`) VALUE
 -- Table structure for table `cart_listings`
 --
 
-CREATE TABLE IF NOT EXISTS `cart_listings` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `cart_listings` (
+  `id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `product_amount` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_cart_listings_products_id` (`product_id`),
-  KEY `fk_cart_listings_customer_id` (`customer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `product_amount` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `cart_listings`
@@ -125,13 +119,12 @@ INSERT INTO `cart_listings` (`id`, `customer_id`, `product_id`, `product_amount`
 -- Table structure for table `categories`
 --
 
-CREATE TABLE IF NOT EXISTS `categories` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL,
   `name` text NOT NULL,
   `description` text NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `categories`
@@ -150,15 +143,14 @@ INSERT INTO `categories` (`id`, `name`, `description`, `created_at`) VALUES
 -- Table structure for table `customers`
 --
 
-CREATE TABLE IF NOT EXISTS `customers` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `customers` (
+  `id` int(11) NOT NULL,
   `fname` varchar(200) NOT NULL,
   `lname` varchar(200) NOT NULL,
   `email` text NOT NULL,
   `hashed_pass` varchar(72) NOT NULL,
-  `salt` char(22) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `salt` char(22) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `customers`
@@ -182,14 +174,12 @@ INSERT INTO `customers` (`id`, `fname`, `lname`, `email`, `hashed_pass`, `salt`)
 -- Table structure for table `orders`
 --
 
-CREATE TABLE IF NOT EXISTS `orders` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `date` date NOT NULL DEFAULT current_timestamp(),
-  `retrieval_date` date NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`),
-  KEY `fk_customer_id` (`customer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `retrieval_date` date NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `orders`
@@ -213,15 +203,12 @@ INSERT INTO `orders` (`id`, `customer_id`, `date`, `retrieval_date`) VALUES
 -- Table structure for table `order_listings`
 --
 
-CREATE TABLE IF NOT EXISTS `order_listings` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `order_listings` (
+  `id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `product_amount` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_product_id` (`product_id`),
-  KEY `fk_order_id` (`order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `product_amount` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `order_listings`
@@ -245,13 +232,12 @@ INSERT INTO `order_listings` (`id`, `order_id`, `product_id`, `product_amount`) 
 -- Table structure for table `pets`
 --
 
-CREATE TABLE IF NOT EXISTS `pets` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `pets` (
+  `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `customer_id` int(11) NOT NULL,
-  `type` enum('dog','cat','bird','other') NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `type` enum('dog','cat','bird','other') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `pets`
@@ -275,34 +261,32 @@ INSERT INTO `pets` (`id`, `name`, `customer_id`, `type`) VALUES
 -- Table structure for table `products`
 --
 
-CREATE TABLE IF NOT EXISTS `products` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `products` (
+  `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `description` text DEFAULT NULL,
   `stock_quantity` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
   `brand` varchar(50) NOT NULL,
   `price` decimal(10,2) NOT NULL,
-  `thumbnail` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_products_category_id` (`category_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `thumbnail` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `products`
 --
 
 INSERT INTO `products` (`id`, `name`, `description`, `stock_quantity`, `category_id`, `brand`, `price`, `thumbnail`) VALUES
-(1, 'Chew Toy', NULL, 50, 1, 'PetJoy', 9.99, 'toy1.jpg'),
-(2, 'Auto Feeder', NULL, 10, 1, 'TechPet', 89.99, 'feed1.jpg'),
-(3, 'Kibble 5kg', NULL, 100, 1, 'NutriBite', 25.50, 'food1.jpg'),
-(4, 'Grooming Brush', NULL, 30, 1, 'ShinyCoat', 12.00, 'brush1.jpg'),
-(5, 'Dog Raincoat', NULL, 15, 1, 'PawsGear', 19.99, 'coat1.jpg'),
-(6, 'Catnip', NULL, 200, 1, 'HappyCat', 5.00, 'catnip.jpg'),
-(7, 'Bird Cage', NULL, 5, 1, 'SkyHome', 45.00, 'cage1.jpg'),
-(8, 'Flea Collar', NULL, 40, 1, 'SafePet', 14.50, 'flea1.jpg'),
-(9, 'Squeaky Ball', NULL, 60, 1, 'PetJoy', 4.99, 'ball1.jpg'),
-(10, 'Fish Flakes', NULL, 80, 1, 'AquaLife', 7.25, 'fish1.jpg');
+(1, 'Chew Toy', 'It\'s like chewing gum, but for your pet and it doesn\'t stick to floors.', 50, 1, 'PetJoy', 9.99, 'chew_toy1.jpg'),
+(2, 'Auto Feeder', 'Releases nutrition without you being there. Great for absentee owners.', 10, 5, 'TechPet', 89.99, 'autofeeder1.jpg'),
+(3, 'Kibble 5kg', 'Dry food for your dog. It\'s like cereal made of meat not approved for human consumption.', 100, 4, 'NutriBite', 25.50, 'kibble1.jpg'),
+(4, 'Grooming Brush', 'The easiest way to get your own felt.', 30, 5, 'ShinyCoat', 12.00, 'pet_brush1.jpg'),
+(5, 'Dog Raincoat', 'My code is DRY and your pet will be too.', 15, 3, 'PawsGear', 19.99, 'dog_raincoat1.jpg'),
+(6, 'Catnip', 'Merry making mint munchable.', 200, 1, 'HappyCat', 5.00, 'catnip1.jpg'),
+(7, 'Bird Cage', 'You can put a bird in a cage sometimes without it being a metaphor.', 5, 1, 'SkyHome', 45.00, 'bird_cage1.jpg'),
+(8, 'Flea Collar', 'Not a collar for fleas or a collar that attracts fleas.', 40, 6, 'SafePet', 14.50, 'flea_collar1.jpg'),
+(9, 'Squeaky Ball', 'Kinda grim when you think about how it\'s meant to simulate a little animal\'s deathrattle.', 60, 1, 'PetJoy', 4.99, 'squeaky_ball1.jpg'),
+(10, 'Fish Flakes', 'It\'s a shame fish will never be able to try dry foods.', 80, 4, 'AquaLife', 7.25, 'fish_feed1.jpg');
 
 -- --------------------------------------------------------
 
@@ -310,14 +294,149 @@ INSERT INTO `products` (`id`, `name`, `description`, `stock_quantity`, `category
 -- Table structure for table `product_images`
 --
 
-CREATE TABLE IF NOT EXISTS `product_images` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `product_images` (
+  `id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `file_path` text NOT NULL,
-  `is_primary` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_PRODUCT_IMAGES_PRODUCT_ID` (`product_id`)
+  `is_primary` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `admins`
+--
+ALTER TABLE `admins`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `appointments`
+--
+ALTER TABLE `appointments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_pet_id` (`pet_id`),
+  ADD KEY `fk_appointments_customer_id` (`customer_id`);
+
+--
+-- Indexes for table `cart_listings`
+--
+ALTER TABLE `cart_listings`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_cart_listings_products_id` (`product_id`),
+  ADD KEY `fk_cart_listings_customer_id` (`customer_id`);
+
+--
+-- Indexes for table `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `customers`
+--
+ALTER TABLE `customers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_customer_id` (`customer_id`);
+
+--
+-- Indexes for table `order_listings`
+--
+ALTER TABLE `order_listings`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_product_id` (`product_id`),
+  ADD KEY `fk_order_id` (`order_id`);
+
+--
+-- Indexes for table `pets`
+--
+ALTER TABLE `pets`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `products`
+--
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_products_category_id` (`category_id`);
+
+--
+-- Indexes for table `product_images`
+--
+ALTER TABLE `product_images`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_PRODUCT_IMAGES_PRODUCT_ID` (`product_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `admins`
+--
+ALTER TABLE `admins`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `appointments`
+--
+ALTER TABLE `appointments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `cart_listings`
+--
+ALTER TABLE `cart_listings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `customers`
+--
+ALTER TABLE `customers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `order_listings`
+--
+ALTER TABLE `order_listings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `pets`
+--
+ALTER TABLE `pets`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `product_images`
+--
+ALTER TABLE `product_images`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
