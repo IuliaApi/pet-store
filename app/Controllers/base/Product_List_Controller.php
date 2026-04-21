@@ -6,6 +6,7 @@ namespace App\Controllers\Base;
 
 use DI\Container;
 use App\Controllers\BaseController;
+use App\Helpers\Core\PDOService;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -21,7 +22,7 @@ class Product_List_Controller extends BaseController
     {
         $pdo_values = [];
         $search_keyword = hs($_GET['input']) ?? null;
-        $sort = $_GET['value'] ?? 'name'; //A->Z || Z->A = name, price=price, //?rating=?
+        $sort = $_GET['value'] ?? 'name'; //A->Z || Z->A = name, price=price, //?stock=?
         $order = $_GET['order'] ?? 'ASC';
 
         $products_Table = "SELECT * FROM products";
@@ -35,12 +36,9 @@ class Product_List_Controller extends BaseController
         $pdo_values["sort"] = $sort;
         $pdo_values["order"] = $order;
 
-        /*
-        $statement = $pdo->prepare($products_Table);
+        $statement = getPDO()->prepare($products_Table);
         $statement->execute($pdo_values);
-        $products[] = $statement->fetchAll();
-        */
-        $products[] = null; //temp/placeholder
+        $products = $statement->fetchAll();
 
         return $products;
     }
