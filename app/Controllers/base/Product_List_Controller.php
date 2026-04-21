@@ -6,41 +6,26 @@ namespace App\Controllers\Base;
 
 use DI\Container;
 use App\Controllers\BaseController;
-use App\Helpers\Core\PDOService;
+use App\Domain\Models\ProductsModel;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class Product_List_Controller extends BaseController
 {
-    public function __construct(Container $container)
+    public function __construct(
+        Container $container,
+        private ProductsModel $productsModel
+    )
     {
         parent::__construct($container);
     }
 
     //filters through the product list based on user input
-    public function search(): array
+    public function search(Request $request, Response $response, array $args): Response
     {
-        $pdo_values = [];
-        $search_keyword = hs($_GET['input']) ?? null;
-        $sort = $_GET['value'] ?? 'name'; //A->Z || Z->A = name, price=price, //?stock=?
-        $order = $_GET['order'] ?? 'ASC';
+        
 
-        $products_Table = "SELECT * FROM products";
-
-        if ($search_keyword !== null) {
-            $products_Table .= " WHERE name LIKE CONCAT('%', :word, '%')";
-            $pdo_values["word"] = $search_keyword;
-        }
-
-        $products_Table .= " ORDER BY :sort :order";
-        $pdo_values["sort"] = $sort;
-        $pdo_values["order"] = $order;
-
-        $statement = getPDO()->prepare($products_Table);
-        $statement->execute($pdo_values);
-        $products = $statement->fetchAll();
-
-        return $products;
+        return $response->withHeader(HEADERS_CONTENT_TYPE, APP_MEDIA_TYPE_JSON)->withStatus(HTTP_OK);
     }
 
     //default loading of a product's details view page
