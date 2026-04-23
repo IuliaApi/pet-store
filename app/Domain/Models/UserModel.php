@@ -37,4 +37,30 @@ class UserModel extends BaseModel
     {
         return !is_bool($this->selectOne('SELECT `id` FROM users WHERE email = ?', [$email]));
     }
+
+    public function findByEmail(string $email): ?array
+    {
+        // TODO: Look up a single user by their email address
+        //     Return the user data or null if not found
+        $sql = 'SELECT * FROM users WHERE email = :email';
+        $result = $this->selectOne($sql, [':email' => $email]);
+
+        if (is_bool($result)) {
+            return null;
+        } else {
+            return $result;
+        }
+    }
+
+    public function findByUsername(string $username): ?array
+    {
+        $sql = 'SELECT * FROM users WHERE username = :username';
+        $result = $this->selectOne($sql, [':username' => $username]);
+
+        if (is_bool($result)) {
+            return null;
+        } else {
+            return $result;
+        }
+    }
 }
