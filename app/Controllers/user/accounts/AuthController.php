@@ -13,4 +13,8 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 class AuthController extends BaseController
 {
 
+    public function __construct(Container $container)
+    {
+        parent::__construct($container);
+    }
 }
