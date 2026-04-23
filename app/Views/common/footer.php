@@ -1,6 +1,6 @@
 <nav class="navbar bg-success justify-content-center text-white flex-column">
     <h6>eCommerce project</h6>
-    <a class="text-white" href="/pet-store/contacts">Click here to learn more about us</a>
+    <a class="text-warning" href="/pet-store/contacts">Click here to learn more about us</a>
 </nav>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>

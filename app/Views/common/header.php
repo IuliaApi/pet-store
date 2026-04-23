@@ -18,13 +18,13 @@
                 Pet Shop Express
             </a>
 
-            <div class="input-group">
+            <form class="input-group" method="GET" action="/pet-store/search_result">
                 <input type="text" class="form-control" placeholder="Search Pet Shop Express Catalogs" data-bs-theme="light">
 
                 <button class="btn btn-warning">
                     Search
                 </button>
-            </div>
+            </form>
 
             <ul class="navbar-nav px-2">
                 <li class="nav-item">
