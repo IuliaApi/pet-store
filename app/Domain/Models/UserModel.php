@@ -45,7 +45,7 @@ class UserModel extends BaseModel
     }
     public function emailExists(string $email): bool
     {
-        return !is_bool($this->selectOne("SELECT 'id FROM users WHERE email = ?", [$email]));
+        return !is_bool($this->selectOne("SELECT 'id' FROM users WHERE email = ?", [$email]));
     }
 
     public function usernameExists(string $username): bool
