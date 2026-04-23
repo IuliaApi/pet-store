@@ -25,8 +25,9 @@ use App\Controllers\User\Orders\Booking_Controller;
 use App\Controllers\User\Saves\Cart_Controller;
 use App\Controllers\User\Saves\Schedule_Controller;
 use App\Controllers\TestController;
-use App\Middleware\AdminAuthMiddleware;
 use App\Controllers\AuthController;
+use App\Middleware\AuthMiddleware;
+use App\Middleware\AdminAuthMiddleware;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 

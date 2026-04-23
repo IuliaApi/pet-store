@@ -64,4 +64,11 @@ class UserModel extends BaseModel
             return $result;
         }
     }
+    public function verifyCredentials(string $identifier, string $password): ?array
+    {
+        // TODO: Look up the user by their identifier (try email first, then username).
+        //       If found, verify the password against the stored hash.
+        //       Return the user data on success or null on failure.
+        return null;
+    }
 }
