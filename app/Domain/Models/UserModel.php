@@ -15,9 +15,6 @@ class UserModel extends BaseModel
     }
     public function createUser(array $data): int
     {
-        // TODO: Hash the password before storing it
-        // TODO: Insert the user into the database
-        // TODO: Return the new user's ID
         $this->execute(
             'INSERT INTO users (first_name, last_name, username, email, password_hash)
          VALUES (:first_name, :last_name, :username, :email, :password_hash)',
@@ -33,11 +30,6 @@ class UserModel extends BaseModel
         return intval($this->lastInsertId());
     }
 
-    public function emailExists(string $email): bool
-    {
-        return !is_bool($this->selectOne('SELECT `id` FROM users WHERE email = ?', [$email]));
-    }
-
     public function findByEmail(string $email): ?array
     {
         // TODO: Look up a single user by their email address
@@ -50,6 +42,15 @@ class UserModel extends BaseModel
         } else {
             return $result;
         }
+    }
+    public function emailExists(string $email): bool
+    {
+        return !is_bool($this->selectOne("SELECT 'id FROM users WHERE email = ?", [$email]));
+    }
+
+    public function usernameExists(string $username): bool
+    {
+        return !is_bool($this->selectOne("SELECT 'id' FROM users WHERE username = ?", [$username]));
     }
 
     public function findByUsername(string $username): ?array

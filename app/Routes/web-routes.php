@@ -26,6 +26,7 @@ use App\Controllers\User\Saves\Cart_Controller;
 use App\Controllers\User\Saves\Schedule_Controller;
 use App\Controllers\TestController;
 use App\Middleware\AdminAuthMiddleware;
+use App\Controllers\AuthController;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -53,6 +54,12 @@ return static function (Slim\App $app): void {
     //Contacts page route
     $app->get('/contacts', [Contacts_Controller::class, 'index'])
         ->setName('contacts.index');
+
+    //Authentication page route
+    $app->get('/register', [AuthController::class, 'register'])
+        ->setName('auth.register');
+
+    $app->post('/register', [AuthController::class, 'store']);
 
     $app->group('/user', function ($group) {
 
@@ -128,7 +135,7 @@ return static function (Slim\App $app): void {
     // })->add(AdminAuthMiddleware::class);
 
     $app->get('/api/products/search', [ProductsController::class, 'search'])
-    ->setName('api.products.search');
+        ->setName('api.products.search');
     // A route to display PHP configuration information.
     $app->get('/phpinfo', function (Request $request, Response $response, $args) {
         ob_start();
