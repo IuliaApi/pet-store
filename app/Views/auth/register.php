@@ -21,13 +21,13 @@ $account_info = $data["account_info"] ?? [];
                     <div class="mb-3">
                         <label for="first_name" class="form-label">First Name</label>
                         <input type="text" class="form-control" id="first_name" name="first_name" required
-                        value ="<?= $account_info['first_name'] ?? "" ?>>
+                            value="<?= $account_info['first_name'] ?? '' ?>" />
                     </div>
 
                     <div class="mb-3">
                         <label for="last_name" class="form-label">Last Name</label>
                         <input type="text" class="form-control" id="last_name" name="last_name" required
-                        first_name>>
+                            first_name>>
                     </div>
 
                     <div class="mb-3">
