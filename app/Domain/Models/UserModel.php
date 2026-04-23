@@ -23,7 +23,7 @@ class UserModel extends BaseModel
                 'last_name' => $data['last_name'],
                 'username' => $data['username'],
                 'email' => $data['email'],
-                'password_hash' => password_hash($data['password_hash'], PASSWORD_DEFAULT),
+                'password_hash' => password_hash($data['password'], PASSWORD_DEFAULT),
             ]
         );
 
