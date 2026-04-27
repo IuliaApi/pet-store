@@ -64,11 +64,27 @@ class UserModel extends BaseModel
             return $result;
         }
     }
+
+    /**
+     * Verify user credentials by email/username and password.
+     *
+     * @param string $identifier Email or username
+     * @param string $password Plain-text password to verify
+     * @return array|null User data if credentials are valid, null otherwise
+     */
     public function verifyCredentials(string $identifier, string $password): ?array
     {
         // TODO: Look up the user by their identifier (try email first, then username).
         //       If found, verify the password against the stored hash.
         //       Return the user data on success or null on failure.
-        return null;
+        $user_data = $this->findByEmail($identifier);
+        if (is_null($user_data)) {
+            $user_data = $this->findByUsername($identifier);
+            if (is_null($user_data))
+                return $user_data;
+        }
+        if (password_verify($password, $user_data['password_hash']))
+            return $user_data;
+        else return null;
     }
 }
