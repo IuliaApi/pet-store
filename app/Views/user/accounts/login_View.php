@@ -9,7 +9,7 @@ ViewHelper::loadHeader($page_title);
 <div class="card m-4">
     <h1 class="card-header">Login to your Account</h1>
     <article class="card-body">
-        <form method="POST" action="">
+        <form method="POST" action="app/Middleware/authmiddleware.php">
 
             <label>Email:</label>
             <input name="email">

@@ -8,6 +8,7 @@ use DI\Container;
 use App\Controllers\BaseController;
 use App\Domain\Models\UserModel;
 use App\Helpers\SessionManager;
+use App\Middleware\SessionMiddleware;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use App\Helpers\FlashMessage;
@@ -112,20 +113,32 @@ class AuthController extends BaseController
      */
     public function authenticate(Request $request, Response $response, array $args): Response
     {
-        // TODO: Extract the identifier and password from the submitted form
-
+        $form_data = $request->getParsedBody();
         // TODO: Validate that both fields are present
+        if (isset($form_data['identifier']) && isset($form_data['password'])) {
+            $user = $this->userModel->verifyCredentials($form_data['identifier'], $form_data['password']);
+            if ($user === null) {
+                FlashMessage::error('Invalid Credentials.');
+                return $this->redirect($request, $response, 'login.php');
+            }
+        }
+        SessionManager::set('user', [
+            'user_id' => $user['id'],
+            'user_email' => $user['email'],
+            'user_name' => $user['first_name'] . ' ' . $user['last_name'],
+            'user_role' => $user['role'],
+            'is_authenticated' => true
+        ]);
 
-        // TODO: Attempt to verify the credentials using the UserModel
-
-        // TODO: If authentication fails, display an error and redirect to the login page
-
-        // TODO: Store the authenticated user's data in the session
-        //       (ID, email, full name, role, and a flag indicating they are authenticated)
 
         // TODO: Display a welcome message and redirect based on role:
         //       admins go to the admin dashboard, customers go to the user dashboard
-        return $response;
+        if ($user['role'] === 'admin') {
+            FlashMessage::success("Welcome " . SessionManager::get('user'['user_name']));
+            return $this->redirect($request, $response, 'admin.dashboard');
+        } else {
+            return $this->redirect($request, $response, 'home.index');
+        }
     }
 
     /**
