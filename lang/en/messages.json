@@ -1,11 +1,16 @@
 {
     "nav": {
-        "home": "Home",
-        "products": "Products",
+        "search": "Search",
+        "search_placeholder": "Search Pet Shop Express Catalogs",
+        "account": "Account",
         "cart": "Cart"
     },
+    "footer": {
+        "eCom_watermark": "eCommerce project",
+        "contacts_link": "Click here to learn more about us"
+    },
     "home": {
-        "welcome": "Welcome to Pet Shop Express",
+        "catalog": "Our catalog",
         "featured_products": "Featured Products"
     },
     "common": {
