@@ -68,7 +68,7 @@ class TranslationHelper
     {
         // TODO: Translate the given key using the current locale
         //       (or the override locale if provided).
-        $this->translator->trans($key,)
+        return $this->translator->trans($key, $parameters, null, $locale);
     }
 
     /**
