@@ -36,7 +36,7 @@ class TranslationHelper
         $this->translator = new Translator($this->currentLocale);
         $this->translator->addLoader('json', new JsonFileLoader());
         $this->translator->setFallbackLocales($this->availableLocales);
-        $this->translator->addResource('json', APP_LANG_PATH."/en/messages.json");
+        $this->translator->addResource('json', APP_LANG_PATH."/en/messages.json", $this->defaultLocale);
         $this->loadTranslations();
 
 
