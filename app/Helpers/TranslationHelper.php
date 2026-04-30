@@ -29,17 +29,15 @@ class TranslationHelper
         // TODO: Initialize class properties, create a Translator instance,
         //       configure the fallback locale, register the JSON file loader,
         //       and load all translation files.
-        $this->defaultLocale=$defaultLocale;
-        $this->langPath=$langPath;
+        $this->defaultLocale = $defaultLocale;
+        $this->langPath = $langPath;
+        $this->availableLocales = $availableLocales;
         $this->setLocale($defaultLocale);
-        $this->availableLocales=$availableLocales;
         $this->translator = new Translator($this->currentLocale);
         $this->translator->addLoader('json', new JsonFileLoader());
         $this->translator->setFallbackLocales($this->availableLocales);
-        $this->translator->addResource('json', APP_LANG_PATH."/en/messages.json", $this->defaultLocale);
+        $this->translator->addResource('json', APP_LANG_PATH . "/en/messages.json", $this->defaultLocale);
         $this->loadTranslations();
-
-
     }
 
     /**
@@ -51,7 +49,7 @@ class TranslationHelper
         //       locale's messages.json, and register each existing file
         //       with the translator.
         foreach ($this->availableLocales as $locale) {
-            $translation_path = $this->langPath.DIRECTORY_SEPARATOR.$locale.DIRECTORY_SEPARATOR."messages.json";
+            $translation_path = $this->langPath . DIRECTORY_SEPARATOR . $locale . DIRECTORY_SEPARATOR . "messages.json";
             $this->translator->addResource('json', $translation_path, $locale);
         }
     }
@@ -81,11 +79,10 @@ class TranslationHelper
     {
         // TODO: Validate that the locale is available, then update both
         //       the class property and the translator.
-        if(!in_array($locale, $this->availableLocales)){
+        if (!in_array($locale, $this->availableLocales)) {
             throw new InvalidArgumentException('The requested locale is NOT supported');
         }
         $this->currentLocale = $locale;
-
     }
 
     // TODO: Implement the following getter methods that return
@@ -94,11 +91,11 @@ class TranslationHelper
     //       - getDefaultLocale(): string
     //       - getAvailableLocales(): array
     //       - isLocaleAvailable(string $locale): bool
-    public function getLocale() : string
+    public function getLocale(): string
     {
         return $this->currentLocale;
     }
-    public function getDefaultLocale():string
+    public function getDefaultLocale(): string
     {
         return $this->defaultLocale;
     }
@@ -106,7 +103,7 @@ class TranslationHelper
     {
         return $this->availableLocales;
     }
-    public function isLocaleAvailable(string $locale):bool
+    public function isLocaleAvailable(string $locale): bool
     {
         return in_array($locale, $this->availableLocales);
     }
