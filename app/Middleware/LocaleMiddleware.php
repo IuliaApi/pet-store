@@ -32,5 +32,6 @@ class LocaleMiddleware implements MiddlewareInterface
         //       in the session, set it in the translator.
         //       Store the current locale as a request attribute
         //       and pass the request to the next handler.
+        return $handler->handle($request);
     }
 }
