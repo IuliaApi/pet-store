@@ -1,3 +1,9 @@
+<?php
+global $translator;
+$currentLocale = $translator->getLocale();
+$availableLocales = $translator->getAvailableLocales();
+?>
+
 <!DOCTYPE html>
 <html lang="en"> <!-- data-bs-theme="dark" //?(want dark mode?) -->
 
@@ -19,23 +25,32 @@
             </a>
 
             <form class="input-group" method="GET" action="/pet-store/search_result">
-                <input type="text" class="form-control" placeholder="Search Pet Shop Express Catalogs" data-bs-theme="light">
+                <input type="text" class="form-control" placeholder="<?= hs(trans('header.search_placeholder')) ?>" data-bs-theme="light">
 
                 <button class="btn btn-warning">
-                    Search
+                    <?= hs(trans('header.search')) ?>
                 </button>
             </form>
 
             <ul class="navbar-nav px-2">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/pet-store/user/">
-                        Account
+                        <?= hs(trans('header.account')) ?>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="/pet-store/user/cart">
-                        Cart
+                        <?= hs(trans('header.cart')) ?>
                     </a>
+                </li>
+                <li>
+                    <?php foreach ($availableLocales as $locale): ?>
+                        <?php if ($locale !== $currentLocale): ?>
+                            <a href="?lang=<?= hs($locale) ?>">
+                                <?= $locale === 'en' ? 'English' : 'Français' ?>
+                            </a>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
                 </li>
             </ul>
         </nav>

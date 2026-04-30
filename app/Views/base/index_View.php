@@ -7,7 +7,7 @@ ViewHelper::loadHeader($page_title);
 ?>
 
 <div class="card m-4">
-    <h1 class="card-header">Our catalog</h1>
+    <h1 class="card-header"><?= hs(trans('home.catalog')) ?></h1>
     <div class="card-body">
         <!-- //TODO: make/add the Homepage and featured products -->
     </div>
