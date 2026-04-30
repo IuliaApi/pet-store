@@ -28,9 +28,17 @@ class TranslationHelper
         // TODO: Initialize class properties, create a Translator instance,
         //       configure the fallback locale, register the JSON file loader,
         //       and load all translation files.
-        $this->$defaultLocale = $defaultLocale;
-        $this->$translator = Translator();
-        $this->$translator->setFallbackLocales($availableLocales);
+        $this->defaultLocale=$defaultLocale;
+        $this->langPath=$langPath;
+        $this->currentLocale='en';
+        $this->availableLocales=$availableLocales;
+        $this->translator = new Translator($this->currentLocale);
+        $this->translator->addLoader('json', new JsonFileLoader());
+        $translator->setFallbackLocales($this->availableLocales);
+        $translator->addResource('json', LOCALES_PATH."/en");
+        $this->loadTranslations();
+
+
     }
 
     /**
@@ -42,7 +50,7 @@ class TranslationHelper
         //       locale's messages.json, and register each existing file
         //       with the translator.
         foreach ($this->availableLocales as $key => $value) {
-            $this->translator->addLoader()
+            APP_
         }
     }
 

@@ -14,6 +14,7 @@ define('APP_ROOT_DIR_NAME', $_ENV['APP_ROOT_DIR'] ?? basename(dirname(__FILE__, 
 const APP_VIEWS_PATH = APP_BASE_DIR_PATH . '/app/Views';
 const APP_LANG_PATH = APP_BASE_DIR_PATH . '/lang';
 const PRODUCT_IMAGES_DIR_PATH = APP_BASE_DIR_PATH . '/public/assets/images/products';
+const LOCALES_PATH = APP_ASSETS_DIR_PATH . '/lang';
 
 
 
