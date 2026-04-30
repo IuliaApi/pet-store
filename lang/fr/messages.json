@@ -1,11 +1,16 @@
 {
-    "nav": {
-        "home": "Accueil",
-        "products": "Produits",
+    "header": {
+        "search": "Recherchez",
+        "search_placeholder": "Recherchez catalogues de Pet Shop Express",
+        "account": "Compte",
         "cart": "Panier"
     },
+    "footer": {
+        "eCom_watermark": "Projet d'eCommerce",
+        "contacts_link": "Cliquez ici pour en savoir plus sur nous"
+    },
     "home": {
-        "welcome": "Bienvenue dans Pet Shop Express",
+        "catalog": "Notre catalogue",
         "featured_products": "Produits en Vedette"
     },
     "common": {
