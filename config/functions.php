@@ -177,3 +177,24 @@ function getErrorName(int $error_no): string
 
     return $error_types[$error_no] ?? "UNKNOWN_ERROR";
 }
+
+if (!function_exists('trans')) {
+    /**
+     * Translate a message using the application's translation helper.
+     *
+     * @param string $key Translation key (supports dot notation: 'home.welcome')
+     * @param array $parameters Parameters to replace in translation
+     * @param string|null $locale Override current locale for this translation
+     * @return string Translated message or the key itself if translation not found
+     */
+    function trans(string $key, array $parameters = [], ?string $locale = null): string
+    {
+        global $translator;
+
+        if (!isset($translator)) {
+            return $key;
+        }
+
+        return $translator->trans($key, $parameters, $locale);
+    }
+}
