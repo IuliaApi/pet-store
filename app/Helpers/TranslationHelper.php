@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Helpers;
 
+use InvalidArgumentException;
 use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\Loader\JsonFileLoader;
 
@@ -30,12 +31,12 @@ class TranslationHelper
         //       and load all translation files.
         $this->defaultLocale=$defaultLocale;
         $this->langPath=$langPath;
-        $this->currentLocale='en';
+        $this->setLocale($defaultLocale);
         $this->availableLocales=$availableLocales;
         $this->translator = new Translator($this->currentLocale);
         $this->translator->addLoader('json', new JsonFileLoader());
-        $translator->setFallbackLocales($this->availableLocales);
-        $translator->addResource('json', LOCALES_PATH."/en");
+        $this->translator->setFallbackLocales($this->availableLocales);
+        $this->translator->addResource('json', LOCALES_PATH."/en");
         $this->loadTranslations();
 
 
@@ -49,8 +50,9 @@ class TranslationHelper
         // TODO: Loop through available locales, build the file path to each
         //       locale's messages.json, and register each existing file
         //       with the translator.
-        foreach ($this->availableLocales as $key => $value) {
-            APP_
+        foreach ($this->availableLocales as $locale) {
+            $translation_path = $this->langPath.DIRECTORY_SEPARATOR.$locale.DIRECTORY_SEPARATOR."messages.json";
+            $this->translator->addResource('json', $translation_path, $locale);
         }
     }
 
@@ -66,6 +68,7 @@ class TranslationHelper
     {
         // TODO: Translate the given key using the current locale
         //       (or the override locale if provided).
+        $this->translator->trans($key,)
     }
 
     /**
@@ -78,6 +81,11 @@ class TranslationHelper
     {
         // TODO: Validate that the locale is available, then update both
         //       the class property and the translator.
+        if(!in_array($locale, $this->availableLocales)){
+            throw new InvalidArgumentException('The requested locale is NOT supported');
+        }
+        $this->currentLocale = $locale;
+
     }
 
     // TODO: Implement the following getter methods that return
