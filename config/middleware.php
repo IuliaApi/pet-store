@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 use App\Middleware\ExceptionMiddleware;
 use Slim\App;
+use App\Middleware\SessionMiddleware;
+use App\Middleware\LocaleMiddleware;
 
 return function (App $app) {
     //TODO: Add your middleware here.
@@ -16,5 +18,7 @@ return function (App $app) {
     // Add your middleware here.
     // Start the session at the application level.
     //$app->add(SessionStartMiddleware::class);
+    $app->add(SessionMiddleware::class);  // Must come first
+    $app->add(LocaleMiddleware::class);   // Comes after
     $app->add(ExceptionMiddleware::class);
 };

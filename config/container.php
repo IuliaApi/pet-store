@@ -18,6 +18,8 @@ use Slim\Psr7\Factory\ServerRequestFactory;
 use Slim\Psr7\Factory\StreamFactory;
 use Slim\Psr7\Factory\UriFactory;
 use Slim\Views\PhpRenderer;
+use App\Helpers\TranslationHelper;
+use App\Middleware\LocaleMiddleware;
 
 $definitions = [
     AppSettings::class => function () {
@@ -76,6 +78,18 @@ $definitions = [
             $container->get(PhpRenderer::class),
             null,
             (bool) $settings['display_error_details'],
+        );
+    },
+    TranslationHelper::class => function (ContainerInterface $container): TranslationHelper {
+        return new TranslationHelper(
+            APP_LANG_PATH,
+            'en',
+            ['en', 'fr']
+        );
+    },
+    LocaleMiddleware::class => function (ContainerInterface $container): LocaleMiddleware {
+        return new LocaleMiddleware(
+            $container->get(TranslationHelper::class)
         );
     },
 ];

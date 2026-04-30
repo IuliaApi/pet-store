@@ -26,6 +26,9 @@ $container = (new ContainerBuilder())
     ->addDefinitions($definitions)
     ->build();
 
+global $translator;
+$translator = $container->get(\App\Helpers\TranslationHelper::class);
+
 // Create and return an App instance.
 $app = $container->get(App::class);
 return $app;

@@ -12,10 +12,13 @@ define('APP_ROOT_DIR_NAME', $_ENV['APP_ROOT_DIR'] ?? basename(dirname(__FILE__, 
 
 // Define the path of the application's views directory.
 const APP_VIEWS_PATH = APP_BASE_DIR_PATH . '/app/Views';
-const APP_LANG_PATH = APP_BASE_DIR_PATH . '/lang';
+const APP_LANG_PATH = APP_BASE_DIR_PATH . DIRECTORY_SEPARATOR . '/lang';
 const PRODUCT_IMAGES_DIR_PATH = APP_BASE_DIR_PATH . '/public/assets/images/products';
 const LOCALES_PATH = APP_ASSETS_DIR_PATH . '/lang';
 
+//PATH TO ENG TRANSLATION FILE
+APP_LANG_PATH . '/en/messages.json';
+APP_LANG_PATH . '/en/messages.json';
 
 
 //* HTTP response status code.
