@@ -36,7 +36,7 @@ class TranslationHelper
         $this->translator = new Translator($this->currentLocale);
         $this->translator->addLoader('json', new JsonFileLoader());
         $this->translator->setFallbackLocales($this->availableLocales);
-        $this->translator->addResource('json', LOCALES_PATH."/en");
+        $this->translator->addResource('json', APP_LANG_PATH."/en/messages.json");
         $this->loadTranslations();
 
 
@@ -94,4 +94,20 @@ class TranslationHelper
     //       - getDefaultLocale(): string
     //       - getAvailableLocales(): array
     //       - isLocaleAvailable(string $locale): bool
+    public function getLocale() : string
+    {
+        return $this->currentLocale;
+    }
+    public function getDefaultLocale():string
+    {
+        return $this->defaultLocale;
+    }
+    public function getAvailableLocales(): array
+    {
+        return $this->availableLocales;
+    }
+    public function isLocaleAvailable(string $locale):bool
+    {
+        return in_array($locale, $this->availableLocales);
+    }
 }
