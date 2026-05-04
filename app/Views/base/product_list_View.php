@@ -5,28 +5,23 @@ use App\Helpers\ViewHelper;
 $page_title = 'Product List';
 ViewHelper::loadHeader($page_title);
 ?>
-
-<div class="card m-4 bg-success">
-    <h1 class="card-header bg-success text-white">Search</h1>
+<div class="card m-4 ">
+    <h1 class="card-header text-white" style=" background-color: <?= DARKBROWNCOLOR ?>">Search</h1>
     <div class="card-body bg-white">
 
-        <form method="GET" action="">
-            <input name="search" type="search">
-            <button name="search_btn" value="name" type="submit" class="btn btn-warning">Search</button>
-            &nbsp;&nbsp;
-            <label>Sort by:</label>
-            <select class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" id="sorting" name="sort">
-                <option value="name" class="dropdown-item">Alphabet</option>
-                <option value="price" class="dropdown-item">Price</option>
-                <option value="stock" class="dropdown-item">Stock</option>
-            </select>
-            &nbsp;&nbsp;
-            <label>Order by:</label>
-            <select class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" id="filtering" name="order">
-                <!-- //! Should allow multiple choices, but only allows one at a time-->
-                <option value="ASC" class="dropdown-item">Ascending</option>
-                <option value="DESC" class="dropdown-item">Descending</option>
-            </select>
+        <label>Sort by:</label>
+        <select class="btn" type="button" data-toggle="dropdown" aria-haspopup="true" id="sorting" name="sort" style=" background-color: <?= SANDCOLOR ?>">
+            <option value="name" class="dropdown-item">Alphabet</option>
+            <option value="price" class="dropdown-item">Price</option>
+            <option value="stock" class="dropdown-item">Stock</option>
+        </select>
+        &nbsp;&nbsp;
+        <label>Order by:</label>
+        <select class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" id="filtering" name="order" style="background-color: <?= SANDCOLOR ?>">
+            <!-- //! Should allow multiple choices, but only allows one at a time-->
+            <option value="ASC" class="dropdown-item">Ascending</option>
+            <option value="DESC" class="dropdown-item">Descending</option>
+        </select>
         </form>
     </div>
 </div>

@@ -17,8 +17,8 @@ ViewHelper::loadHeader($page_title);
             <h4>Total:</h4>
             <!-- //TODO: A price count here -->
         </label>
-        <button type="submit" class="btn btn-primary">Checkout</button>
-        <button type="submit" class="btn btn-primary">Continue Shopping</button>
+        <button type="submit" class="btn text-white" style=" background-color: <?= GREENCOLOR ?>">Checkout</button>
+        <button type="submit" class="btn text-white" style=" background-color: <?= SANDCOLOR ?>">Continue Shopping</button>
     </div>
 </div>
 
