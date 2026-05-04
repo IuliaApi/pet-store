@@ -1,5 +1,5 @@
 {
-    "nav": {
+    "header": {
         "search": "Search",
         "search_placeholder": "Search Pet Shop Express Catalogs",
         "account": "Account",
@@ -24,7 +24,26 @@
             "message": "Oops! The page you are looking for does not exist."
         }
     },
-    "user": {
-        "greeting": "Hello, %name%! Ready to shop with us?"
+    "login": {
+        "login": "Login",
+        "email_label": "Email or Username",
+        "email_input": "Enter your email or username",
+        "password_label": "Password",
+        "password_input": "Enter your password",
+        "register_label": "Don't have an account?",
+        "register_link": "Register here"
+    },
+    "register": {
+        "register": "Register",
+        "title": "Create Account",
+        "first_name": "First Name",
+        "last_name": "Last Name",
+        "username": "Username",
+        "email": "Email Address",
+        "password": "Password",
+        "password_warning": "Password must be at least 8 characters long and contain at least one number.",
+        "confirm_password": "Re-enter Password",
+        "login_label": "Already have an account?",
+        "login_link": "Login here"
     }
 }
