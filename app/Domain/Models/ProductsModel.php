@@ -16,7 +16,9 @@ class ProductsModel extends BaseModel
 
     public function getAll(): array
     {
-        return $this->selectAll('SELECT * FROM products ORDER BY id DESC');
+        return $this->selectAll('SELECT `products`.*, `categories`.`name` AS `category_name`
+FROM `products`
+	LEFT JOIN `categories` ON `products`.`category_id` = `categories`.`id` ORDER BY id DESC');
     }
 
     public function getById(int $id): array|false
@@ -28,12 +30,12 @@ class ProductsModel extends BaseModel
 
     public function create(array $data): int
     {
-        $sql = 'INSERT INTO products (name, stock, type, brand, price, thumbnail)
-                VALUES (:name, :stock, :type, :brand, :price, :thumbnail)';
+        $sql = 'INSERT INTO products (name, stock, category_id, brand, price, thumbnail)
+                VALUES (:name, :stock, :category_id, :brand, :price, :thumbnail)';
         $this->execute($sql, [
             'name' => $data['name'],
             'stock' => $data['stock'],
-            'type' => $data['type'],
+            'category_id' => $data['category_id'],
             'brand' => $data['brand'],
             'price' => $data['price'],
             'thumbnail' => $data['thumbnail'],
@@ -55,7 +57,7 @@ class ProductsModel extends BaseModel
         return $this->execute($sql, [
             'name' => $data['name'],
             'stock' => $data['stock'],
-            'type' => $data['type'],
+            'category_id' => $data['category_id'],
             'brand' => $data['brand'],
             'price' => $data['price'],
             'thumbnail' => $data['thumbnail'],

@@ -32,7 +32,7 @@ ViewHelper::loadAdminHeader($title ?? 'Admin · Products');
                     <tr class="text-secondary">
                         <th scope="col">#</th>
                         <th scope="col">Name</th>
-                        <th scope="col">Type</th>
+                        <th scope="col">Category</th>
                         <th scope="col">Brand</th>
                         <th scope="col" class="text-end">Stock</th>
                         <th scope="col" class="text-end">Price</th>
@@ -51,12 +51,12 @@ ViewHelper::loadAdminHeader($title ?? 'Admin · Products');
                             <tr>
                                 <th scope="row"><?= htmlspecialchars((string) $product['id']) ?></th>
                                 <td><?= htmlspecialchars((string) $product['name']) ?></td>
-                                <td><?= htmlspecialchars((string) $product['type']) ?></td>
+                                <td><?= htmlspecialchars((string) $product['category_name']) ?></td>
                                 <td><?= htmlspecialchars((string) $product['brand']) ?></td>
-                                <td class="text-end"><?= htmlspecialchars((string) $product['stock']) ?></td>
+                                <td class="text-end"><?= htmlspecialchars((string) $product['stock_quantity']) ?></td>
                                 <td class="text-end">$<?= htmlspecialchars((string) $product['price']) ?></td>
                                 <td class="text-end">
-                                    <a href="<?= APP_BASE_URL ?>/admin/products/<?= urlencode((string) $product['id']) 
+                                    <a href="<?= APP_BASE_URL ?>/admin/products/<?= urlencode((string) $product['id'])
                                     ?>/edit" class="btn btn-sm btn-outline-light">Edit</a>
                                     <a href="<?= APP_BASE_URL ?>/admin/products/<?= urlencode((string) $product['id']
                                     ) ?>/delete" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this product?');">Delete</a>

@@ -155,7 +155,7 @@ class AdminProductsController extends BaseController
         }
 
         $allowedTypes = $this->productsModel->getAllowedTypes();
-        $data['type'] = (string)($input['type'] ?? '');
+        $data['category'] = (string)($input['category_id'] ?? '');
         if (!in_array($data['type'], $allowedTypes, true)) {
             $errors[] = 'Please choose a valid product category.';
         }
