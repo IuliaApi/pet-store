@@ -24,7 +24,7 @@ $availableLocales = $translator->getAvailableLocales();
                 Pet Shop Express
             </a>
 
-            <form class="input-group" method="GET" action="/pet-store/search_result">
+            <form class="input-group" method="GET" action="<?= APP_BASE_URL ?>/search_result">
                 <input type="text" class="form-control" placeholder="<?= hs(trans('header.search_placeholder')) ?>" data-bs-theme="light">
 
                 <button class="btn btn-warning">
@@ -34,12 +34,12 @@ $availableLocales = $translator->getAvailableLocales();
 
             <ul class="navbar-nav px-2">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/pet-store/user/">
+                    <a class="nav-link active" aria-current="page" href="/pet-store/">
                         <?= hs(trans('header.account')) ?>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="/pet-store/user/cart">
+                    <a class="nav-link active" href="/pet-store/cart">
                         <?= hs(trans('header.cart')) ?>
                     </a>
                 </li>

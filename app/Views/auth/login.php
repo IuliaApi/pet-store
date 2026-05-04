@@ -12,7 +12,7 @@ ViewHelper::loadHeader($title ?? 'Login · Registration');
                 <h3 class="text-center">Login</h3>
             </div>
             <div class="card-body">
-                <form method="POST" action="<?= APP_BASE_URL ?>/login">
+                <form method="POST" action="<?= APP_BASE_URL ?>/user/login">
                     <div class="mb-3">
                         <label for="identifier" class="form-label">Email or Username</label>
                         <input

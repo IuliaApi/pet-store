@@ -24,7 +24,7 @@ class LocaleMiddleware implements MiddlewareInterface
     {
         // TODO: Detect the user's preferred locale by checking:
         //       1. The URL query parameter (?lang=)
-        
+
         // $locale = $request->getQueryParams()['lang'] ??
         // SessionManager::get('lang') ??
         // $this->translator->getDefaultLocale();

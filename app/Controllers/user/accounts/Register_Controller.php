@@ -24,7 +24,7 @@ class Register_Controller extends BaseController
             'message' => 'Welcome to the registration page',
         ];
 
-        return $this->render($response, '/user/accounts/Register_View.php', $data);
+        return $this->render($response, '/auth/register.php', $data);
     }
 
     public function error(Request $request, Response $response, array $args): Response

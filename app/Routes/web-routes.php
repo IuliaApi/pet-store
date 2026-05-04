@@ -62,16 +62,18 @@ return static function (Slim\App $app): void {
 
     $app->post('/register', [AuthController::class, 'store']);
 
-    $app->group('/user', function ($group) {
+    $app->group('', function ($group) {
 
         //default landing page for /user
-        $group->get('/', [Login_Controller::class, 'index'])
-            ->setName('user.login.index');
+        // $group->get('/', [Login_Controller::class, 'index'])
+        //     ->setName('user.login.index');
 
-        //Login page route
+        //Login page route: shows the login form
         $group->get('/login', [Login_Controller::class, 'index'])
             ->setName('user.login.index');
 
+        $group->post('/login', [AuthController::class, 'authenticate'])
+            ->setName('user.authenticate');
         //Registration page route
         $group->get('/registration', [Register_Controller::class, 'index'])
             ->setName('user.registration.index');

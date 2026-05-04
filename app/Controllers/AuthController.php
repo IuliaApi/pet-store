@@ -134,7 +134,7 @@ class AuthController extends BaseController
         // TODO: Display a welcome message and redirect based on role:
         //       admins go to the admin dashboard, customers go to the user dashboard
         if ($user['role'] === 'admin') {
-            FlashMessage::success("Welcome " . SessionManager::get('user'['user_name']));
+            FlashMessage::success("Welcome " . SessionManager::get('username'));
             return $this->redirect($request, $response, 'admin.dashboard');
         } else {
             return $this->redirect($request, $response, 'home.index');
