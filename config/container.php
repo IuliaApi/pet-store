@@ -83,7 +83,7 @@ $definitions = [
     TranslationHelper::class => function (ContainerInterface $container): TranslationHelper {
         return new TranslationHelper(
             APP_LANG_PATH,
-            'en',
+            'fr',
             ['en', 'fr']
         );
     },

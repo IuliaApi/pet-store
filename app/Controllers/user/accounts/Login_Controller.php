@@ -24,7 +24,7 @@ class Login_Controller extends BaseController
             'message' => 'Welcome to the login page',
         ];
 
-        return $this->render($response, '/user/accounts/Login_View.php', $data);
+        return $this->render($response, '/auth/login.php', $data);
     }
 
     public function error(Request $request, Response $response, array $args): Response

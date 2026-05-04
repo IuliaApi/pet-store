@@ -3,8 +3,7 @@
 use App\Helpers\ViewHelper;
 
 
-$title = $data["title"];
-ViewHelper::loadHeader($title);
+ViewHelper::loadHeader($title ?? 'Home · Registration');
 $account_info = $data["account_info"] ?? [];
 ?>
 
@@ -27,17 +26,19 @@ $account_info = $data["account_info"] ?? [];
                     <div class="mb-3">
                         <label for="last_name" class="form-label">Last Name</label>
                         <input type="text" class="form-control" id="last_name" name="last_name" required
-                            first_name>>
+                            value="<?= $account_info['last_name'] ?? '' ?>" />
                     </div>
 
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" name="username" required>
+                        <input type="text" class="form-control" id="username" name="username" required
+                            value="<?= $account_info['username'] ?? '' ?>" />
                     </div>
 
                     <div class="mb-3">
                         <label for="email" class="form-label">Email Address</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
+                        <input type="email" class="form-control" id="email" name="email" required
+                            value="<?= $account_info['email'] ?? '' ?>" />
                     </div>
 
                     <div class="mb-3">
