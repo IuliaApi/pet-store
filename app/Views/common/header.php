@@ -18,7 +18,7 @@ $availableLocales = $translator->getAvailableLocales();
 
 <body>
     <header data-bs-theme="dark">
-        <nav class="navbar navbar-expand-lg bg-success d-flex px-3 py-2">
+        <nav class="navbar navbar-expand-lg d-flex px-3 py-2" style=" background-color: <?= DARKBROWNCOLOR ?>">
 
             <a class="navbar-brand fw-bold" href="/pet-store/">
                 Pet Shop Express
@@ -27,7 +27,7 @@ $availableLocales = $translator->getAvailableLocales();
             <form class="input-group" method="GET" action="<?= APP_BASE_URL ?>/search_result">
                 <input type="text" class="form-control" placeholder="<?= hs(trans('header.search_placeholder')) ?>" data-bs-theme="light">
 
-                <button class="btn btn-warning">
+                <button class="btn" style=" background-color: <?= SANDCOLOR ?>">
                     <?= hs(trans('header.search')) ?>
                 </button>
             </form>
@@ -55,10 +55,10 @@ $availableLocales = $translator->getAvailableLocales();
             </ul>
         </nav>
 
-        <nav class="navbar navbar-expand-lg bg-warning d-flex px-3 py-2">
+        <nav class="navbar navbar-expand-lg d-flex px-3 py-2" style=" background-color: <?= BROWNCOLOR ?>">
 
             <!-- //TODO: add categories here -->
-            <ul class="navbar-nav text-white">
+            <ul class=" navbar-nav text-white">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="">
                         sample category

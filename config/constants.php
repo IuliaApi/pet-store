@@ -32,3 +32,11 @@ const HEADERS_CONTENT_TYPE = "Content-Type";
 const APP_MEDIA_TYPE_JSON = "application/json";
 const APP_MEDIA_TYPE_XML = "application/xml";
 const APP_MEDIA_TYPE_YAML = "application/yaml";
+
+
+//COLOURS
+const SANDCOLOR = "#c9a887";
+const LIGHTBROWNCOLOR = "#e3a66a";
+const BROWNCOLOR = "#9c7c5f";
+const DARKBROWNCOLOR = "#8c7056";
+const GREENCOLOR = "#83a167";
