@@ -100,7 +100,7 @@ class TwoFactorController extends BaseController
         // 4. If the code is valid, mark 2FA as verified in the session.
         SessionManager::set('2fa_verified', true);
         // 5. Clear the attempts counter.
-        SessionManager::clear('failed_login_attempts');
+        SessionManager::remove('failed_login_attempts');
         // 6. Regenerate the session ID for security.
         session_regenerate_id(true);
         // 7. Redirect to the dashboard.
