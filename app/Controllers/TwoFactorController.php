@@ -111,11 +111,20 @@ class TwoFactorController extends BaseController
     {
         // TODO:
         // 1. Retrieve the submitted password from the form data.
+        $form_data = $request->getParsedBody();
+        $password = $form_data['password'];
         // 2. Look up the user in the database and use password_verify()
         //    to confirm the password is correct. If invalid, re-render
         //    the disable page with an error.
+        if($this->userModel->verifyCredentials(SessionManager::get('user')['user_id'], $password)===null){
+            FlashMessage::error('Incorrect credentials');
+            return $this->render($response, 'auth/2fa-disable');
+        }
         // 3. Disable 2FA in the database for this user.
+        $this->twoFactorModel->disable(SessionManager::get('user')['user_id']);
         // 4. Redirect to the dashboard with a success flash message.
+        FlashMessage::success('You have disabled two-factor authentication');
+        return $this->redirect($request, $response, 'admin/users/2fa-dashboard');
     }
 
     public function showDisable(Request $request, Response $response): Response
