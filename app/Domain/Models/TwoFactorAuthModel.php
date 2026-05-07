@@ -20,6 +20,12 @@ class TwoFactorAuthModel extends BaseModel
     {
         // TODO: Insert a new 2FA record with the user ID and secret.
         //       Return the ID of the created record.
+        $sql = 'INSERT INTO two_factor_auth (user_id, secret)
+                VALUES (:user_id, :secret)';
+
+        $variables = ['user_id' => $userId, 'secret' => $secret];
+
+        return $this->execute($sql, $variables);
     }
 
     public function enable(int $userId): bool
@@ -35,13 +41,19 @@ class TwoFactorAuthModel extends BaseModel
     public function disable(int $userId): bool
     {
         // TODO: Update the record to mark 2FA as disabled.
-        return ($this->execute('UPDATE two_factor_auth SET enabled = 0 WHERE user_id = :userId', ['userId' => $userId]) === 1);
+        return ($this->execute('UPDATE two_factor_auth SET enabled = 0 WHERE user_id = :userId', ['userId' => $userId]) === 1
+        );
     }
 
     public function isEnabled(int $userId): bool
     {
         // TODO: Check whether the user has 2FA enabled.
+
+        $result = $this->selectOne('SELECT enabled FROM two_factor_auth WHERE user_id = :userId AND enabled = 1', ['userId' => $userId]);
+
+        return !is_bool($result);
     }
+
 
     public function getSecret(int $userId): ?string
     {

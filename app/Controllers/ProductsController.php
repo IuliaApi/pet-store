@@ -44,14 +44,14 @@ class ProductsController extends BaseController
             $params['q'] = substr($params['q'], 0, 100);
         }
         $products = $this->productsModel->searchProducts($params['q'], $category);
-        $response[] = [
+        $result[] = [
             'success' => true,
             'count' => count($products),
             'query' => $params['q'],
             'category_id' => $category,
             'products' => $products
         ];
-        $jsonResponse = json_encode($response);
+        $jsonResponse = json_encode($result);
         $response->getBody()->write($jsonResponse);
         // TODO: Return response with proper headers
         return $response

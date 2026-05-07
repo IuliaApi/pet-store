@@ -7,7 +7,7 @@ use DI\Container;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class TestController extends BaseController
+class TestContactsController extends BaseController
 {
     public function __construct(Container $container)
     {
@@ -23,5 +23,4 @@ class TestController extends BaseController
 
         return $this->render($response, 'user\contact_View.php');
     }
-
 }
