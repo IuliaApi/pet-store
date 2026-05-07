@@ -16,6 +16,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class TwoFactorController extends BaseController
 {
+
     public function __construct(
         ContainerInterface $container,
         private TwoFactorAuthModel $twoFactorModel,
@@ -31,11 +32,10 @@ class TwoFactorController extends BaseController
         //    2FA enabled. If so, set a flash error and redirect
         //    to the dashboard.
 
-        if($this->twoFactorModel->isEnabled(SessionManager::get('user')['user_id']))
-            {
-                FlashMessage::error('You already have two-factor authentication enabled.');
-                return $this->redirect($request, $response, '/admin/users/2fa-dashboard');
-            }
+        if ($this->twoFactorModel->isEnabled(SessionManager::get('user')['user_id'])) {
+            FlashMessage::error('You already have two-factor authentication enabled.');
+            return $this->redirect($request, $response, '/admin/users/2fa-dashboard');
+        }
         // 2. Create a QR code provider and a TwoFactorAuth instance.
         $qrProvider = new BaconQrCodeProvider(4, '#ffffff', '#000000', 'svg');
         $tfa = new TwoFactorAuth($qrProvider, 'pet-store');
@@ -47,7 +47,7 @@ class TwoFactorController extends BaseController
         // 5. Generate a QR code data URI for the authenticator app.
         $uri = $tfa->getQRCodeImageAsDataUri(SessionManager::get('user')['user_email'], SessionManager::get('secret'));
         // 6. Render the setup view, passing the QR code and the secret.
-        return $this->render($response, 'auth/2fa-setup', ['title'=>'Enable 2FA','uri'=>$uri, 'secret'=>SessionManager::get('secret')]);
+        return $this->render($response, 'auth/2fa-setup', ['title' => 'Enable 2FA', 'uri' => $uri, 'secret' => SessionManager::get('secret')]);
     }
 
     public function verifyAndEnable(Request $request, Response $response): Response
@@ -55,9 +55,30 @@ class TwoFactorController extends BaseController
         // TODO:
         // 1. Retrieve the setup secret from the session. If missing,
         //    the setup session has expired: redirect to the setup page.
+        $userEmail = SessionManager::get('user_email');
+        $data = $request->getParsedBody();
+        $code = $data['code'] ?? '';
+
+
+        $secret = SessionManager::get('2fa_setup_secret');
+
+
+        if (!isset($secret) || empty($secret)) {
+            return $this->redirect($request, $response, '2fa-setup.php');
+        }
         // 2. Verify the submitted code against the session secret.
+        $qrProvider = new BaconQrCodeProvider(4, '#ffffff', '#000000', 'svg');
+        $tfa = new TwoFactorAuth($qrProvider, 'pet-store');
+        $valid = $tfa->verifyCode($secret, $code);
+
         // 3. If the code is invalid, regenerate the QR code and
         //    re-render the setup page with an error message.
+        if (!$valid) {
+            $qrProvider = new BaconQrCodeProvider(4, '#ffffff', '#000000', 'svg');
+            $tfa = new TwoFactorAuth($qrProvider, 'pet-store');
+            $tfa->createSecret();
+            return $this->render($response, '2fa-setup.php',['']);
+        }
         // 4. If the code is valid, save the secret to the database
         //    and enable 2FA for the user.
         // 5. Remove the setup secret from the session.
@@ -73,7 +94,7 @@ class TwoFactorController extends BaseController
     {
         // TODO:
         // 1. Retrieve the user's stored TOTP secret from the database.
-        $secret=$this->twoFactorModel->getSecret(SessionManager::get('user')['user_id']);
+        $secret = $this->twoFactorModel->getSecret(SessionManager::get('user')['user_id']);
         // 2. Verify the submitted code against the stored secret.
         $form_data = $request->getParsedBody();
         $code = $form_data['code'];
@@ -83,13 +104,12 @@ class TwoFactorController extends BaseController
         //    in the session. After 5 failed attempts, destroy the session
         //    and redirect to the login page. Otherwise, re-render the
         //    verification page with an error.
-        if(!$tfa->verifyCode($secret, $code))
-            {
-                if(SessionManager::has('failed_login_attempts')){
-                    SessionManager::set('failed_login_attempts',  SessionManager::get('failed_login_attempts')+1);
-                    if(SessionManager::get('failed_login_attempts')===5){
-                        SessionManager::destroy();
-                        return $this->redirect($request, $response, 'auth/login');
+        if (!$tfa->verifyCode($secret, $code)) {
+            if (SessionManager::has('failed_login_attempts')) {
+                SessionManager::set('failed_login_attempts',  SessionManager::get('failed_login_attempts') + 1);
+                if (SessionManager::get('failed_login_attempts') === 5) {
+                    SessionManager::destroy();
+                    return $this->redirect($request, $response, 'auth/login');
                 } else {
                     SessionManager::set('failed_login_attempts', 1);
                 }
