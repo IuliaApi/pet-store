@@ -32,8 +32,8 @@ class TwoFactorAuthModel extends BaseModel
     {
         // TODO: Update the record to mark 2FA as enabled and set
         //       the enabled timestamp.
-        $sql = "UPDATE two_factor_auth SET enable = :enable WHERE user_id = :user_id";
-        $variables = ['enable' => true, 'user_id' => $userId];
+        $sql = "UPDATE two_factor_auth SET enabled = :enabled WHERE user_id = :user_id";
+        $variables[] = ['enabled' => true, 'user_id' => $userId];
 
         return ($this->execute($sql, $variables) > 0);
     }
@@ -59,7 +59,7 @@ class TwoFactorAuthModel extends BaseModel
     {
         // TODO: Return the TOTP secret for the given user.
         $sql = "SELECT secret FROM two_factor_auth WHERE username user_id = :user_id";
-        $variables = ['user_id' => $userId];
+        $variables[] = ['user_id' => $userId];
 
         return $this->selectOne($sql, $variables)[0];
     }
