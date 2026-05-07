@@ -22,6 +22,10 @@ class TwoFactorAuthModel extends BaseModel
     {
         // TODO: Update the record to mark 2FA as enabled and set
         //       the enabled timestamp.
+        $sql = "UPDATE two_factor_auth SET enable = :enable WHERE user_id = :user_id";
+        $variables = ['enable' => true, 'user_id' => $userId];
+
+        return ($this->execute($sql, $variables) > 0);
     }
 
     public function disable(int $userId): bool
