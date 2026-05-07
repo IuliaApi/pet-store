@@ -10,6 +10,10 @@ class TwoFactorAuthModel extends BaseModel
     {
         // TODO: Query the two_factor_auth table to find the record
         //       for the given user.
+        $result = $this->selectOne('SELECT * FROM two_factor_auth WHERE user_id = :userId', ['userId'=>$userId]);
+        if ($result===false)
+            return null;
+        else return $result;
     }
 
     public function create(int $userId, string $secret): int
@@ -27,6 +31,7 @@ class TwoFactorAuthModel extends BaseModel
     public function disable(int $userId): bool
     {
         // TODO: Update the record to mark 2FA as disabled.
+        return ($this->execute('UPDATE two_factor_auth SET enabled = 0 WHERE user_id = :userId', ['userId'=>$userId])===1);
     }
 
     public function isEnabled(int $userId): bool
