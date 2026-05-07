@@ -96,6 +96,7 @@ class TwoFactorController extends BaseController
                 FlashMessage::error('Invalid code');
                 return $this->redirect($request, $response, '2fa-verify');
             }
+        }
         // 4. If the code is valid, mark 2FA as verified in the session.
         SessionManager::set('2fa_verified', true);
         // 5. Clear the attempts counter.
