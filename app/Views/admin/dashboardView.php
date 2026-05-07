@@ -26,3 +26,4 @@ ViewHelper::loadAdminHeader($title);
 </div>
 
 <?php ViewHelper::loadAdminFooter(); ?>
+
