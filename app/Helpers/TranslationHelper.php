@@ -83,6 +83,7 @@ class TranslationHelper
             throw new InvalidArgumentException('The requested locale is NOT supported');
         }
         $this->currentLocale = $locale;
+        $this->translator->setLocale($locale);
     }
 
     // TODO: Implement the following getter methods that return
