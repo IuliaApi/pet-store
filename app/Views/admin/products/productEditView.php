@@ -3,7 +3,7 @@
 use App\Helpers\ViewHelper;
 
 /** @var array $product */
-/** @var array $types */
+/** @var array $categories */
 
 ViewHelper::loadAdminHeader($title ?? 'Admin · Edit Product');
 ?>
@@ -20,31 +20,31 @@ ViewHelper::loadAdminHeader($title ?? 'Admin · Edit Product');
                     </div>
                 </div>
 
-                <form method="post" action="<?= APP_BASE_URL ?>/admin/products/<?= urlencode((string) $product['id']) ?>" novalidate>
+                <form method="post" action="<?= APP_BASE_URL ?>/admin/products/<?= urlencode((string)($product['id'] ?? '')) ?>" novalidate>
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" maxlength="50" required value="<?= htmlspecialchars((string) $product['name']) ?>">
+                        <input type="text" class="form-control" id="name" name="name" maxlength="50" required value="<?= htmlspecialchars((string)($product['name'] ?? '')) ?>">
                     </div>
 
                     <div class="row">
                         <div class="col-md-4 mb-3">
-                            <label for="stock" class="form-label">Stock</label>
-                            <input type="number" class="form-control" id="stock" name="stock" min="0" step="1" required value="<?= htmlspecialchars((string) $product['stock']) ?>">
+                            <label for="stock_quantity" class="form-label">Stock</label>
+                            <input type="number" class="form-control" id="stock_quantity" name="stock_quantity" min="0" step="1" required value="<?= (int)($product['stock_quantity'] ?? 0) ?>">
                         </div>
                         <div class="col-md-4 mb-3">
                             <label for="price" class="form-label">Price</label>
                             <div class="input-group">
                                 <span class="input-group-text">$</span>
-                                <input type="number" class="form-control" id="price" name="price" min="0" step="0.01" required value="<?= htmlspecialchars((string) $product['price']) ?>">
+                                <input type="number" class="form-control" id="price" name="price" min="0" step="0.01" required value="<?= htmlspecialchars((string)($product['price'] ?? '')) ?>">
                             </div>
                         </div>
                         <div class="col-md-4 mb-3">
-                            <label for="type" class="form-label">Category</label>
-                            <select class="form-select" id="type" name="type" required>
+                            <label for="category_id" class="form-label">Category</label>
+                            <select class="form-select" id="category_id" name="category_id" required>
                                 <option value="">-- Select --</option>
-                                <?php foreach ($types as $type) : ?>
-                                    <option value="<?= htmlspecialchars($type) ?>" <?= $product['type'] === $type ? 'selected' : '' ?>>
-                                        <?= htmlspecialchars(ucwords($type)) ?>
+                                <?php foreach ($categories as $cat) : ?>
+                                    <option value="<?= htmlspecialchars((string)($cat['id'] ?? '')) ?>" <?= ((int)($product['category_id'] ?? 0) === (int)($cat['id'] ?? 0)) ? 'selected' : '' ?>>
+                                        <?= htmlspecialchars(ucwords((string)($cat['name'] ?? ''))) ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>
@@ -54,11 +54,11 @@ ViewHelper::loadAdminHeader($title ?? 'Admin · Edit Product');
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="brand" class="form-label">Brand</label>
-                            <input type="text" class="form-control" id="brand" name="brand" maxlength="50" required value="<?= htmlspecialchars((string) $product['brand']) ?>">
+                            <input type="text" class="form-control" id="brand" name="brand" maxlength="50" required value="<?= htmlspecialchars((string)($product['brand'] ?? '')) ?>">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="thumbnail" class="form-label">Thumbnail filename</label>
-                            <input type="text" class="form-control" id="thumbnail" name="thumbnail" maxlength="50" value="<?= htmlspecialchars((string) $product['thumbnail']) ?>">
+                            <input type="text" class="form-control" id="thumbnail" name="thumbnail" maxlength="50" value="<?= htmlspecialchars((string)($product['thumbnail'] ?? '')) ?>">
                             <div class="form-text text-secondary">Optional</div>
                         </div>
                     </div>

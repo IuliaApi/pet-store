@@ -39,12 +39,12 @@ class AdminProductsController extends BaseController
 
     public function create(Request $request, Response $response, array $args): Response
     {
-        $types = $this->productsModel->getAllowedTypes();
+        $categories = $this->productsModel->getCategories();
 
         $data = [
             'title' => 'Admin · Create Product',
             'username' => $_SESSION['username'] ?? 'Admin',
-            'types' => $types,
+            'categories' => $categories,
         ];
 
         return $this->render($response, 'admin/products/productCreateView.php', $data);
@@ -78,13 +78,13 @@ class AdminProductsController extends BaseController
             return $this->redirect($request, $response, 'admin.products.index');
         }
 
-        $types = $this->productsModel->getAllowedTypes();
+        $categories = $this->productsModel->getCategories();
 
         $data = [
             'title' => 'Admin · Edit Product',
             'username' => $_SESSION['username'] ?? 'Admin',
             'product' => $product,
-            'types' => $types,
+            'categories' => $categories,
         ];
 
         return $this->render($response, 'admin/products/productEditView.php', $data);
@@ -147,16 +147,18 @@ class AdminProductsController extends BaseController
             $errors[] = 'Product name must be at most 50 characters.';
         }
 
-        $stockRaw = trim((string)($input['stock'] ?? ''));
+        $stockRaw = trim((string)($input['stock_quantity'] ?? $input['stock'] ?? ''));
         if ($stockRaw === '' || !ctype_digit($stockRaw)) {
             $errors[] = 'Stock must be a non-negative whole number.';
         } else {
-            $data['stock'] = (int) $stockRaw;
+            $data['stock_quantity'] = (int) $stockRaw;
         }
 
-        $allowedTypes = $this->productsModel->getAllowedTypes();
-        $data['category'] = (string)($input['category_id'] ?? '');
-        if (!in_array($data['type'], $allowedTypes, true)) {
+        // Validate category_id exists in categories table
+        $data['category_id'] = isset($input['category_id']) ? (int)$input['category_id'] : 0;
+        $categories = $this->productsModel->getCategories();
+        $validCategoryIds = array_column($categories, 'id');
+        if ($data['category_id'] <= 0 || !in_array($data['category_id'], $validCategoryIds)) {
             $errors[] = 'Please choose a valid product category.';
         }
 

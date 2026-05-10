@@ -2,7 +2,7 @@
 
 use App\Helpers\ViewHelper;
 
-/** @var array $types */
+/** @var array $categories */
 
 ViewHelper::loadAdminHeader($title ?? 'Admin · Create Product');
 ?>
@@ -27,8 +27,8 @@ ViewHelper::loadAdminHeader($title ?? 'Admin · Create Product');
 
                     <div class="row">
                         <div class="col-md-4 mb-3">
-                            <label for="stock" class="form-label">Stock</label>
-                            <input type="number" class="form-control" id="stock" name="stock" min="0" step="1" required>
+                            <label for="stock_quantity" class="form-label">Stock</label>
+                            <input type="number" class="form-control" id="stock_quantity" name="stock_quantity" min="0" step="1" required>
                         </div>
                         <div class="col-md-4 mb-3">
                             <label for="price" class="form-label">Price</label>
@@ -38,11 +38,11 @@ ViewHelper::loadAdminHeader($title ?? 'Admin · Create Product');
                             </div>
                         </div>
                         <div class="col-md-4 mb-3">
-                            <label for="type" class="form-label">Category</label>
-                            <select class="form-select" id="type" name="type" required>
+                            <label for="category_id" class="form-label">Category</label>
+                            <select class="form-select" id="category_id" name="category_id" required>
                                 <option value="">-- Select --</option>
-                                <?php foreach ($types as $type) : ?>
-                                    <option value="<?= htmlspecialchars($type) ?>"><?= htmlspecialchars(ucwords($type)) ?></option>
+                                <?php foreach ($categories as $cat) : ?>
+                                    <option value="<?= htmlspecialchars((string)($cat['id'] ?? '')) ?>"><?= htmlspecialchars(ucwords((string)($cat['name'] ?? ''))) ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>

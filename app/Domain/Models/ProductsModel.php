@@ -16,25 +16,27 @@ class ProductsModel extends BaseModel
 
     public function getAll(): array
     {
-        return $this->selectAll('SELECT `products`.*, `categories`.`name` AS `category_name`
-FROM `products`
-	LEFT JOIN `categories` ON `products`.`category_id` = `categories`.`id` ORDER BY id DESC');
+        return $this->selectAll('SELECT p.id, p.name, p.description, p.stock_quantity, p.category_id, p.brand, p.price, p.thumbnail, c.name AS category_name
+FROM products p
+LEFT JOIN categories c ON p.category_id = c.id
+ORDER BY p.id DESC');
     }
 
     public function getById(int $id): array|false
     {
-        return $this->selectOne('SELECT * FROM products WHERE id = :id', [
+        return $this->selectOne('SELECT id, name, description, stock_quantity, category_id, brand, price, thumbnail FROM products WHERE id = :id', [
             'id' => $id,
         ]);
     }
 
     public function create(array $data): int
     {
-        $sql = 'INSERT INTO products (name, stock, category_id, brand, price, thumbnail)
-                VALUES (:name, :stock, :category_id, :brand, :price, :thumbnail)';
+        $sql = 'INSERT INTO products (name, description, stock_quantity, category_id, brand, price, thumbnail)
+                VALUES (:name, :description, :stock_quantity, :category_id, :brand, :price, :thumbnail)';
         $this->execute($sql, [
             'name' => $data['name'],
-            'stock' => $data['stock'],
+            'description' => $data['description'] ?? null,
+            'stock_quantity' => $data['stock_quantity'],
             'category_id' => $data['category_id'],
             'brand' => $data['brand'],
             'price' => $data['price'],
@@ -48,21 +50,33 @@ FROM `products`
     {
         $sql = 'UPDATE products
                 SET name = :name,
-                    stock = :stock,
-                    type = :type,
+                    description = :description,
+                    stock_quantity = :stock_quantity,
+                    category_id = :category_id,
                     brand = :brand,
                     price = :price,
                     thumbnail = :thumbnail
                 WHERE id = :id';
         return $this->execute($sql, [
             'name' => $data['name'],
-            'stock' => $data['stock'],
+            'description' => $data['description'] ?? null,
+            'stock_quantity' => $data['stock_quantity'],
             'category_id' => $data['category_id'],
             'brand' => $data['brand'],
             'price' => $data['price'],
             'thumbnail' => $data['thumbnail'],
             'id' => $id,
         ]);
+    }
+
+    /**
+     * Return categories list (id, name) for admin forms.
+     *
+     * @return array<int,array<string,mixed>>
+     */
+    public function getCategories(): array
+    {
+        return $this->selectAll('SELECT id, name FROM categories ORDER BY name ASC');
     }
 
     public function delete(int $id): int
