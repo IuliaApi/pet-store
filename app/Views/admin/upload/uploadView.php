@@ -29,4 +29,36 @@ ViewHelper::loadAdminHeader($title ?? 'File Upload');
     </div>
 </div>
 
+<!-- Uploaded Files Display -->
+<?php
+$uploadedFiles = App\Helpers\SessionManager::get('uploaded_files', []);
+?>
+<?php if (!empty($uploadedFiles)): ?>
+<div class="card mt-4">
+    <div class="card-header">
+        <h5>Uploaded Files</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <?php foreach (array_reverse($uploadedFiles) as $filename): ?>
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <img
+                        src="<?= APP_BASE_URL ?>/public/uploads/images/<?= hs($filename) ?>"
+                        class="card-img-top"
+                        alt="Uploaded image"
+                        style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <p class="card-text small text-muted">
+                            <?= hs($filename) ?>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+
 <?php ViewHelper::loadAdminFooter(); ?>

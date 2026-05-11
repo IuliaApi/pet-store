@@ -58,6 +58,6 @@ class FileUploadHelper
         } catch (Exception $e){
             return  Result::failure('Failed to save uploaded file: '. $e->getMessage());
         }
-        return Result::success('File uploaded succesfully', ['filename'=>$newFileName]);
+        return Result::success('File uploaded successfully', ['filename'=>$newFileName]);
     }
 }

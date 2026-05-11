@@ -20,7 +20,7 @@ class UploadController extends BaseController
     public function index(Request $request, Response $response, array $args): Response
     {
         $data = ['title' => 'File Upload'];
-        return $this->render($response, 'admin/upload/uploadView', $data);
+        return $this->render($response, 'admin/upload/uploadView.php', $data);
     }
 
     /**
