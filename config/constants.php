@@ -16,7 +16,7 @@ const APP_LANG_PATH = APP_BASE_DIR_PATH . DIRECTORY_SEPARATOR . 'lang';
 const PRODUCT_IMAGES_DIR_PATH = APP_BASE_DIR_PATH . '/public/assets/images/products';
 
 //PATH TO ENG TRANSLATION FILE
-APP_LANG_PATH . '/en/messages.json';
+const APP_ENG_LANG_PATH = APP_LANG_PATH . '/en/messages.json';
 
 
 //* HTTP response status code.
