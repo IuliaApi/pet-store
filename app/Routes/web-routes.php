@@ -24,12 +24,13 @@ use App\Controllers\User\Orders\Checkout_Controller;
 use App\Controllers\User\Orders\Booking_Controller;
 use App\Controllers\User\Saves\Cart_Controller;
 use App\Controllers\User\Saves\Schedule_Controller;
-use App\Controllers\TestController;
+use App\Controllers\TestContactsController;
 use App\Controllers\AuthController;
 use App\Middleware\AuthMiddleware;
 use App\Middleware\AdminAuthMiddleware;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use App\Controllers\UploadController;
 
 
 return static function (Slim\App $app): void {
@@ -134,6 +135,11 @@ return static function (Slim\App $app): void {
         // Categories
         $group->get('/categories', [AdminCategoriesController::class, 'index'])
             ->setName('admin.categories.index');
+        // Picture upload
+        $group->get('/upload', [UploadController::class, 'index'])
+            ->setName('upload.index');
+        $group->post('/upload', [UploadController::class, 'upload'])
+            ->setName('upload.process');
     });
     // })->add(AdminAuthMiddleware::class);
 
@@ -147,7 +153,7 @@ return static function (Slim\App $app): void {
         $response->getBody()->write($phpinfo);
         return $response;
     });
-    $app->get('/test_contacts', [TestController::class, 'contact'])
+    $app->get('/test_contacts', [TestContactsController::class, 'contact'])
         ->setName('contacts_Views.php');
 
     // A route to test runtime error handling and custom exceptions.
