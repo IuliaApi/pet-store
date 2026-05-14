@@ -50,7 +50,7 @@ return static function (Slim\App $app): void {
         ->setName('search_result.index');
 
     //specific item page route
-    $app->get('/item', [Product_Details_Controller::class, 'index'])
+    $app->get('/products/{id}', [Product_Details_Controller::class, 'index'])
         ->setName('item.index');
 
     //Contacts page route

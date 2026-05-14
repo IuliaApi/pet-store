@@ -1,5 +1,7 @@
 <?php
 
+/** @var array $product */
+
 use App\Helpers\ViewHelper;
 
 $page_title = 'Specific Product Name Here';
@@ -7,7 +9,7 @@ ViewHelper::loadHeader($page_title);
 ?>
 
 <div class="card m-4">
-    <h1 class="card-header">Product Name Here</h1>
+    <h1 class="card-header"><?= $product['name'] ?></h1>
     <div class="card-body">
 
         <img scr="" class="card-img-top">

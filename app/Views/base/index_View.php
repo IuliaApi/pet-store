@@ -29,7 +29,7 @@ ViewHelper::loadHeader($page_title);
                         $description = trim((string) ($product['description'] ?? ''));
                         ?>
                         <div class="col-12 col-md-6 col-lg-3">
-                            <div class="card h-100 border-0 shadow-sm overflow-hidden">
+                            <a class="card h-100 border-0 shadow-sm overflow-hidden text-decoration-none" href="/pet-store/products/<?= $product["id"]; ?>">
                                 <?php if ($hasThumbnail) : ?>
                                     <img src="<?= htmlspecialchars(base_url('/assets/images/products/' . rawurlencode($thumbnail))) ?>" class="card-img-top" alt="<?= htmlspecialchars((string) $product['name']) ?>" style="height: 200px; object-fit: cover;">
                                 <?php else : ?>
@@ -51,7 +51,7 @@ ViewHelper::loadHeader($page_title);
                                         <small class="text-muted">Stock: <?= htmlspecialchars((string) $product['stock_quantity']) ?></small>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     <?php endforeach; ?>
                 <?php endif; ?>
