@@ -46,8 +46,8 @@ return static function (Slim\App $app): void {
         ->setName('products.index');
 
     //Lists of products based on a search page route
-    $app->get('/search_result', [Product_List_Controller::class, 'index'])
-        ->setName('search_result.index');
+    $app->get('/search', [Product_List_Controller::class, 'search'])
+        ->setName('search_result.search');
 
     //specific item page route
     $app->get('/products/{id}', [Product_Details_Controller::class, 'index'])

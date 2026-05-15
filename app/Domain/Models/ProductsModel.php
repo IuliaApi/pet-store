@@ -123,14 +123,14 @@ ORDER BY p.id DESC');
         $params = [];
         // TODO: If searchTerm is not empty:
         if (!empty($searchTerm)) {
-            $sql .= " AND (p.name LIKE CONCAT('%', :search, '%') OR p.description LIKE CONCAT('%', :search, '%'))";
-            $params = ['search' => $searchTerm];
+            $sql .= " AND (p.name LIKE CONCAT('%', :search, '%'))"; // OR p.description LIKE CONCAT('%', :search, '%') //!This breaks the search
+            $params['search'] = $searchTerm;
         }
 
         // TODO: If categoryId is provided and > 0:
         if ($categoryId !== null && $categoryId > 0) {
-            $sql .= " AND .category_id = :category_id";
-            $params = ['category_id' => $categoryId];
+            $sql .= " AND p.category_id = :category_id";
+            $params['category_id'] = $categoryId;
         }
         // - Add condition: p.category_id = :category_id
         // - Add to params: 'category_id' => $categoryId

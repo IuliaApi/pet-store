@@ -1,5 +1,7 @@
 <?php
 
+/** @var array $results */
+
 use App\Helpers\ViewHelper;
 
 $page_title = 'Product List';
@@ -27,7 +29,7 @@ ViewHelper::loadHeader($page_title);
 </div>
 
 <div class="card m-4">
-    <h1 class="card-header">Our catalog</h1>
+    <h1 class="card-header"><?= $results['title'] ?></h1>
     <div class="card-body">
         <!-- //TODO: add cards for each product -->
     </div>
