@@ -5,6 +5,9 @@
         "account": "Account",
         "cart": "Cart"
     },
+    "nav":{
+        "products": "Products"
+    },
     "footer": {
         "eCom_watermark": "eCommerce project",
         "contacts_link": "Click here to learn more about us"

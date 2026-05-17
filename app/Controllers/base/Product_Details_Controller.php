@@ -22,11 +22,17 @@ class Product_Details_Controller extends BaseController
     //default loading of a product's details view page
     public function index(Request $request, Response $response, array $args): Response
     {
-        $data = [
-            'product' => $this->productsModel->getById(intval($args['id']))
-        ];
+        $product = $this->productsModel->getById(intval($args['id']));
 
-        return $this->render($response, '/base/Product_Details_View.php', $data);
+    if ($product && !empty($product['thumbnail'])) {
+        $product['thumbnail'] = base_url('/assets/images/products/' . rawurlencode($product['thumbnail']));;
+    }
+
+    $data = [
+        'product' => $product
+    ];
+
+    return $this->render($response, '/base/Product_Details_View.php', $data);
     }
 
     public function error(Request $request, Response $response, array $args): Response

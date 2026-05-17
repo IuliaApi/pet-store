@@ -60,8 +60,8 @@ $availableLocales = $translator->getAvailableLocales();
             <!-- //TODO: add categories here -->
             <ul class=" navbar-nav text-white">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="">
-                        sample category
+                    <a class="nav-link active" aria-current="page" href="/pet-store/products">
+                        <?= hs(trans('nav.products')) ?>
                     </a>
                 </li>
                 <li class="nav-item">

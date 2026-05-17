@@ -5,6 +5,9 @@
         "account": "Compte",
         "cart": "Panier"
     },
+    "nav":{
+            "products": "Produits"
+    },
     "footer": {
         "eCom_watermark": "Projet d'eCommerce",
         "contacts_link": "Cliquez ici pour en savoir plus sur nous"
