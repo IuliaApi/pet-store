@@ -26,23 +26,12 @@ class Product_List_Controller extends BaseController
         $products = $this->productsModel->searchProducts($keyword);
         $sum = count($products);
 
-        $data['results'] = [
-            'title' => (($sum > 0) ? $sum : 'No ') . (($sum === 1) ? ' result ' : 'results ') . 'for ' . '"' . $keyword . '"',
+        $data = [
+            'title' => (($sum > 0) ? $sum : 'No') . (($sum === 1) ? ' result ' : ' results ') . (($keyword === '') ? '' : 'for ' . '"' . $keyword . '"'),
             'products' => $products
         ];
 
         // return $response->withHeader(HEADERS_CONTENT_TYPE, APP_MEDIA_TYPE_JSON)->withStatus(HTTP_OK);
-
-        return $this->render($response, '/base/Product_List_View.php', $data);
-    }
-
-    //default loading of a product's details view page
-    public function index(Request $request, Response $response, array $args): Response
-    {
-        $data['results'] = [
-            'title' => 'Our catalogue',
-            'products' => $this->productsModel->getAll()
-        ];
 
         return $this->render($response, '/base/Product_List_View.php', $data);
     }

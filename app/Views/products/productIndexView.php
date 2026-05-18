@@ -35,14 +35,13 @@ ViewHelper::loadHeader($title ?? 'Shop · Products');
                     : (is_numeric($product['stock'] ?? null) ? (int)$product['stock'] : 0);
                 ?>
                 <div class="col-12 col-md-4 col-lg-3">
-                    <div class="card h-100 shadow-sm border-0 overflow-hidden">
+                    <a class="card h-100 shadow-sm border-0 overflow-hidden text-decoration-none" href="/pet-store/products/<?= $product["id"]; ?>">
                         <?php if ($hasThumbnail) : ?>
                             <img
                                 src="<?= htmlspecialchars(base_url('/assets/images/products/' . rawurlencode($thumbnail))) ?>"
                                 class="card-img-top"
                                 alt="<?= htmlspecialchars((string) $product['name']) ?>"
-                                style="height: 220px; object-fit: cover;"
-                            >
+                                style="height: 220px; object-fit: cover;">
                         <?php else : ?>
                             <div class="d-flex align-items-center justify-content-center text-white fw-semibold" style="height: 220px; background: linear-gradient(135deg, <?= SANDCOLOR ?> 0%, <?= BROWNCOLOR ?> 100%);">
                                 <div class="text-center">
@@ -65,11 +64,11 @@ ViewHelper::loadHeader($title ?? 'Shop · Products');
                             </p>
 
                             <div class="mt-auto d-flex justify-content-between align-items-center gap-2">
-                                        <small class="text-muted">Stock: <?= htmlspecialchars((string) $displayStock) ?></small>
+                                <small class="text-muted">Stock: <?= htmlspecialchars((string) $displayStock) ?></small>
                                 <button type="button" class="btn btn-sm btn-outline-primary" disabled>Coming soon</button>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             <?php endforeach; ?>
         <?php endif; ?>

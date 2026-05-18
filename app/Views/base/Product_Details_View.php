@@ -15,9 +15,9 @@ ViewHelper::loadHeader($page_title);
             <!-- Product Image -->
             <div class="col-md-5 text-center p-4">
                 <img src="<?= hs($product['thumbnail']) ?>"
-                     class="img-fluid rounded"
-                     style="width: 100%; height: 300px; object-fit: cover;"
-                     alt="<?= hs($product['name']) ?>">
+                    class="img-fluid rounded"
+                    style="width: 100%; height: 300px; object-fit: cover;"
+                    alt="<?= hs($product['name']) ?>">
             </div>
 
             <!-- Product Info -->
@@ -47,7 +47,7 @@ ViewHelper::loadHeader($page_title);
                         <button class="btn btn-success flex-fill">
                             Add to Cart
                         </button>
-                        <a href="/products" class="btn btn-outline-secondary flex-fill">
+                        <a href="/pet-store/products" class="btn btn-outline-secondary flex-fill">
                             Back
                         </a>
                     </div>

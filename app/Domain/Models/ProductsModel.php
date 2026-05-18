@@ -107,7 +107,7 @@ ORDER BY p.id DESC');
         //          c.name AS category_name, c.id AS category_id, pi.file_path AS image_path
         // - Start with WHERE 1=1 to make adding conditions easier
 
-        $sql = "SELECT p.id, p.name, p.description, p.price, p.stock_quantity,
+        $sql = "SELECT p.id, p.name, p.description, p.brand, p.price, p.thumbnail, p.stock_quantity,
               c.name AS category_name, c.id AS category_id, pi.file_path AS image_path FROM products p
 
      LEFT JOIN categories c ON p.category_id = c.id
