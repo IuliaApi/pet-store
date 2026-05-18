@@ -24,7 +24,13 @@ class TwoFactorMiddleware implements MiddlewareInterface
     {
         // TODO: Retrieve the user's authentication status from the session.
         //       If not authenticated, pass the request to the next handler.
+        if (SessionManager::get('user')['is_authenticated'] ?? false) {
+            return $handler->handle($request);
+        }
+
         //       If authenticated, check whether the user has 2FA enabled
+
+
         //       and whether it has been verified this session.
         //       If 2FA is required but not verified, redirect to the
         //       verification page.

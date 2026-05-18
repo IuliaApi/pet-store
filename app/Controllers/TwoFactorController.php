@@ -77,17 +77,30 @@ class TwoFactorController extends BaseController
             $qrProvider = new BaconQrCodeProvider(4, '#ffffff', '#000000', 'svg');
             $tfa = new TwoFactorAuth($qrProvider, 'pet-store');
             $tfa->createSecret();
-            return $this->render($response, '2fa-setup.php',['']);
+            return $this->render($response, '2fa-setup.php', ['']);
         }
+
         // 4. If the code is valid, save the secret to the database
         //    and enable 2FA for the user.
+        $this->twoFactorModel->create(SessionManager::get('user')['user_id'], $secret);
+        $this->twoFactorModel->enable(SessionManager::get('user')['user_id']);
+
         // 5. Remove the setup secret from the session.
+        SessionManager::remove('2fa_setup_secret');
+
         // 6. Redirect to the dashboard with a success flash message.
+        FlashMessage::success('Account successfully verified.');
+        return $this->redirect($request, $response, 'admin/users/2fa-dashboard');
     }
 
     public function showVerify(Request $request, Response $response): Response
     {
         // TODO: Render the 2FA verification view.
+        $data = [
+            'title' => '2FA · Verification'
+        ];
+
+        return $this->render($response, 'auth/2fa-verify.php', $data);
     }
 
     public function verify(Request $request, Response $response): Response
@@ -136,7 +149,7 @@ class TwoFactorController extends BaseController
         // 2. Look up the user in the database and use password_verify()
         //    to confirm the password is correct. If invalid, re-render
         //    the disable page with an error.
-        if($this->userModel->verifyCredentials(SessionManager::get('user')['user_id'], $password)===null){
+        if ($this->userModel->verifyCredentials(SessionManager::get('user')['user_id'], $password) === null) {
             FlashMessage::error('Incorrect credentials');
             return $this->render($response, 'auth/2fa-disable');
         }
@@ -150,5 +163,10 @@ class TwoFactorController extends BaseController
     public function showDisable(Request $request, Response $response): Response
     {
         // TODO: Render the disable confirmation view.
+        $data = [
+            'title' => '2FA · Disable'
+        ];
+
+        return $this->render($response, 'auth/2fa-disable.php', $data);
     }
 }
