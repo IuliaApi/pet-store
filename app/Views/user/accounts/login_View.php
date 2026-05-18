@@ -2,8 +2,8 @@
 
 use App\Helpers\ViewHelper;
 
-$page_title = 'Login';
-ViewHelper::loadHeader($page_title);
+
+ViewHelper::loadHeader('Login');
 ?>
 
 <div class="card m-4">

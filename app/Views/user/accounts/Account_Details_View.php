@@ -2,8 +2,8 @@
 
 use App\Helpers\ViewHelper;
 
-$page_title = 'Account Details';
-ViewHelper::loadHeader($page_title);
+
+ViewHelper::loadHeader('Account Details');
 ?>
 
 <article class="card m-4">

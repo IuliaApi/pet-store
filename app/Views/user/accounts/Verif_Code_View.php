@@ -2,8 +2,7 @@
 
 use App\Helpers\ViewHelper;
 
-$page_title = 'Verification';
-ViewHelper::loadHeader($page_title);
+ViewHelper::loadHeader('Verification');
 ?>
 
 <div class="card m-4">

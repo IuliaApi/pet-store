@@ -4,8 +4,7 @@
 
 use App\Helpers\ViewHelper;
 
-$page_title = 'Specific Product Name Here';
-ViewHelper::loadHeader($page_title);
+ViewHelper::loadHeader('Pet Shop Express · ' . hs($product['name']));
 ?>
 
 <div class="container my-5">

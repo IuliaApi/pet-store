@@ -4,8 +4,7 @@ use App\Helpers\ViewHelper;
 
 /** @var array $products */
 
-$page_title = 'Product List';
-ViewHelper::loadHeader($page_title);
+ViewHelper::loadHeader('Pet Shop Express');
 ?>
 
 <div class="container py-4">

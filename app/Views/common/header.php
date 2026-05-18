@@ -34,7 +34,7 @@ $availableLocales = $translator->getAvailableLocales();
 
             <ul class="navbar-nav px-2">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/pet-store/">
+                    <a class="nav-link active" aria-current="page" href="/pet-store/login">
                         <?= hs(trans('header.account')) ?>
                     </a>
                 </li>

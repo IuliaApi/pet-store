@@ -2,8 +2,8 @@
 
 use App\Helpers\ViewHelper;
 
-$page_title = 'New User Registration';
-ViewHelper::loadHeader($page_title);
+
+ViewHelper::loadHeader('New User Registration');
 ?>
 
 <div class="card m-4">
