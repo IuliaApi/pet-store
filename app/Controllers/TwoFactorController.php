@@ -132,6 +132,19 @@ class TwoFactorController extends BaseController
         }
         // 4. If the code is valid, mark 2FA as verified in the session.
         SessionManager::set('2fa_verified', true);
+
+        $trustDevice = $data['trust_device'] ?? false;
+
+        if ($trustDevice) {
+            // TODO: Generate a secure random device token.
+            //       Calculate the expiration date (30 days from now).
+            //       Build a device info array with the device name, user agent,
+            //       IP address, and expiration date.
+            //       Save the trusted device to the database.
+            //       Set a secure cookie named 'trusted_device' with the token,
+            //       configured with httponly and samesite flags.
+        }
+
         // 5. Clear the attempts counter.
         SessionManager::remove('failed_login_attempts');
         // 6. Regenerate the session ID for security.
@@ -168,5 +181,30 @@ class TwoFactorController extends BaseController
         ];
 
         return $this->render($response, 'auth/2fa-disable.php', $data);
+    }
+
+    private function getDeviceName(Request $request): string
+    {
+        $userAgent = $request->getHeaderLine('User-Agent');
+
+        if (stripos($userAgent, 'Windows') !== false) return 'Windows PC';
+        if (stripos($userAgent, 'Mac') !== false) return 'Mac';
+        if (stripos($userAgent, 'iPhone') !== false) return 'iPhone';
+        if (stripos($userAgent, 'Android') !== false) return 'Android';
+        if (stripos($userAgent, 'Linux') !== false) return 'Linux PC';
+
+        return 'Unknown Device';
+    }
+
+    private function getClientIp(Request $request): string
+    {
+        $serverParams = $request->getServerParams();
+
+        if (!empty($serverParams['HTTP_X_FORWARDED_FOR'])) {
+            $ipList = explode(',', $serverParams['HTTP_X_FORWARDED_FOR']);
+            return trim($ipList[0]);
+        }
+
+        return $serverParams['REMOTE_ADDR'] ?? '0.0.0.0';
     }
 }
