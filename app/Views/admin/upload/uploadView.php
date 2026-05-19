@@ -2,7 +2,11 @@
 
 use App\Helpers\ViewHelper;
 
+<<<<<<< Updated upstream
 ViewHelper::loadAdminHeader($title ?? 'File Upload');
+=======
+ViewHelper::loadAdminHeader($title);
+>>>>>>> Stashed changes
 ?>
 
 <div class="card mb-4">
@@ -61,4 +65,8 @@ $uploadedFiles = App\Helpers\SessionManager::get('uploaded_files', []);
 </div>
 <?php endif; ?>
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 <?php ViewHelper::loadAdminFooter(); ?>

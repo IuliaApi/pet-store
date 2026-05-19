@@ -20,26 +20,26 @@ $availableLocales = $translator->getAvailableLocales();
     <header data-bs-theme="dark">
         <nav class="navbar navbar-expand-lg d-flex px-3 py-2" style=" background-color: <?= DARKBROWNCOLOR ?>">
 
-            <a class="navbar-brand fw-bold" href="/pet-store/">
+            <a class="navbar-brand fw-bold" href="<?= APP_BASE_URL ?>/">
                 Pet Shop Express
             </a>
 
-            <form class="input-group" method="GET" action="<?= APP_BASE_URL ?>/search">
-                <input name="search_keyword" type="search" class="form-control" placeholder="<?= hs(trans('header.search_placeholder')) ?>" data-bs-theme="light">
+            <form class="input-group" method="GET" action="<?= APP_BASE_URL ?>/search_result">
+                <input type="text" class="form-control" placeholder="<?= hs(trans('header.search_placeholder')) ?>" data-bs-theme="light">
 
-                <button class="btn" style=" background-color: <?= SANDCOLOR ?>" type="submit">
+                <button class="btn" style=" background-color: <?= SANDCOLOR ?>">
                     <?= hs(trans('header.search')) ?>
                 </button>
             </form>
 
             <ul class="navbar-nav px-2">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/pet-store/login">
+                    <a class="nav-link active" aria-current="page" href="/pet-store/">
                         <?= hs(trans('header.account')) ?>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="/pet-store/cart">
+                    <a class="nav-link active" href="<?= APP_BASE_URL ?>/cart">
                         <?= hs(trans('header.cart')) ?>
                     </a>
                 </li>
@@ -60,17 +60,7 @@ $availableLocales = $translator->getAvailableLocales();
             <!-- //TODO: add categories here -->
             <ul class=" navbar-nav text-white">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/pet-store/products">
-                        <?= hs(trans('nav.products')) ?>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="">
-                        sample category
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="">
+                    <a class="nav-link active" aria-current="page" href="">
                         sample category
                     </a>
                 </li>

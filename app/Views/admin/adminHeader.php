@@ -41,54 +41,49 @@
 </head>
 
 <body>
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Sidebar -->
-            <nav class="col-md-3 col-lg-2 d-md-block admin-sidebar p-0">
-                <div class="p-3">
-                    <h5 class="text-white mb-0">Admin Panel</h5>
-                    <small class="text-muted">Pet Store</small>
-                </div>
-                <hr class="text-secondary my-0">
-                <ul class="nav flex-column px-2 mt-2">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="<?= APP_BASE_URL ?>/admin/dashboard">
-                            Dashboard
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= APP_BASE_URL ?>/admin/products">
-                            Products
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= APP_BASE_URL ?>/admin/categories">
-                            Categories
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= APP_BASE_URL ?>/admin/orders">
-                            Orders
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= APP_BASE_URL ?>/admin/users">
-                            Users
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= APP_BASE_URL ?>/admin/upload">
-                            File Upload
-                        </a>
-                    </li>
-                </ul>
-                <hr class="text-secondary">
-                <div class="px-2">
-                    <a class="nav-link text-muted" href="<?= APP_BASE_URL ?>/">
-                        &larr; Back to Store
-                    </a>
-                </div>
-            </nav>
+	<div class="container-fluid">
+		<div class="row">
+			<!-- Sidebar -->
+			<nav class="col-md-3 col-lg-2 d-md-block admin-sidebar p-0">
+				<div class="p-3">
+					<h5 class="text-white mb-0">Admin Panel</h5>
+					<small class="text-muted">Pet Store</small>
+				</div>
+				<hr class="text-secondary my-0">
+				<ul class="nav flex-column px-2 mt-2">
+					<li class="nav-item">
+						<a class="nav-link active" href="<?= APP_BASE_URL ?>/admin/dashboard">
+							Dashboard
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="<?= APP_BASE_URL ?>/admin/products">
+							Products
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="<?= APP_BASE_URL ?>/admin/categories">
+							Categories
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="<?= APP_BASE_URL ?>/admin/orders">
+							Orders
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="<?= APP_BASE_URL ?>/admin/users">
+							Users
+						</a>
+					</li>
+				</ul>
+				<hr class="text-secondary">
+				<div class="px-2">
+					<a class="nav-link text-muted" href="<?= APP_BASE_URL ?>/">
+						&larr; Back to Store
+					</a>
+				</div>
+			</nav>
 
             <!-- Main Content -->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 admin-content">

@@ -21,6 +21,7 @@ class FileUploadHelper
      */
     public static function upload(UploadedFileInterface $uploadedFile, array $config): Result
     {
+<<<<<<< Updated upstream
         // You'll implement the method body in the following steps
         $directory= $config['directory'] ?? null;
         $allowedTypes = $config['allowedTypes'] ?? [];

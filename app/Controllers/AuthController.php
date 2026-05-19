@@ -113,14 +113,15 @@ class AuthController extends BaseController
      */
     public function authenticate(Request $request, Response $response, array $args): Response
     {
-        $form_data = $request->getParsedBody();
+        $form_data = (array) $request->getParsedBody();
         // TODO: Validate that both fields are present
         if (isset($form_data['identifier']) && isset($form_data['password'])) {
             $user = $this->userModel->verifyCredentials($form_data['identifier'], $form_data['password']);
             if ($user === null) {
                 FlashMessage::error('Invalid Credentials.');
-                return $this->redirect($request, $response, 'login.php');
+                return $this->redirect($request, $response, 'auth.login');
             }
+<<<<<<< Updated upstream
 
             SessionManager::set('user', [
                 'user_id' => $user['id'],
@@ -137,6 +138,25 @@ class AuthController extends BaseController
             } else {
                 return $this->redirect($request, $response, 'home.index');
             }
+=======
+            
+        }
+        
+        SessionManager::set('user', [
+            'user_id' => $user['id'],
+            'user_email' => $user['email'],
+            'user_name' => $user['first_name'] . ' ' . $user['last_name'],
+            'user_role' => $user['role'],
+            'is_authenticated' => true
+        ]);
+
+
+        // TODO: Display a welcome message and redirect based on role:
+        //       admins go to the admin dashboard, customers go to the user dashboard
+        if ($user['role'] === 'admin') {
+            FlashMessage::success("Welcome " . SessionManager::get('user_name'));
+            return $this->redirect($request, $response, 'admin.dashboard');
+>>>>>>> Stashed changes
         } else {
             FlashMessage::warning('Invalid credentials');
             return $this->redirect($request, $response, 'login.php');
@@ -148,10 +168,11 @@ class AuthController extends BaseController
      */
     public function logout(Request $request, Response $response, array $args): Response
     {
-        session_destroy();
+        SessionManager::destroy();
         FlashMessage::success('You have successfully been logged out.');
-        return $this->redirect($request, $response, 'login.php');
+        return $this->redirect($request, $response, 'auth.login');
     }
+    
     /**
      * Display user dashboard (protected route).
      */
@@ -161,6 +182,7 @@ class AuthController extends BaseController
             'title' => 'Dashboard'
         ];
 
-        return $this->render($response, 'auth/login.php', $data);
+        return $this->render($response, 'user/dashboard.php', $data);
     }
 }
+

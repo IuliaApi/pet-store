@@ -3,9 +3,11 @@
         "search": "Search",
         "search_placeholder": "Search Pet Shop Express Catalogs",
         "account": "Account",
-        "cart": "Cart"
+        "cart": "Cart",
+        "profile": "Profile",
+        "logout": "Logout"
     },
-    "nav":{
+    "nav": {
         "products": "Products"
     },
     "footer": {

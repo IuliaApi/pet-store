@@ -3,7 +3,7 @@
 use App\Helpers\SessionManager;
 use App\Helpers\ViewHelper;
 
-ViewHelper::loadHeader($title ?? 'Dashboard');
+ViewHelper::loadHeader($title);
 ?>
 
 <h1>User Dashboard</h1>
