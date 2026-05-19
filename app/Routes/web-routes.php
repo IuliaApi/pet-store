@@ -95,9 +95,7 @@ return static function (Slim\App $app): void {
     $app->get('/booking', [Booking_Controller::class, 'index'])
         ->setName('user.booking.index');
 
-    //Shopping cart page route
-    $app->get('/cart', [Cart_Controller::class, 'index'])
-        ->setName('user.cart.index');
+
 
     //Scheduled appointments page route
     $app->get('/schedule', [Schedule_Controller::class, 'index'])
@@ -131,6 +129,9 @@ return static function (Slim\App $app): void {
             ->add(TwoFactorMiddleware::class)
             ->add(AuthMiddleware::class);
     });
+    //Shopping cart page route
+    // $app->get('/cart', [Cart_Controller::class, 'index'])
+    //     ->setName('user.cart.index');
 
     $app->group('/cart', function ($group) {
         // view the cart
