@@ -2,11 +2,7 @@
 
 use App\Helpers\ViewHelper;
 
-<<<<<<< Updated upstream
 ViewHelper::loadAdminHeader($title ?? 'File Upload');
-=======
-ViewHelper::loadAdminHeader($title);
->>>>>>> Stashed changes
 ?>
 
 <div class="card mb-4">
@@ -38,35 +34,32 @@ ViewHelper::loadAdminHeader($title);
 $uploadedFiles = App\Helpers\SessionManager::get('uploaded_files', []);
 ?>
 <?php if (!empty($uploadedFiles)): ?>
-<div class="card mt-4">
-    <div class="card-header">
-        <h5>Uploaded Files</h5>
-    </div>
-    <div class="card-body">
-        <div class="row">
-            <?php foreach (array_reverse($uploadedFiles) as $filename): ?>
-            <div class="col-md-4 mb-3">
-                <div class="card">
-                    <img
-                        src="<?= APP_BASE_URL ?>/public/uploads/images/<?= hs($filename) ?>"
-                        class="card-img-top"
-                        alt="Uploaded image"
-                        style="height: 200px; object-fit: cover;">
-                    <div class="card-body">
-                        <p class="card-text small text-muted">
-                            <?= hs($filename) ?>
-                        </p>
+    <div class="card mt-4">
+        <div class="card-header">
+            <h5>Uploaded Files</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <?php foreach (array_reverse($uploadedFiles) as $filename): ?>
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <img
+                                src="<?= APP_BASE_URL ?>/public/uploads/images/<?= hs($filename) ?>"
+                                class="card-img-top"
+                                alt="Uploaded image"
+                                style="height: 200px; object-fit: cover;">
+                            <div class="card-body">
+                                <p class="card-text small text-muted">
+                                    <?= hs($filename) ?>
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                <?php endforeach; ?>
             </div>
-            <?php endforeach; ?>
         </div>
     </div>
-</div>
 <?php endif; ?>
 
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
-<?php ViewHelper::loadAdminFooter(); ?>
+<<<<<<< Updated upstream=======>>>>>>> Stashed changes
+    <?php ViewHelper::loadAdminFooter(); ?>
