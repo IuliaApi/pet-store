@@ -60,5 +60,59 @@ class FileUploadHelper
             return  Result::failure('Failed to save uploaded file: '. $e->getMessage());
         }
         return Result::success('File uploaded successfully', ['filename'=>$newFileName]);
+=======
+        $directory = $config['directory'] ?? null;
+        $allowedTypes = $config['allowedTypes'] ?? [];
+        $maxSize = $config['maxSize'] ?? 0;
+        $filenamePrefix = $config['filenamePrefix'] ?? 'upload_';
+
+        if (!is_null($directory) === false) {
+            return Result::failure('Upload directory not specified in configuration');
+        }
+
+
+        if (count($allowedTypes) === 0) {
+            return Result::failure('Allowed file types not specified in configuration');
+        }
+
+        if ($maxSize <= 0) {
+            return Result::failure('Maximum file size not specified in configuration');
+        }
+
+        if (!$uploadedFile->getError() === UPLOAD_ERR_OK) {
+            return Result::failure('Error uploading file');
+        }
+
+        // if ($uploadedFile->getSize() > round($maxSize / (1024 * 1024), 1)) {
+        //     return Result::failure('Error exceeded file size');
+        // }
+        if ($uploadedFile->getSize() > round($maxSize, 1)) {
+            return Result::failure('Error exceeded file size');
+        }
+        // dd($config);
+        if (!in_array($uploadedFile->getClientMediaType(), $allowedTypes)) {
+            return Result::failure('Error with the file type');
+            //will change later, you told us to skip validation
+        }
+
+        $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
+        $filename = uniqid($filenamePrefix) . '.' . $extension;
+
+        if (!is_dir($directory)) {
+            if (!mkdir($directory, 0755, true)) {
+                return Result::failure('Error could not make directory');
+            }
+        }
+
+        $destination = $directory . DIRECTORY_SEPARATOR . $filename;
+
+        try {
+            $uploadedFile->moveTo($destination);
+        } catch (Exception $e) {
+            Result::failure('Failed to save uploaded file: ' . $e->getMessage());
+        }
+
+        return Result::success("File uploaded successfully", ['filename' => $filename]);
+>>>>>>> Stashed changes
     }
 }
