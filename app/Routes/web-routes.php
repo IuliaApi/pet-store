@@ -20,6 +20,7 @@ use App\Controllers\Base\Contacts_Controller;
 use App\Controllers\User\Accounts\Register_Controller;
 use App\Controllers\User\Accounts\Verif_Code_Controller;
 use App\Controllers\User\Accounts\Account_Details_Controller;
+use App\Controllers\User\Accounts\Login_Controller;
 use App\Controllers\User\Orders\Checkout_Controller;
 use App\Controllers\User\Orders\Booking_Controller;
 use App\Controllers\User\Saves\Cart_Controller;
@@ -30,7 +31,6 @@ use App\Middleware\AuthMiddleware;
 use App\Middleware\AdminAuthMiddleware;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use App\Controllers\UploadController;
 
 
 return static function (Slim\App $app): void {
@@ -63,11 +63,6 @@ return static function (Slim\App $app): void {
 
     $app->post('/register', [AuthController::class, 'store']);
 
-<<<<<<< Updated upstream
-    //default landing page for /user
-    // $group->get('/', [Login_Controller::class, 'index'])
-    //     ->setName('user.login.index');
-=======
     $app->get('/login', [AuthController::class, 'login'])
         ->setName('auth.login');
 
@@ -80,28 +75,13 @@ return static function (Slim\App $app): void {
         ->setName('user.dashboard')
         ->add(AuthMiddleware::class);
 
-    $app->group('', function ($group) {
->>>>>>> Stashed changes
-
     //Login page route: shows the login form
-    $app->get('/login', [Login_Controller::class, 'index'])
-        ->setName('user.login.index');
+    //$app->get('/login', [Login_Controller::class, 'index'])
+    //->setName('user.login.index');
 
-<<<<<<< Updated upstream
-    $app->post('/login', [AuthController::class, 'authenticate'])
-        ->setName('user.authenticate');
     //Registration page route
     $app->get('/registration', [Register_Controller::class, 'index'])
         ->setName('user.registration.index');
-
-    //Verification code page route
-    $app->get('/verification', [Verif_Code_Controller::class, 'index'])
-        ->setName('user.verification.index');
-=======
-        //Registration page route
-        $group->get('/registration', [Register_Controller::class, 'index'])
-            ->setName('user.registration.index');
->>>>>>> Stashed changes
 
     //Account page route
     $app->get('/profile', [Account_Details_Controller::class, 'index'])
@@ -154,22 +134,13 @@ return static function (Slim\App $app): void {
         // Categories
         $group->get('/categories', [AdminCategoriesController::class, 'index'])
             ->setName('admin.categories.index');
-<<<<<<< Updated upstream
-        // Picture upload
-=======
 
         // Uploads
->>>>>>> Stashed changes
         $group->get('/upload', [UploadController::class, 'index'])
             ->setName('upload.index');
         $group->post('/upload', [UploadController::class, 'upload'])
             ->setName('upload.process');
-<<<<<<< Updated upstream
-    });
-    // })->add(AdminAuthMiddleware::class);
-=======
     })->add(AdminAuthMiddleware::class);
->>>>>>> Stashed changes
 
     $app->get('/api/products/search', [ProductsController::class, 'search'])
         ->setName('api.products.search');

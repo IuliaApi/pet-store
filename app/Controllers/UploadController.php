@@ -6,31 +6,17 @@ use App\Helpers\FileUploadHelper;
 use App\Helpers\FlashMessage;
 use App\Helpers\SessionManager;
 use DI\Container;
-<<<<<<< Updated upstream
-use Override;
-=======
 use LDAP\Result;
->>>>>>> Stashed changes
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class UploadController extends BaseController
 {
-<<<<<<< Updated upstream
-=======
     //TODO: Add a constructor that calls the parent constructor.
->>>>>>> Stashed changes
     public function __construct(Container $container)
     {
         parent::__construct($container);
     }
-<<<<<<< Updated upstream
-
-    public function index(Request $request, Response $response, array $args): Response
-    {
-        $data = ['title' => 'File Upload'];
-        return $this->render($response, 'admin/upload/uploadView.php', $data);
-=======
     /**
      * Display the upload form.
      */
@@ -46,7 +32,6 @@ class UploadController extends BaseController
         // TODO: Create a $data array with 'title' => 'File Upload'
 
         // TODO: Render 'admin/upload/uploadView.php' view and pass $data
->>>>>>> Stashed changes
     }
 
     /**
@@ -54,13 +39,6 @@ class UploadController extends BaseController
      */
     public function upload(Request $request, Response $response, array $args): Response
     {
-<<<<<<< Updated upstream
-        $files = $request->getUploadedFiles();
-        // Extract 'myfile' from the array
-        $myFile = $files['myfile'];
-        $config=[
-            'directory' => APP_BASE_DIR_PATH . '/public/uploads/images',
-=======
         // TODO: Get uploaded files using $request->getUploadedFiles()
         $uploadedFiles = $request->getUploadedFiles();
         // TODO: Extract 'myfile' from the array
@@ -74,24 +52,10 @@ class UploadController extends BaseController
 
         $config = [
             'directory' => APP_IMAGES_UPLOADS_DIR,
->>>>>>> Stashed changes
             'allowedTypes' => ['image/jpeg', 'image/png', 'image/gif'],
             'maxSize' => 2 * 1024 * 1024,
             'filenamePrefix' => 'upload_'
         ];
-<<<<<<< Updated upstream
-        $result = FileUploadHelper::upload($myFile, $config);
-        if($result->isSuccess()){
-            $filename = $result->getData()['filename'];
-            $uploadedFiles = SessionManager::get('uploaded_files') ?? [];
-            $uploadedFiles[] = $filename;
-            SessionManager::set('uploaded_files', $uploadedFiles);
-            FlashMessage::success('You have successfully uploaded '.$filename.'.');
-        } else {
-            $errorMessage = $result->getMessage();
-            FlashMessage::error($errorMessage);
-        }
-=======
 
         // TODO: Call FileUploadHelper::upload() with uploaded file and config
 
@@ -118,7 +82,6 @@ class UploadController extends BaseController
             FlashMessage::error($errorMessage);
         }
         // TODO: Redirect back to 'upload.index'
->>>>>>> Stashed changes
         return $this->redirect($request, $response, 'upload.index');
     }
 }

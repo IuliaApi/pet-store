@@ -121,27 +121,8 @@ class AuthController extends BaseController
                 FlashMessage::error('Invalid Credentials.');
                 return $this->redirect($request, $response, 'auth.login');
             }
-<<<<<<< Updated upstream
-
-            SessionManager::set('user', [
-                'user_id' => $user['id'],
-                'user_email' => $user['email'],
-                'user_name' => $user['first_name'] . ' ' . $user['last_name'],
-                'user_role' => $user['role'],
-                'is_authenticated' => true
-            ]);
-            // TODO: Display a welcome message and redirect based on role:
-            //       admins go to the admin dashboard, customers go to the user dashboard
-            if ($user['role'] === 'admin') {
-                FlashMessage::success("Welcome " . SessionManager::get('username'));
-                return $this->redirect($request, $response, 'admin.dashboard');
-            } else {
-                return $this->redirect($request, $response, 'home.index');
-            }
-=======
-            
         }
-        
+
         SessionManager::set('user', [
             'user_id' => $user['id'],
             'user_email' => $user['email'],
@@ -156,7 +137,6 @@ class AuthController extends BaseController
         if ($user['role'] === 'admin') {
             FlashMessage::success("Welcome " . SessionManager::get('user_name'));
             return $this->redirect($request, $response, 'admin.dashboard');
->>>>>>> Stashed changes
         } else {
             FlashMessage::warning('Invalid credentials');
             return $this->redirect($request, $response, 'login.php');
@@ -172,7 +152,7 @@ class AuthController extends BaseController
         FlashMessage::success('You have successfully been logged out.');
         return $this->redirect($request, $response, 'auth.login');
     }
-    
+
     /**
      * Display user dashboard (protected route).
      */
@@ -185,4 +165,3 @@ class AuthController extends BaseController
         return $this->render($response, 'user/dashboard.php', $data);
     }
 }
-
