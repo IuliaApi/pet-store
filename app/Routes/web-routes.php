@@ -63,46 +63,43 @@ return static function (Slim\App $app): void {
 
     $app->post('/register', [AuthController::class, 'store']);
 
-    $app->group('', function ($group) {
+    //default landing page for /user
+    // $group->get('/', [Login_Controller::class, 'index'])
+    //     ->setName('user.login.index');
 
-        //default landing page for /user
-        // $group->get('/', [Login_Controller::class, 'index'])
-        //     ->setName('user.login.index');
+    //Login page route: shows the login form
+    $app->get('/login', [Login_Controller::class, 'index'])
+        ->setName('user.login.index');
 
-        //Login page route: shows the login form
-        $group->get('/login', [Login_Controller::class, 'index'])
-            ->setName('user.login.index');
+    $app->post('/login', [AuthController::class, 'authenticate'])
+        ->setName('user.authenticate');
+    //Registration page route
+    $app->get('/registration', [Register_Controller::class, 'index'])
+        ->setName('user.registration.index');
 
-        $group->post('/login', [AuthController::class, 'authenticate'])
-            ->setName('user.authenticate');
-        //Registration page route
-        $group->get('/registration', [Register_Controller::class, 'index'])
-            ->setName('user.registration.index');
+    //Verification code page route
+    $app->get('/verification', [Verif_Code_Controller::class, 'index'])
+        ->setName('user.verification.index');
 
-        //Verification code page route
-        $group->get('/verification', [Verif_Code_Controller::class, 'index'])
-            ->setName('user.verification.index');
+    //Account page route
+    $app->get('/profile', [Account_Details_Controller::class, 'index'])
+        ->setName('user.profile.index');
 
-        //Account page route
-        $group->get('/profile', [Account_Details_Controller::class, 'index'])
-            ->setName('user.profile.index');
+    //checkout page route
+    $app->get('/checkout', [Checkout_Controller::class, 'index'])
+        ->setName('user.checkout.index');
 
-        //checkout page route
-        $group->get('/checkout', [Checkout_Controller::class, 'index'])
-            ->setName('user.checkout.index');
+    //appointment booking page route
+    $app->get('/booking', [Booking_Controller::class, 'index'])
+        ->setName('user.booking.index');
 
-        //appointment booking page route
-        $group->get('/booking', [Booking_Controller::class, 'index'])
-            ->setName('user.booking.index');
+    //Shopping cart page route
+    $app->get('/cart', [Cart_Controller::class, 'index'])
+        ->setName('user.cart.index');
 
-        //Shopping cart page route
-        $group->get('/cart', [Cart_Controller::class, 'index'])
-            ->setName('user.cart.index');
-
-        //Scheduled appointments page route
-        $group->get('/schedule', [Schedule_Controller::class, 'index'])
-            ->setName('user.schedule.index');
-    });
+    //Scheduled appointments page route
+    $app->get('/schedule', [Schedule_Controller::class, 'index'])
+        ->setName('user.schedule.index');
 
     // Admin Panel Routes
     $app->group('/admin', function ($group) {

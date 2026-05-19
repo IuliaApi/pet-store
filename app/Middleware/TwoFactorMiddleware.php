@@ -37,7 +37,7 @@ class TwoFactorMiddleware implements MiddlewareInterface
         //       If 2FA is required but not verified, redirect to the
         //       verification page.
         //
-        if ($this->twoFactorModel->isEnabled($user['id']) && isset($this->twoFactorModel->getSecret($user)['id'])) {
+        if ($this->twoFactorModel->isEnabled($user['id']) && !isset($this->twoFactorModel->getSecret($user)['id'])) {
             //       Use the following to generate the verification URL and
             //       create a redirect response:
             $routeParser = RouteContext::fromRequest($request)->getRouteParser();
