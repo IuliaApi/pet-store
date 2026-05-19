@@ -132,6 +132,26 @@ return static function (Slim\App $app): void {
             ->add(AuthMiddleware::class);
     });
 
+    $app->group('/cart', function ($group) {
+        // view the cart
+        $group->get('', [Cart_Controller::class, 'index'])
+        ->setName('cart.index');
+
+        // cart CRUD
+        $group->post('/add', [Cart_Controller::class, 'add'])
+        ->setName('cart.add');
+
+        $group->post('/update', [Cart_Controller::class, 'update'])
+        ->setName('cart.update');
+
+        $group->post('/remove', [Cart_Controller::class, 'remove'])
+        ->setName('cart.remove');
+
+        $group->post('/clear', [Cart_Controller::class, 'clear'])
+        ->setName('cart.clear');
+
+    });
+
     // Admin Panel Routes
     $app->group('/admin', function ($group) {
         // Dashboard route
