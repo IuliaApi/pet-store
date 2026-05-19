@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\Domain\Models\ProductsModel;
-use App\Helpers\ViewHelper;
 use DI\Container;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use function strlen;
+use function intval;
 
 class ProductsController extends BaseController
 {
@@ -27,7 +28,6 @@ class ProductsController extends BaseController
             'title' => 'Shop · Products',
             'products' => $products,
         ];
-
         return $this->render($response, 'products/productIndexView.php', $data);
     }
 
@@ -53,7 +53,7 @@ class ProductsController extends BaseController
         ];
         $jsonResponse = json_encode($result);
         $response->getBody()->write($jsonResponse);
-        // TODO: Return response with proper headers
+        // Return response with proper headers
         return $response
             ->withHeader("Content-Type", 'application/json')
             ->withStatus(200);

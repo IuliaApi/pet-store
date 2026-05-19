@@ -86,7 +86,7 @@ $total ??= 0;
 
         <div class="d-flex gap-2">
 
-            <form method="GET" action="/products">
+            <form method="GET" action="<?= APP_BASE_URL?>/products">
                 <button class="btn text-white" style="background-color: <?= SANDCOLOR ?>">
                     Continue Shopping
                 </button>
