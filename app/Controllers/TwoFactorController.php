@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Domain\Models\TrustedDeviceModel;
+use DateTime;
 use App\Domain\Models\TwoFactorAuthModel;
 use App\Domain\Models\UserModel;
 use App\Helpers\FlashMessage;
@@ -20,6 +22,7 @@ class TwoFactorController extends BaseController
     public function __construct(
         ContainerInterface $container,
         private TwoFactorAuthModel $twoFactorModel,
+        private TrustedDeviceModel $trustedDeviceModel,
         private UserModel $userModel
     ) {
         parent::__construct($container);
@@ -133,16 +136,39 @@ class TwoFactorController extends BaseController
         // 4. If the code is valid, mark 2FA as verified in the session.
         SessionManager::set('2fa_verified', true);
 
-        $trustDevice = $data['trust_device'] ?? false;
+        $trustDevice = $form_data['trust_device'] ?? false;
 
         if ($trustDevice) {
-            // TODO: Generate a secure random device token.
+            // Generate a secure random device token.
+            $device_token = bin2hex(random_bytes(32));
+
             //       Calculate the expiration date (30 days from now).
+            $expire_date = (new DateTime('+30 days'))->format('Y-m-d H:i:s');
+
             //       Build a device info array with the device name, user agent,
             //       IP address, and expiration date.
+            $device_info = [
+                'device_name' => $this->getDeviceName($request),
+                'user_agent' => $request->getHeaderLine('User-Agent'),
+                'ip_address' => $this->getClientIp($request),
+                'expires_at' => $expire_date,
+            ];
+
             //       Save the trusted device to the database.
+            $this->trustedDeviceModel->create(SessionManager::get('user')['user_id'], $device_token, $device_info);
+
             //       Set a secure cookie named 'trusted_device' with the token,
             //       configured with httponly and samesite flags.
+            setcookie(
+                'trusted_device',
+                $device_token,
+                [
+                    'expires' => strtotime($expire_date),
+                    'path' => '/',
+                    'httponly' => true,
+                    'samesite' => 'Strict',
+                ]
+            );
         }
 
         // 5. Clear the attempts counter.
