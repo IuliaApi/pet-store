@@ -169,7 +169,10 @@ return static function (Slim\App $app): void {
             ->setName('upload.index');
         $group->post('/upload', [UploadController::class, 'upload'])
             ->setName('upload.process');
-    })->add(AdminAuthMiddleware::class);
+    })
+        ->add(TwoFactorMiddleware::class)
+        ->add(AdminAuthMiddleware::class)
+        ->add(AuthMiddleware::class);
 
     $app->get('/api/products/search', [ProductsController::class, 'search'])
         ->setName('api.products.search');

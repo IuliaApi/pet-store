@@ -7,6 +7,7 @@ namespace App\Controllers;
 use DI\Container;
 use App\Controllers\BaseController;
 use App\Domain\Models\UserModel;
+use App\Domain\Models\TwoFactorAuthModel;
 use App\Helpers\SessionManager;
 use App\Middleware\SessionMiddleware;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -17,7 +18,7 @@ use Exception;
 class AuthController extends BaseController
 {
 
-    public function __construct(Container $container, private UserModel $userModel)
+    public function __construct(Container $container, private UserModel $userModel, private TwoFactorAuthModel $twoFactorAuthModel)
     {
         parent::__construct($container);
     }
@@ -121,6 +122,9 @@ class AuthController extends BaseController
                 FlashMessage::error('Invalid Credentials.');
                 return $this->redirect($request, $response, 'auth.login');
             }
+        } else {
+            FlashMessage::error('Insufficient Credentials. Please ensure all fields are filled before submitting.');
+            return $this->redirect($request, $response, 'auth.login');
         }
 
         SessionManager::set('user', [
@@ -131,6 +135,20 @@ class AuthController extends BaseController
             'is_authenticated' => true
         ]);
 
+        // TODO:
+        // 1. Query the database to check whether the user has 2FA enabled.
+        // 2. Store the result in the session as 'requires_2fa'.
+        $requires_2fa = $this->twoFactorAuthModel->isEnabled($user['id']);
+
+        // 3. Set 'two_factor_verified' in the session:
+        // If the user does not have 2FA enabled, mark it as already verified so they are not prompted.
+        //If they do have 2FA, mark it as not yet verified.
+        if (!$requires_2fa) {
+            SessionManager::set('user', ['two_factor_verified' => true]);
+        } else {
+            SessionManager::set('user', ['two_factor_verified' => false]);
+        }
+
 
         // TODO: Display a welcome message and redirect based on role:
         //       admins go to the admin dashboard, customers go to the user dashboard
@@ -138,8 +156,8 @@ class AuthController extends BaseController
             FlashMessage::success("Welcome " . SessionManager::get('user_name'));
             return $this->redirect($request, $response, 'admin.dashboard');
         } else {
-            FlashMessage::warning('Invalid credentials');
-            return $this->redirect($request, $response, 'login.php');
+            FlashMessage::success("Welcome " . SessionManager::get('user_name'));
+            return $this->redirect($request, $response, 'user.dashboard');
         }
     }
 
@@ -158,8 +176,15 @@ class AuthController extends BaseController
      */
     public function dashboard(Request $request, Response $response, array $args): Response
     {
+        // TODO:
+        // 1. Query the database to check whether the current user has 2FA enabled.
+        $status = $this->twoFactorAuthModel->isEnabled(SessionManager::get('user')['id']);
+        // 2. Render 'dashboard.php', passing the 2FA status so the
+        //    view can display the correct toggle button.
+
         $data = [
-            'title' => 'Dashboard'
+            'title' => 'Dashboard',
+            'has2FA' => $status
         ];
 
         return $this->render($response, 'user/dashboard.php', $data);

@@ -1,38 +1,45 @@
 <?php
 
-use App\Helpers\SessionManager;
 use App\Helpers\ViewHelper;
+use App\Helpers\SessionManager;
 
-ViewHelper::loadHeader($title);
+/** @var array $data */
+
+ViewHelper::loadHeader($data['title'] ?? 'Dashboard');
+
 ?>
 
-<h1>User Dashboard</h1>
+<div class="container mt-5" style="max-width: 800px;">
+    <h1>Dashboard</h1>
 
-<div class="row">
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">My Profile</h5>
-                <p class="card-text">
-                    <strong>Name:</strong> <?= hs(SessionManager::get('user_name', 'N/A')) ?><br>
-                    <strong>Email:</strong> <?= hs(SessionManager::get('user_email', 'N/A')) ?><br>
-                    <strong>Role:</strong> <?= hs(SessionManager::get('user_role', 'N/A')) ?>
-                </p>
-            </div>
-        </div>
+    <div class="bg-light p-4 rounded mb-4">
+        <h2>Welcome, <?= hs(SessionManager::get('user', 'username') ?? 'customer') ?>!</h2>
+        <p>Email: <?= hs(SessionManager::get('user', 'user_email' ?? 'EMAIL NOT INCLUDED')) ?></p>
     </div>
 
-    <div class="col-md-8">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Quick Actions</h5>
-                <div class="d-grid gap-2">
-                    <a href="<?= APP_BASE_URL ?>/" class="btn btn-primary">Browse Products</a>
-                    <a href="<?= APP_BASE_URL ?>/logout" class="btn btn-outline-secondary">Logout</a>
-                </div>
-            </div>
-        </div>
+    <hr>
+
+    <h3>Security Settings</h3>
+
+    <div class="border rounded p-4 bg-white">
+        <h4>Two-Factor Authentication (2FA)</h4>
+
+        <?php if ($data['has2FA']): ?>
+            <div class="alert alert-success">2FA is enabled</div>
+            <p>Your account is protected with two-factor authentication.</p>
+            <a href="<?= APP_BASE_URL ?>/2fa/disable" class="btn btn-danger">Disable 2FA</a>
+        <?php else: ?>
+            <div class="alert alert-warning">2FA is disabled</div>
+            <p>Enable 2FA to add an extra layer of security to your account.</p>
+            <a href="<?= APP_BASE_URL ?>/2fa/setup" class="btn btn-primary">Enable 2FA</a>
+        <?php endif; ?>
     </div>
+
+    <hr>
+
+    <form method="POST" action="<?= APP_BASE_URL ?>/logout">
+        <button type="submit" class="btn btn-secondary">Logout</button>
+    </form>
 </div>
 
 <?php ViewHelper::loadFooter(); ?>

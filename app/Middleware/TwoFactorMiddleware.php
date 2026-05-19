@@ -11,12 +11,14 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\MiddlewareInterface;
+use App\Domain\Models\TrustedDeviceModel;
 use Slim\Routing\RouteContext;
 
 class TwoFactorMiddleware implements MiddlewareInterface
 {
     public function __construct(
         private TwoFactorAuthModel $twoFactorModel,
+        private TrustedDeviceModel $trustedDeviceModel,
         private ResponseFactoryInterface $responseFactory
     ) {
         $this->twoFactorModel = $twoFactorModel;
@@ -38,12 +40,27 @@ class TwoFactorMiddleware implements MiddlewareInterface
         //       verification page.
         //
         if ($this->twoFactorModel->isEnabled($user['id']) && !isset($this->twoFactorModel->getSecret($user)['id'])) {
-            //       Use the following to generate the verification URL and
-            //       create a redirect response:
+            $cookies = $request->getCookieParams();
+            $deviceToken = $cookies['trusted_device'] ?? null;
+
+            if ($deviceToken) {
+                if ($this->trustedDeviceModel->isValid($deviceToken, $user['id'])) {
+                    SessionManager::set('two_factor_verified', true);
+                    $this->trustedDeviceModel->updateLastUsed($deviceToken);
+
+                    return $handler->handle($request);
+                } else {
+                    setcookie('trusted_device', '', time() - 3600, '/' . APP_ROOT_DIR_NAME);
+                }
+            }
+
+            //       Use the following to generate the verification URL and create a redirect response:
             $routeParser = RouteContext::fromRequest($request)->getRouteParser();
             $verifyUrl = $routeParser->urlFor('2fa.verify');
             $response = $this->responseFactory->createResponse(302);
             return $response->withHeader('Location', $verifyUrl);
+        } else {
+            return $handler->handle($request);
         }
     }
 }
