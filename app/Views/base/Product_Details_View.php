@@ -43,12 +43,27 @@ ViewHelper::loadHeader('Pet Shop Express · ' . hs($product['name']));
 
                     <!-- Buttons -->
                     <div class="d-flex gap-2 mt-3">
-                        <button class="btn btn-success flex-fill">
-                            Add to Cart
-                        </button>
+
                         <a href="/pet-store/products" class="btn btn-outline-secondary flex-fill">
                             Back
                         </a>
+                        <form method="POST" action="<?=APP_BASE_URL?>/cart/add" class="d-flex gap-1">
+
+                        <input type="hidden" name="productId" value="<?= $product['id'] ?>">
+
+                        <!-- <input
+                            type="number"
+                            name="quantity"
+                            value="<?= ''//$item['quantity'] ?>"
+                            min="0"
+                            class="form-control form-control-sm"
+                            style="width: 70px;"> -->
+
+                        <button class="btn btn-success flex-fill">
+                            Add to Cart
+                        </button>
+
+                    </form>
                     </div>
 
                 </div>
