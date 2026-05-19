@@ -18,17 +18,17 @@ use App\Controllers\Base\Product_List_Controller;
 use App\Controllers\Base\Product_Details_Controller;
 use App\Controllers\Base\Contacts_Controller;
 use App\Controllers\User\Accounts\Register_Controller;
-use App\Controllers\User\Accounts\Verif_Code_Controller;
 use App\Controllers\User\Accounts\Account_Details_Controller;
-use App\Controllers\User\Accounts\Login_Controller;
 use App\Controllers\User\Orders\Checkout_Controller;
 use App\Controllers\User\Orders\Booking_Controller;
 use App\Controllers\User\Saves\Cart_Controller;
 use App\Controllers\User\Saves\Schedule_Controller;
 use App\Controllers\TestContactsController;
 use App\Controllers\AuthController;
+use App\Controllers\TwoFactorController;
 use App\Middleware\AuthMiddleware;
 use App\Middleware\AdminAuthMiddleware;
+use App\Middleware\TwoFactorMiddleware;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -101,7 +101,36 @@ return static function (Slim\App $app): void {
 
     //Scheduled appointments page route
     $app->get('/schedule', [Schedule_Controller::class, 'index'])
-        ->setName('user.schedule.index');
+        ->setName('user.schedule.index')
+        ->add(AuthMiddleware::class);
+
+    $app->group('/2fa', function ($group) {
+        $group->get('setup', [TwoFactorController::class, 'showSetup'])
+            ->setName('2fa.setup')
+            ->add(AuthMiddleware::class);
+
+        $group->post('verify-and-enable', [TwoFactorController::class, 'verifyAndEnable'])
+            ->setName('2fa.enable')
+            ->add(AuthMiddleware::class);
+
+        $group->get('verify', [TwoFactorController::class, 'showVerify'])
+            ->setName('2fa.verify')
+            ->add(AuthMiddleware::class);
+
+        $group->post('verify', [TwoFactorController::class, 'verify'])
+            ->setName('2fa.verify.post')
+            ->add(AuthMiddleware::class);
+
+        $group->get('disable', [TwoFactorController::class, 'showDisable'])
+            ->setName('2fa.disable.show')
+            ->add(TwoFactorMiddleware::class)
+            ->add(AuthMiddleware::class);
+
+        $group->post('disable', [TwoFactorController::class, 'disable'])
+            ->setName('2fa.disable')
+            ->add(TwoFactorMiddleware::class)
+            ->add(AuthMiddleware::class);
+    });
 
     // Admin Panel Routes
     $app->group('/admin', function ($group) {
