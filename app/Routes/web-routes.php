@@ -95,11 +95,13 @@ return static function (Slim\App $app): void {
     $app->get('/checkout', [Checkout_Controller::class, 'index'])
         ->setName('user.checkout.index');
 
+    //finish checkout page route
+    $app->post('/checkout', [Checkout_Controller::class, 'clear'])
+        ->setName('user.checkout.clear');
+
     //appointment booking page route
     $app->get('/booking', [Booking_Controller::class, 'index'])
         ->setName('user.booking.index');
-
-
 
     //Scheduled appointments page route
     $app->get('/schedule', [Schedule_Controller::class, 'index'])
@@ -155,7 +157,7 @@ return static function (Slim\App $app): void {
         $group->post('/clear', [Cart_Controller::class, 'clear'])
             ->setName('cart.clear');
     })
-    ->add(AuthMiddleware::class)
+        ->add(AuthMiddleware::class)
     ;
 
     // Admin Panel Routes

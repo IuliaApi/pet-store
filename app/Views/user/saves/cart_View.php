@@ -3,8 +3,7 @@
 use App\Helpers\ViewHelper;
 use App\Helpers\FlashMessage;
 
-$page_title = trans('cart.page_title');
-ViewHelper::loadHeader($page_title);
+ViewHelper::loadHeader(hs(trans('cart.page_title')));
 
 $cart ??= [];
 $total ??= 0;

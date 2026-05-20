@@ -59,6 +59,10 @@
         "continue_shopping": "Continue Shopping",
         "checkout": "Checkout"
     },
+    "receipt": {
+        "receipt": "Receipt",
+        "thank_you": "Thank you for shopping with us!"
+    },
     "common": {
         "save": "Save",
         "cancel": "Cancel",
