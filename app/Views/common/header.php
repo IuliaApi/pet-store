@@ -26,7 +26,7 @@ $availableLocales = $translator->getAvailableLocales();
             </a>
 
             <form class="input-group" method="GET" action="<?= APP_BASE_URL ?>/products">
-                <input type="text" name="q" class="form-control"  placeholder="<?= hs(trans('header.search_placeholder')) ?>" data-bs-theme="light">
+                <input type="text" name="q" class="form-control" placeholder="<?= hs(trans('header.search_placeholder')) ?>" data-bs-theme="light">
 
                 <button class="btn d-inline-flex align-items-center" style=" background-color: <?= SANDCOLOR ?>">
                     <?= swarm_icon('tabler:search', ['class' => 'me-1', 'width' => '18', 'height' => '18']) ?>
@@ -47,10 +47,10 @@ $availableLocales = $translator->getAvailableLocales();
                         <?= hs(trans('header.cart')) ?>
                     </a>
                 </li>
-                <li>
+                <li class="nav-item d-flex align-items-center justify-content-center">
                     <?php foreach ($availableLocales as $locale): ?>
                         <?php if ($locale !== $currentLocale): ?>
-                            <a href="?lang=<?= hs($locale) ?>">
+                            <a class="nav-link px-2 py-1 mx-1 rounded-pill border text-decoration-none small" style="border-color: <?= SANDCOLOR ?> !important; color: <?= SANDCOLOR ?>;" href="?lang=<?= hs($locale) ?>">
                                 <?= $locale === 'en' ? 'English' : 'Français' ?>
                             </a>
                         <?php endif; ?>

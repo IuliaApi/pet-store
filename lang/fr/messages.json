@@ -36,6 +36,21 @@
         "stock_label": "Stock:",
         "items": "articles"
     },
+    "cart": {
+        "page_title": "Panier",
+        "title": "Panier",
+        "empty": "Votre panier est vide.",
+        "find_products": "Trouvez ici ce dont votre animal a besoin.",
+        "product": "Produit",
+        "price": "Prix",
+        "quantity": "Quantité",
+        "subtotal": "Sous-total",
+        "remove": "Retirer",
+        "update": "Mettre à jour",
+        "total": "Total :",
+        "continue_shopping": "Continuer les achats",
+        "checkout": "Passer à la caisse"
+    },
     "common": {
         "save": "Enregistrer",
         "cancel": "Annuler",
