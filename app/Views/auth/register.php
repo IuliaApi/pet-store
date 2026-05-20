@@ -1,7 +1,7 @@
 <?php
 
 use App\Helpers\ViewHelper;
-
+use App\Helpers\FlashMessage;
 
 ViewHelper::loadHeader($title ?? 'Home · Registration');
 $account_info = $data["account_info"] ?? [];
