@@ -196,9 +196,9 @@ return static function (Slim\App $app): void {
         $group->post('/upload', [UploadController::class, 'upload'])
             ->setName('upload.process');
     })
+        ->add(AuthMiddleware::class)
         ->add(TwoFactorMiddleware::class)
-        ->add(AdminAuthMiddleware::class)
-        ->add(AuthMiddleware::class);
+        ->add(AdminAuthMiddleware::class);
 
     // A route to display PHP configuration information.
     $app->get('/phpinfo', function (Request $request, Response $response, $args) {

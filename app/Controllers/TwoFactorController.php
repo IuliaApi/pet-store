@@ -187,7 +187,7 @@ class TwoFactorController extends BaseController
 
         if (SessionManager::get('user')['user_role'] === 'admin') {
             FlashMessage::success("Welcome " . SessionManager::get('user')['user_name']);
-            return $this->redirect($request, $response, 'admin/users/2fa-dashboard');
+            return $this->redirect($request, $response, 'admin.dashboard');
         } else {
             FlashMessage::success("Welcome " . SessionManager::get('user')['user_name']);
             return $this->redirect($request, $response, 'user.dashboard');
