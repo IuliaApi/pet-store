@@ -64,7 +64,7 @@ $total ??= 0;
                             <td>$<?= number_format($subtotal, 2) ?></td>
 
                             <td>
-                                <form method="POST" action="/cart/remove">
+                                <form method="POST" action="<?=APP_BASE_URL?>/cart/remove">
                                     <input type="hidden" name="productId" value="<?= $item['product_id'] ?>">
                                     <button class="btn btn-sm btn-danger">X</button>
                                 </form>
@@ -92,7 +92,7 @@ $total ??= 0;
                 </button>
             </form>
 
-            <form method="POST" action="/checkout">
+            <form method="GET" action="<?=APP_BASE_URL?>/checkout">
                 <button class="btn text-white" style="background-color: <?= GREENCOLOR ?>">
                     <?= hs(trans('cart.checkout')) ?>
                 </button>
