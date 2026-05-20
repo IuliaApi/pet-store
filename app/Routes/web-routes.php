@@ -68,7 +68,7 @@ return static function (Slim\App $app): void {
 
     $app->post('/login', [AuthController::class, 'authenticate']);
 
-    $app->get('/logout', [AuthController::class, 'logout'])
+    $app->post('/logout', [AuthController::class, 'logout'])
         ->setName('auth.logout');
 
     $app->get('/dashboard', [AuthController::class, 'dashboard'])
@@ -103,28 +103,28 @@ return static function (Slim\App $app): void {
         ->add(AuthMiddleware::class);
 
     $app->group('/2fa', function ($group) {
-        $group->get('setup', [TwoFactorController::class, 'showSetup'])
+        $group->get('/setup', [TwoFactorController::class, 'showSetup'])
             ->setName('2fa.setup')
             ->add(AuthMiddleware::class);
 
-        $group->post('verify-and-enable', [TwoFactorController::class, 'verifyAndEnable'])
+        $group->post('/verify-and-enable', [TwoFactorController::class, 'verifyAndEnable'])
             ->setName('2fa.enable')
             ->add(AuthMiddleware::class);
 
-        $group->get('verify', [TwoFactorController::class, 'showVerify'])
+        $group->get('/verify', [TwoFactorController::class, 'showVerify'])
             ->setName('2fa.verify')
             ->add(AuthMiddleware::class);
 
-        $group->post('verify', [TwoFactorController::class, 'verify'])
+        $group->post('/verify', [TwoFactorController::class, 'verify'])
             ->setName('2fa.verify.post')
             ->add(AuthMiddleware::class);
 
-        $group->get('disable', [TwoFactorController::class, 'showDisable'])
+        $group->get('/disable', [TwoFactorController::class, 'showDisable'])
             ->setName('2fa.disable.show')
             ->add(TwoFactorMiddleware::class)
             ->add(AuthMiddleware::class);
 
-        $group->post('disable', [TwoFactorController::class, 'disable'])
+        $group->post('/disable', [TwoFactorController::class, 'disable'])
             ->setName('2fa.disable')
             ->add(TwoFactorMiddleware::class)
             ->add(AuthMiddleware::class);
@@ -136,21 +136,20 @@ return static function (Slim\App $app): void {
     $app->group('/cart', function ($group) {
         // view the cart
         $group->get('', [Cart_Controller::class, 'index'])
-        ->setName('cart.index');
+            ->setName('cart.index');
 
         // cart CRUD
         $group->post('/add', [Cart_Controller::class, 'add'])
-        ->setName('cart.add');
+            ->setName('cart.add');
 
         $group->post('/update', [Cart_Controller::class, 'update'])
-        ->setName('cart.update');
+            ->setName('cart.update');
 
         $group->post('/remove', [Cart_Controller::class, 'remove'])
-        ->setName('cart.remove');
+            ->setName('cart.remove');
 
         $group->post('/clear', [Cart_Controller::class, 'clear'])
-        ->setName('cart.clear');
-
+            ->setName('cart.clear');
     });
 
     // Admin Panel Routes

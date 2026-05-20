@@ -2,7 +2,7 @@
 
 use App\Helpers\ViewHelper;
 
-ViewHelper::loadAdminHeader($title);
+ViewHelper::loadAdminHeader($title ?? 'Dashboard');
 ?>
 
 <!-- Statistics Cards -->
@@ -26,4 +26,3 @@ ViewHelper::loadAdminHeader($title);
 </div>
 
 <?php ViewHelper::loadAdminFooter(); ?>
-

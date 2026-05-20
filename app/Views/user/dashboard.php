@@ -13,8 +13,8 @@ ViewHelper::loadHeader($data['title'] ?? 'Dashboard');
     <h1>Dashboard</h1>
 
     <div class="bg-light p-4 rounded mb-4">
-        <h2>Welcome, <?= hs(SessionManager::get('user', 'username') ?? 'customer') ?>!</h2>
-        <p>Email: <?= hs(SessionManager::get('user', 'user_email' ?? 'EMAIL NOT INCLUDED')) ?></p>
+        <h2>Welcome, <?= hs(SessionManager::get('user')['user_name'] ?? 'customer') ?>!</h2>
+        <p>Email: <?= hs(SessionManager::get('user')['user_email'] ?? 'EMAIL NOT INCLUDED') ?></p>
     </div>
 
     <hr>
@@ -40,6 +40,7 @@ ViewHelper::loadHeader($data['title'] ?? 'Dashboard');
     <form method="POST" action="<?= APP_BASE_URL ?>/logout">
         <button type="submit" class="btn btn-secondary">Logout</button>
     </form>
+    <br>
 </div>
 
 <?php ViewHelper::loadFooter(); ?>

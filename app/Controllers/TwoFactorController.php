@@ -48,9 +48,9 @@ class TwoFactorController extends BaseController
         //    database yet, since the user has not verified the code).
         SessionManager::set('2fa_secret', $secret);
         // 5. Generate a QR code data URI for the authenticator app.
-        $uri = $tfa->getQRCodeImageAsDataUri(SessionManager::get('user')['user_email'], SessionManager::get('secret'));
+        $uri = $tfa->getQRCodeImageAsDataUri(SessionManager::get('user')['user_email'], SessionManager::get('2fa_secret'));
         // 6. Render the setup view, passing the QR code and the secret.
-        return $this->render($response, 'auth/2fa-setup', ['title' => 'Enable 2FA', 'uri' => $uri, 'secret' => SessionManager::get('secret')]);
+        return $this->render($response, 'auth/2fa-setup.php', ['title' => 'Enable 2FA', 'qrCodeDataUri' => $uri, 'secret' => SessionManager::get('2fa_secret')]);
     }
 
     public function verifyAndEnable(Request $request, Response $response): Response
@@ -63,11 +63,11 @@ class TwoFactorController extends BaseController
         $code = $data['code'] ?? '';
 
 
-        $secret = SessionManager::get('2fa_setup_secret');
+        $secret = SessionManager::get('2fa_secret');
 
 
         if (!isset($secret) || empty($secret)) {
-            return $this->redirect($request, $response, '2fa-setup.php');
+            return $this->redirect($request, $response, '2fa.setup');
         }
         // 2. Verify the submitted code against the session secret.
         $qrProvider = new BaconQrCodeProvider(4, '#ffffff', '#000000', 'svg');
@@ -89,11 +89,11 @@ class TwoFactorController extends BaseController
         $this->twoFactorModel->enable(SessionManager::get('user')['user_id']);
 
         // 5. Remove the setup secret from the session.
-        SessionManager::remove('2fa_setup_secret');
+        SessionManager::remove('2fa_secret');
 
         // 6. Redirect to the dashboard with a success flash message.
         FlashMessage::success('Account successfully verified.');
-        return $this->redirect($request, $response, 'admin/users/2fa-dashboard');
+        return $this->redirect($request, $response, 'user.dashboard');
     }
 
     public function showVerify(Request $request, Response $response): Response

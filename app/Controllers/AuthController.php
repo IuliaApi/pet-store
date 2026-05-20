@@ -60,7 +60,7 @@ class AuthController extends BaseController
             FlashMessage::error('This username is already taken.');
             $return_to_form = true;
         }
-        if (!preg_match("/^.{8,}$/i", $form_data['password']) && !preg_match("/\d/", $form_data['password'])) {
+        if (!preg_match("/^.{8,}$/i", $form_data['password']) || !preg_match("/\d/", $form_data['password'])) {
             FlashMessage::error('Password must be at least 8 characters long and contain a number');
             $return_to_form = true;
         }
@@ -143,20 +143,21 @@ class AuthController extends BaseController
         // 3. Set 'two_factor_verified' in the session:
         // If the user does not have 2FA enabled, mark it as already verified so they are not prompted.
         //If they do have 2FA, mark it as not yet verified.
+        $session_user = SessionManager::get('user');
         if (!$requires_2fa) {
-            SessionManager::set('user', ['two_factor_verified' => true]);
+            $session_user['two_factor_verified'] = true;
         } else {
-            SessionManager::set('user', ['two_factor_verified' => false]);
+            $session_user['two_factor_verified'] = false;
         }
-
+        SessionManager::set('user', $session_user);
 
         // TODO: Display a welcome message and redirect based on role:
         //       admins go to the admin dashboard, customers go to the user dashboard
         if ($user['role'] === 'admin') {
-            FlashMessage::success("Welcome " . SessionManager::get('user_name'));
+            FlashMessage::success("Welcome " . SessionManager::get('user')['user_name']);
             return $this->redirect($request, $response, 'admin.dashboard');
         } else {
-            FlashMessage::success("Welcome " . SessionManager::get('user_name'));
+            FlashMessage::success("Welcome " . SessionManager::get('user')['user_name']);
             return $this->redirect($request, $response, 'user.dashboard');
         }
     }
@@ -178,7 +179,7 @@ class AuthController extends BaseController
     {
         // TODO:
         // 1. Query the database to check whether the current user has 2FA enabled.
-        $status = $this->twoFactorAuthModel->isEnabled(SessionManager::get('user')['id']);
+        $status = $this->twoFactorAuthModel->isEnabled(SessionManager::get('user')['user_id']);
         // 2. Render 'dashboard.php', passing the 2FA status so the
         //    view can display the correct toggle button.
 
