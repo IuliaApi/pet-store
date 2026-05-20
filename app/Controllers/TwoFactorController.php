@@ -58,7 +58,6 @@ class TwoFactorController extends BaseController
         // TODO:
         // 1. Retrieve the setup secret from the session. If missing,
         //    the setup session has expired: redirect to the setup page.
-        $userEmail = SessionManager::get('user_email');
         $data = $request->getParsedBody();
         $code = $data['code'] ?? '';
 
@@ -77,10 +76,18 @@ class TwoFactorController extends BaseController
         // 3. If the code is invalid, regenerate the QR code and
         //    re-render the setup page with an error message.
         if (!$valid) {
-            $qrProvider = new BaconQrCodeProvider(4, '#ffffff', '#000000', 'svg');
-            $tfa = new TwoFactorAuth($qrProvider, 'pet-store');
-            $tfa->createSecret();
-            return $this->render($response, '2fa-setup.php', ['']);
+            $uri = $tfa->getQRCodeImageAsDataUri(SessionManager::get('user')['user_email'], $secret);
+
+            return $this->render(
+                $response,
+                'auth/2fa-setup.php',
+                [
+                    'title' => 'Enable 2FA',
+                    'qrCodeDataUri' => $uri,
+                    'secret' => $secret,
+                    'error' => 'Invalid verification code.'
+                ]
+            );
         }
 
         // 4. If the code is valid, save the secret to the database
@@ -176,7 +183,15 @@ class TwoFactorController extends BaseController
         // 6. Regenerate the session ID for security.
         session_regenerate_id(true);
         // 7. Redirect to the dashboard.
-        return $this->redirect($request, $response, 'admin/users/2fa-dashboard');
+        // return $this->redirect($request, $response, 'admin/users/2fa-dashboard');
+
+        if (SessionManager::get('user')['user_role'] === 'admin') {
+            FlashMessage::success("Welcome " . SessionManager::get('user')['user_name']);
+            return $this->redirect($request, $response, 'admin/users/2fa-dashboard');
+        } else {
+            FlashMessage::success("Welcome " . SessionManager::get('user')['user_name']);
+            return $this->redirect($request, $response, 'user.dashboard');
+        }
     }
 
     public function disable(Request $request, Response $response): Response
@@ -188,7 +203,7 @@ class TwoFactorController extends BaseController
         // 2. Look up the user in the database and use password_verify()
         //    to confirm the password is correct. If invalid, re-render
         //    the disable page with an error.
-        if ($this->userModel->verifyCredentials(SessionManager::get('user')['user_id'], $password) === null) {
+        if ($this->userModel->verifyCredentials(SessionManager::get('user')['user_email'], $password) === null) {
             FlashMessage::error('Incorrect credentials');
             return $this->render($response, 'auth/2fa-disable');
         }
