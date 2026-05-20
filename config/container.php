@@ -6,6 +6,9 @@ use App\Helpers\Core\AppSettings;
 use App\Helpers\Core\JsonRenderer;
 use App\Helpers\Core\PDOService;
 use App\Middleware\ExceptionMiddleware;
+use Frostybee\SwarmIcons\IconManager;
+use Frostybee\SwarmIcons\SwarmIcons;
+use Frostybee\SwarmIcons\SwarmIconsConfig;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ServerRequestFactoryInterface;
@@ -50,6 +53,24 @@ $definitions = [
     PDOService::class => function (ContainerInterface $container): PDOService {
         $db_config = $container->get(AppSettings::class)->get('db');
         return new PDOService($db_config);
+    },
+    IconManager::class => function (): IconManager {
+        $manager = SwarmIconsConfig::create()
+            ->discoverJsonSets(APP_BASE_DIR_PATH . '/public/assets/svg-icons')
+            ->cachePath(APP_BASE_DIR_PATH . '/var/cache/icons')
+            ->defaultPrefix('tabler')
+            ->defaultAttributes([
+                'width' => '24',
+                'height' => '24',
+                'fill' => 'none',
+                'stroke' => 'currentColor',
+                'stroke-width' => '2',
+            ])
+            ->build();
+
+        SwarmIcons::setManager($manager);
+
+        return $manager;
     },
 
     // HTTP factories
