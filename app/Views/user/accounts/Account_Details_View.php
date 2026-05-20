@@ -9,6 +9,7 @@ ViewHelper::loadHeader($page_title);
 <article class="card m-4">
     <h1 class="card-header">Account</h1>
     <section class="card-body">
+        <p>Signed in as: <?= htmlspecialchars($username ?? 'User') ?></p>
         <form method="POST" action="">
 
             <label>First Name:</label>

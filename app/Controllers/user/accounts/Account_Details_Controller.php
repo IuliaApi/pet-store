@@ -22,6 +22,7 @@ class Account_Details_Controller extends BaseController
         $data['data'] = [
             'title' => 'Account',
             'message' => 'Welcome to your account page',
+            'username' => $_SESSION['username'] ?? 'User',
         ];
 
         return $this->render($response, '/user/accounts/Account_Details_View.php', $data);

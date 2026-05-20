@@ -17,9 +17,9 @@ class ProductsModel extends BaseModel
     public function getAll(): array
     {
         return $this->selectAll('SELECT p.id, p.name, p.description, p.stock_quantity, p.category_id, p.brand, p.price, p.thumbnail, c.name AS category_name
-FROM products p
-LEFT JOIN categories c ON p.category_id = c.id
-ORDER BY p.id DESC');
+        FROM products p
+        LEFT JOIN categories c ON p.category_id = c.id
+        ORDER BY p.id DESC');
     }
 
     public function getById(int $id): array|false
