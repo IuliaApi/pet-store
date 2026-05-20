@@ -11,7 +11,13 @@ use App\Domain\Models\ProductsModel;
 use App\Helpers\FlashMessage;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-
+use function intval;
+/**
+ * Controller for the various CRUD operations used by the cart
+ * only links to the cart view
+ * index is the only GET route
+ * all others are POST
+ */
 class Cart_Controller extends BaseController
 {
     public function __construct(Container $container, private ProductsModel $productsModel)
@@ -19,7 +25,13 @@ class Cart_Controller extends BaseController
         parent::__construct($container);
     }
 
-    //default loading of product cart view page
+    /**
+     * The total and item count for the cart are computed dynamically here
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return Response
+     */
     public function index(Request $request, Response $response, array $args): Response
     {
         $data = [];
@@ -33,7 +45,13 @@ class Cart_Controller extends BaseController
         $data['message'] = 'Welcome to your shopping cart page';
         return $this->render($response, '/user/saves/cart_View.php', $data);
     }
-
+    /**
+     * POST function invoked when adding items to the cart
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return Response
+     */
     public function add(Request $request, Response $response, array $args): Response
     {
         $productId = intval($request->getParsedBody()['productId']);
@@ -75,6 +93,13 @@ class Cart_Controller extends BaseController
         return $this->redirect($request, $response, 'cart.index');
     }
 
+    /**
+     * function for a POST call within the cart view to update the quantity of items already in cart
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return Response
+     */
     public function update(Request $request, Response $response, array $args): Response
     {
         $update = $request->getParsedBody();

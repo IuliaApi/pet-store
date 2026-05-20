@@ -14,7 +14,10 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use App\Helpers\FlashMessage;
 use Exception;
-
+/**
+ * Controller for the log in and registration processes
+ * Links to two view
+ */
 class AuthController extends BaseController
 {
 
@@ -22,6 +25,10 @@ class AuthController extends BaseController
     {
         parent::__construct($container);
     }
+
+    /**
+     * Display the register form (GET request)
+     */
     public function register(Request $request, Response $response, array $args): Response
     {
         $data['data'] = [
@@ -35,6 +42,10 @@ class AuthController extends BaseController
         return $this->render($response, "auth/register.php", $data);
     }
 
+    /**
+     * invoked by the form in the register method
+     * POST request
+     */
     public function store(Request $request, Response $response, array $args): Response
     {
         // TODO: Extract the submitted form fields from the request
@@ -94,8 +105,6 @@ class AuthController extends BaseController
             FlashMessage::error($e->getMessage());
             return $this->redirect($request, $response, 'auth.register');
         }
-        // !after validating the account info and detecting something wrong with them
-
     }
     /**
      * Display the login form (GET request).
