@@ -20,7 +20,9 @@ SET time_zone = "+00:00";
 --
 -- Database: `pet_store_db`
 --
-
+DROP DATABASE IF EXISTS `pet_store_db`;
+CREATE DATABASE IF NOT EXISTS `pet_store_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `pet_store_db`;
 -- --------------------------------------------------------
 
 --
