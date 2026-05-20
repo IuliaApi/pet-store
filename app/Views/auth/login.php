@@ -1,6 +1,7 @@
 <?php
 
 use App\Helpers\ViewHelper;
+use App\Helpers\FlashMessage;
 
 ViewHelper::loadHeader($title ?? 'Login · Registration');
 ?>

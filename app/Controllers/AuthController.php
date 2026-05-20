@@ -89,7 +89,7 @@ class AuthController extends BaseController
         try {
             $userId = $this->userModel->createUser($userParams);
             FlashMessage::success("Created user #$userId");
-            return $this->render($response, '/user/accounts/login.php');
+            return $this->redirect($request, $response, 'auth.login');
         } catch (Exception $e) {
             FlashMessage::error($e->getMessage());
             return $this->redirect($request, $response, 'auth.register');

@@ -154,7 +154,9 @@ return static function (Slim\App $app): void {
 
         $group->post('/clear', [Cart_Controller::class, 'clear'])
             ->setName('cart.clear');
-    });
+    })
+    ->add(AuthMiddleware::class)
+    ;
 
     // Admin Panel Routes
     $app->group('/admin', function ($group) {

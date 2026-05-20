@@ -6,6 +6,7 @@ namespace App\Domain\Models;
 
 use App\Domain\Enums\ProductCategory;
 use App\Helpers\Core\PDOService;
+use function intval;
 
 class UserModel extends BaseModel
 {
