@@ -7,21 +7,21 @@ use App\Helpers\ViewHelper;
 ViewHelper::loadHeader('Product List');
 ?>
 <div class="card m-4 ">
-    <h1 class="card-header text-white" style=" background-color: <?= DARKBROWNCOLOR ?>">Search</h1>
+    <h1 class="card-header text-white" style=" background-color: <?= DARKBROWNCOLOR ?>"><?= hs(trans('products.search')) ?></h1>
     <div class="card-body bg-white">
 
-        <label>Sort by:</label>
+        <label><?= hs(trans('products.sort_by')) ?></label>
         <select class="btn" type="button" data-toggle="dropdown" aria-haspopup="true" id="sorting" name="sort" style=" background-color: <?= SANDCOLOR ?>">
-            <option value="name" class="dropdown-item">Alphabet</option>
-            <option value="price" class="dropdown-item">Price</option>
-            <option value="stock" class="dropdown-item">Stock</option>
+            <option value="name" class="dropdown-item"><?= hs(trans('products.alphabet')) ?></option>
+            <option value="price" class="dropdown-item"><?= hs(trans('products.price')) ?></option>
+            <option value="stock" class="dropdown-item"><?= hs(trans('products.stock')) ?></option>
         </select>
         &nbsp;&nbsp;
-        <label>Order by:</label>
+        <label><?= hs(trans('products.order_by')) ?></label>
         <select class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" id="filtering" name="order" style="background-color: <?= SANDCOLOR ?>">
             <!-- //! Should allow multiple choices, but only allows one at a time-->
-            <option value="ASC" class="dropdown-item">Ascending</option>
-            <option value="DESC" class="dropdown-item">Descending</option>
+            <option value="ASC" class="dropdown-item"><?= hs(trans('products.ascending')) ?></option>
+            <option value="DESC" class="dropdown-item"><?= hs(trans('products.descending')) ?></option>
         </select>
         </form>
     </div>
@@ -33,7 +33,7 @@ ViewHelper::loadHeader('Product List');
         <div class="row g-4">
             <?php if (empty($data['products'])) : ?>
                 <div class="col-12">
-                    <p class="text-muted">No products available yet. Please check back soon.</p>
+                    <p class="text-muted"><?= hs(trans('products.no_products')) ?></p>
                 </div>
             <?php else : ?>
                 <?php foreach ($data['products'] as $product) : ?>
@@ -60,7 +60,7 @@ ViewHelper::loadHeader('Product List');
                                 <div class="d-flex align-items-center justify-content-center text-white fw-semibold" style="height: 220px; background: linear-gradient(135deg, <?= SANDCOLOR ?> 0%, <?= BROWNCOLOR ?> 100%);">
                                     <div class="text-center">
                                         <i class="bi bi-image fs-1 d-block mb-2"></i>
-                                        <span>Image coming soon</span>
+                                        <span><?= hs(trans('products.image_coming_soon')) ?></span>
                                     </div>
                                 </div>
                             <?php endif; ?>
@@ -74,12 +74,12 @@ ViewHelper::loadHeader('Product List');
                                 </div>
 
                                 <p class="card-text text-secondary mb-3" style="font-size: 0.92rem;">
-                                    <?= htmlspecialchars($description !== '' ? $description : 'No description provided.') ?>
+                                    <?= htmlspecialchars($description !== '' ? $description : hs(trans('products.no_description'))) ?>
                                 </p>
 
                                 <div class="mt-auto d-flex justify-content-between align-items-center gap-2">
-                                    <small class="text-muted">Stock: <?= htmlspecialchars((string) $displayStock) ?></small>
-                                    <button type="button" class="btn btn-sm btn-outline-primary" disabled>Coming soon</button>
+                                    <small class="text-muted"><?= hs(trans('products.stock_label')) ?> <?= htmlspecialchars((string) $displayStock) ?></small>
+                                    <button type="button" class="btn btn-sm btn-outline-primary" disabled><?= hs(trans('products.coming_soon')) ?></button>
                                 </div>
                             </div>
                         </a>

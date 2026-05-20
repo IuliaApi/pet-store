@@ -16,7 +16,24 @@
     },
     "home": {
         "catalog": "Our catalog",
-        "featured_products": "Featured Products"
+        "featured_products": "Featured Products",
+        "featured_products_description": "Featured products from the catalogue."
+    },
+    "products": {
+        "title": "Pet store products",
+        "search": "Search",
+        "sort_by": "Sort by:",
+        "order_by": "Order by:",
+        "alphabet": "Alphabet",
+        "price": "Price",
+        "stock": "Stock",
+        "ascending": "Ascending",
+        "descending": "Descending",
+        "no_products": "No products available yet. Please check back soon.",
+        "image_coming_soon": "Image coming soon",
+        "no_description": "No description provided.",
+        "stock_label": "Stock:",
+        "items": "items"
     },
     "common": {
         "save": "Save",

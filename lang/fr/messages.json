@@ -16,7 +16,25 @@
     },
     "home": {
         "catalog": "Notre catalogue",
-        "featured_products": "Produits en Vedette"
+        "featured_products": "Produits en Vedette",
+        "featured_products_description": "Produits en vedette du catalogue."
+    },
+    "products": {
+        "title": "Produits de la boutique",
+        "search": "Rechercher",
+        "sort_by": "Trier par :",
+        "order_by": "Ordre :",
+        "alphabet": "Alphabétique",
+        "price": "Prix",
+        "stock": "Stock",
+        "ascending": "Croissant",
+        "descending": "Décroissant",
+        "no_products": "Aucun produit n'est encore disponible. Revenez bientôt.",
+        "image_coming_soon": "Image bientôt disponible",
+        "coming_soon": "Bientôt disponible",
+        "no_description": "Aucune description fournie.",
+        "stock_label": "Stock:",
+        "items": "articles"
     },
     "common": {
         "save": "Enregistrer",

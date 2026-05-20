@@ -11,13 +11,13 @@ ViewHelper::loadHeader('Pet Shop Express');
     <div class="card border-0 shadow-sm">
         <div class="card-header bg-transparent border-0 pb-0">
             <h1 class="mb-1"><?= hs(trans('home.catalog')) ?></h1>
-            <p class="text-muted mb-0">Featured products from the catalogue.</p>
+            <p class="text-muted mb-0"><?= hs(trans('home.featured_products_description')) ?></p>
         </div>
         <div class="card-body">
             <div class="row g-4">
                 <?php if (empty($products)) : ?>
                     <div class="col-12">
-                        <p class="text-muted mb-0">No products available yet. Please check back soon.</p>
+                        <p class="text-muted mb-0"><?= hs(trans('products.no_products')) ?></p>
                     </div>
                 <?php else : ?>
                     <?php foreach ($products as $product) : ?>
@@ -35,7 +35,7 @@ ViewHelper::loadHeader('Pet Shop Express');
                                     <div class="d-flex align-items-center justify-content-center text-white fw-semibold" style="height: 200px; background: linear-gradient(135deg, <?= SANDCOLOR ?> 0%, <?= BROWNCOLOR ?> 100%);">
                                         <div class="text-center">
                                             <i class="bi bi-image fs-1 d-block mb-2"></i>
-                                            <span>Image coming soon</span>
+                                            <span><?= hs(trans('products.image_coming_soon')) ?></span>
                                         </div>
                                     </div>
                                 <?php endif; ?>
@@ -43,11 +43,11 @@ ViewHelper::loadHeader('Pet Shop Express');
                                     <h5 class="card-title mb-1"><?= htmlspecialchars((string) $product['name']) ?></h5>
                                     <small class="text-muted mb-2"><?= htmlspecialchars((string) ($product['category_name'] ?? 'Uncategorized')) ?> · <?= htmlspecialchars((string) $product['brand']) ?></small>
                                     <p class="text-secondary mb-3" style="font-size: 0.92rem;">
-                                        <?= htmlspecialchars($description !== '' ? $description : 'No description provided.') ?>
+                                        <?= htmlspecialchars($description !== '' ? $description : hs(trans('products.no_description'))) ?>
                                     </p>
                                     <div class="mt-auto d-flex justify-content-between align-items-center gap-2">
                                         <span class="fw-bold">$<?= htmlspecialchars(number_format((float) $product['price'], 2)) ?></span>
-                                        <small class="text-muted">Stock: <?= htmlspecialchars((string) $product['stock_quantity']) ?></small>
+                                        <small class="text-muted"><?= hs(trans('products.stock_label')) ?> <?= htmlspecialchars((string) $product['stock_quantity']) ?></small>
                                     </div>
                                 </div>
                             </a>
