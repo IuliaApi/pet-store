@@ -23,7 +23,8 @@ class AdminAuthMiddleware implements MiddlewareInterface
     public function process(Request $request, RequestHandler $handler): ResponseInterface
     {
         $routeParser = RouteContext::fromRequest($request)->getRouteParser();
-        $isAuthenticated = (bool) SessionManager::get('is_authenticated', false);
+        $user = SessionManager::get('user');
+        $isAuthenticated = (bool) $user['is_authenticated'];
         // TODO: Retrieve the user's authentication status and role from the session.
         //       If not authenticated, redirect to the login page.
         //       If authenticated but not an admin, redirect to the user dashboard
@@ -34,12 +35,16 @@ class AdminAuthMiddleware implements MiddlewareInterface
             return $response->withHeader('Location', $loginUrl);
         }
         //       If both checks pass, allow the request to proceed.
-        if (SessionManager::get('user_role') !== 'admin') {
+        if ($user['user_role'] !== 'admin') {
             FlashMessage::error('Access denied.');
+            $loginUrl = $routeParser->urlFor('auth.login');
+            dd($_SESSION);
+            $response = $this->responseFactory->createResponse(302);
+            return $response->withHeader('Location', $loginUrl);
         }
 
         // After verifying the user is an admin, check if 2FA is enabled:
-        $userId = SessionManager::get('user_id');
+        $userId = $user['user_id'];
 
         if (!$this->twoFactorModel->isEnabled($userId)) {
             FlashMessage::warning('Admin accounts require Two-Factor Authentication. Please enable 2FA to continue.');
@@ -52,9 +57,9 @@ class AdminAuthMiddleware implements MiddlewareInterface
         }
 
         //       Use the same redirect pattern as AuthMiddleware (RouteParser + responseFactory).
-        $dashboardUrl = $routeParser->urlFor('user.dashboard');
+        $dashboardUrl = $routeParser->urlFor('admin.dashboard');
         $response = $this->responseFactory->createResponse(302);
-        return $response->withHeader('Location', $dashboardUrl);
+        // return $response->withHeader('Location', $dashboardUrl);
         return $handler->handle($request);
     }
 }

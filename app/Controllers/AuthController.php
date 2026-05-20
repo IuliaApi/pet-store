@@ -153,12 +153,12 @@ class AuthController extends BaseController
 
         // TODO: Display a welcome message and redirect based on role:
         //       admins go to the admin dashboard, customers go to the user dashboard
-        if ($session_user['two_factor_verified'] ?? false) {
+        if (!($session_user['two_factor_verified'] ?? false)) {
             return $this->redirect($request, $response, '2fa.verify');
         } else {
             if ($user['role'] === 'admin') {
                 FlashMessage::success("Welcome " . SessionManager::get('user')['user_name']);
-                return $this->redirect($request, $response, 'admin/users/2fa-dashboard');
+                return $this->redirect($request, $response, 'admin.dashboard');
             } else {
                 FlashMessage::success("Welcome " . SessionManager::get('user')['user_name']);
                 return $this->redirect($request, $response, 'user.dashboard');

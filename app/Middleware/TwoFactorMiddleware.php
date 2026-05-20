@@ -39,13 +39,13 @@ class TwoFactorMiddleware implements MiddlewareInterface
         //       If 2FA is required but not verified, redirect to the
         //       verification page.
         //
-        if ($this->twoFactorModel->isEnabled($user['id']) &&
+        if ($this->twoFactorModel->isEnabled($user['user_id']) &&
             !($user['two_factor_verified'] ?? false)) {
             $cookies = $request->getCookieParams();
             $deviceToken = $cookies['trusted_device'] ?? null;
 
             if ($deviceToken) {
-                if ($this->trustedDeviceModel->isValid($deviceToken, $user['id'])) {
+                if ($this->trustedDeviceModel->isValid($deviceToken, $user['user_id'])) {
                     SessionManager::set('two_factor_verified', true);
                     $this->trustedDeviceModel->updateLastUsed($deviceToken);
 
