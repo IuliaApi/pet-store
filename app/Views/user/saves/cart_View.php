@@ -3,7 +3,7 @@
 use App\Helpers\ViewHelper;
 use App\Helpers\FlashMessage;
 
-$page_title = 'Shopping Cart';
+$page_title = trans('cart.page_title');
 ViewHelper::loadHeader($page_title);
 
 $cart ??= [];
@@ -11,14 +11,14 @@ $total ??= 0;
 ?>
 
 <div class="card m-4">
-    <h1 class="card-header">Cart</h1>
+    <h1 class="card-header"><?= hs(trans('cart.title')) ?></h1>
 
     <div class="card-body">
 
         <?php if (empty($cart)): ?>
             <div class="alert alert-info" role="alert">
-                Your cart is empty. <br>
-                <a href="/pet-store/products"> Find what your pet needs here.</a>
+                <?= hs(trans('cart.empty')) ?> <br>
+                <a href="<?= APP_BASE_URL ?>/products"><?= hs(trans('cart.find_products')) ?></a>
             </div>
 
         <?php else: ?>
@@ -26,11 +26,11 @@ $total ??= 0;
             <table class="table table-striped align-middle">
                 <thead>
                     <tr>
-                        <th>Product</th>
-                        <th>Price</th>
-                        <th style="width: 180px;">Quantity</th>
-                        <th>Subtotal</th>
-                        <th>Remove</th>
+                        <th><?= hs(trans('cart.product')) ?></th>
+                        <th><?= hs(trans('cart.price')) ?></th>
+                        <th style="width: 180px;"><?= hs(trans('cart.quantity')) ?></th>
+                        <th><?= hs(trans('cart.subtotal')) ?></th>
+                        <th><?= hs(trans('cart.remove')) ?></th>
                     </tr>
                 </thead>
 
@@ -56,7 +56,7 @@ $total ??= 0;
                                         class="form-control form-control-sm"
                                         style="width: 70px;">
 
-                                    <button class="btn btn-sm btn-primary">Update</button>
+                                    <button class="btn btn-sm btn-primary"><?= hs(trans('cart.update')) ?></button>
 
                                 </form>
                             </td>
@@ -81,20 +81,20 @@ $total ??= 0;
     <div class="card-footer d-flex justify-content-between align-items-center">
 
         <div>
-            <h4>Total: $<?= number_format($total, 2) ?></h4>
+            <h4><?= hs(trans('cart.total')) ?> $<?= number_format($total, 2) ?></h4>
         </div>
 
         <div class="d-flex gap-2">
 
-            <form method="GET" action="<?= APP_BASE_URL?>/products">
+            <form method="GET" action="<?= APP_BASE_URL ?>/products">
                 <button class="btn text-white" style="background-color: <?= SANDCOLOR ?>">
-                    Continue Shopping
+                    <?= hs(trans('cart.continue_shopping')) ?>
                 </button>
             </form>
 
             <form method="GET" action="<?=APP_BASE_URL?>/checkout">
                 <button class="btn text-white" style="background-color: <?= GREENCOLOR ?>">
-                    Checkout
+                    <?= hs(trans('cart.checkout')) ?>
                 </button>
             </form>
 

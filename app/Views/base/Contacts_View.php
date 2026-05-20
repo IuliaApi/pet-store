@@ -12,8 +12,8 @@ ViewHelper::loadHeader($page_title);
         <form method="POST" action="">
 
             <h4>Find Us Here:</h4>
-            <a href="">example of a street name here</a>
-            <a href="">example of an email here</a>
+            <a href="https://maps.google.com/?q=821+Sainte-Croix+Avenue,+Montr%C3%A9al,+QC+H4L+3X9" target="_blank" rel="noopener noreferrer">821 Sainte-Croix Avenue, Montréal, QC H4L 3X9</a>
+            <a href="mailto:petshopexpress@gmail.com">petshopexpress@gmail.com</a>
 
             <br>
 

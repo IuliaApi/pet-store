@@ -35,6 +35,21 @@
         "stock_label": "Stock:",
         "items": "items"
     },
+    "cart": {
+        "page_title": "Shopping Cart",
+        "title": "Cart",
+        "empty": "Your cart is empty.",
+        "find_products": "Find what your pet needs here.",
+        "product": "Product",
+        "price": "Price",
+        "quantity": "Quantity",
+        "subtotal": "Subtotal",
+        "remove": "Remove",
+        "update": "Update",
+        "total": "Total:",
+        "continue_shopping": "Continue Shopping",
+        "checkout": "Checkout"
+    },
     "common": {
         "save": "Save",
         "cancel": "Cancel",
