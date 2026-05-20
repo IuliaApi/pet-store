@@ -22,7 +22,15 @@ class ProductsController extends BaseController
 
     public function index(Request $request, Response $response, array $args): Response
     {
-        $products = $this->productsModel->getAll();
+        $params = $request->getQueryParams();
+        $query = trim($params['q'] ?? '');
+        $products = [];
+        if ($query !== '') {
+            $products = $this->productsModel->searchProducts($query);
+        } else {
+            $products = $this->productsModel->getAll();
+        }
+        // $products = empty($query) ? $this->productsModel->getAll() : $this->productsModel->searchProducts($query);
 
         $data = [
             'title' => 'Shop · Products',
@@ -31,7 +39,7 @@ class ProductsController extends BaseController
         return $this->render($response, 'products/productIndexView.php', $data);
     }
 
-    public function search(Request $request, Response $response, array $args): Response
+    public function searchApi(Request $request, Response $response, array $args): Response
     {
         $params = $request->getQueryParams();
         if (!isset($params['q'])) {
@@ -44,7 +52,7 @@ class ProductsController extends BaseController
             $params['q'] = substr($params['q'], 0, 100);
         }
         $products = $this->productsModel->searchProducts($params['q'], $category);
-        $result[] = [
+        $result = [
             'success' => true,
             'count' => count($products),
             'query' => $params['q'],
@@ -57,5 +65,10 @@ class ProductsController extends BaseController
         return $response
             ->withHeader("Content-Type", 'application/json')
             ->withStatus(200);
+    }
+
+    public function error(Request $request, Response $response, array $args): Response
+    {
+        return $this->render($response, '404.php');
     }
 }

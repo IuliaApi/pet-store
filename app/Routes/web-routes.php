@@ -45,9 +45,13 @@ return static function (Slim\App $app): void {
     $app->get('/products', [ProductsController::class, 'index'])
         ->setName('products.index');
 
+
+    $app->get('/api/products/search', [ProductsController::class, 'searchApi'])
+        ->setName('products.searchApi');
+
     //Lists of products based on a search page route
     $app->get('/search', [Product_List_Controller::class, 'search'])
-        ->setName('search_result.search');
+        ->setName('products.search');
 
     //specific item page route
     $app->get('/products/{id}', [Product_Details_Controller::class, 'index'])
@@ -194,8 +198,6 @@ return static function (Slim\App $app): void {
         ->add(AdminAuthMiddleware::class)
         ->add(AuthMiddleware::class);
 
-    $app->get('/api/products/search', [ProductsController::class, 'search'])
-        ->setName('api.products.search');
     // A route to display PHP configuration information.
     $app->get('/phpinfo', function (Request $request, Response $response, $args) {
         ob_start();

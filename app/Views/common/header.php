@@ -24,8 +24,8 @@ $availableLocales = $translator->getAvailableLocales();
                 Pet Shop Express
             </a>
 
-            <form class="input-group" method="GET" action="<?= APP_BASE_URL ?>/search_result">
-                <input type="text" class="form-control" placeholder="<?= hs(trans('header.search_placeholder')) ?>" data-bs-theme="light">
+            <form class="input-group" method="GET" action="<?= APP_BASE_URL ?>/products">
+                <input type="text" name="q" class="form-control"  placeholder="<?= hs(trans('header.search_placeholder')) ?>" data-bs-theme="light">
 
                 <button class="btn" style=" background-color: <?= SANDCOLOR ?>">
                     <?= hs(trans('header.search')) ?>
