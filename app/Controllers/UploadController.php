@@ -51,7 +51,7 @@ class UploadController extends BaseController
         //       - 'filenamePrefix' => 'upload_'
 
         $config = [
-            'directory' => APP_IMAGES_UPLOADS_DIR,
+            'directory' => PRODUCT_IMAGES_DIR_PATH,
             'allowedTypes' => ['image/jpeg', 'image/png', 'image/gif'],
             'maxSize' => 2 * 1024 * 1024,
             'filenamePrefix' => 'upload_'

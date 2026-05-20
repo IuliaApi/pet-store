@@ -60,6 +60,4 @@ $uploadedFiles = App\Helpers\SessionManager::get('uploaded_files', []);
         </div>
     </div>
 <?php endif; ?>
-
-<<<<<<< Updated upstream=======>>>>>>> Stashed changes
     <?php ViewHelper::loadAdminFooter(); ?>
