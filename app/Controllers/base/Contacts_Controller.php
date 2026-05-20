@@ -9,6 +9,10 @@ use App\Controllers\BaseController;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
+/**
+ * Controller for the contacts page
+ * Our contact information is not stored in a database so there is no model to be used
+ */
 class Contacts_Controller extends BaseController
 {
     public function __construct(Container $container)
@@ -16,7 +20,13 @@ class Contacts_Controller extends BaseController
         parent::__construct($container);
     }
 
-    //default loading of Contact view page
+    /**
+     * default loading of Contact view page
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return Response
+     */
     public function index(Request $request, Response $response, array $args): Response
     {
         $data['data'] = [
