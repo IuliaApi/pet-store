@@ -30,7 +30,7 @@ class TwoFactorMiddleware implements MiddlewareInterface
         $user = SessionManager::get('user');
 
         //       If not authenticated, pass the request to the next handler.
-        if ($user['is_authenticated'] ?? false) {
+        if (!($user['is_authenticated'] ?? false)) {
             return $handler->handle($request);
         }
 
@@ -39,7 +39,8 @@ class TwoFactorMiddleware implements MiddlewareInterface
         //       If 2FA is required but not verified, redirect to the
         //       verification page.
         //
-        if ($this->twoFactorModel->isEnabled($user['id']) && !isset($this->twoFactorModel->getSecret($user)['id'])) {
+        if ($this->twoFactorModel->isEnabled($user['id']) &&
+            !($user['two_factor_verified'] ?? false)) {
             $cookies = $request->getCookieParams();
             $deviceToken = $cookies['trusted_device'] ?? null;
 
