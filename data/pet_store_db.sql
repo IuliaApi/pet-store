@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 20, 2026 at 02:39 AM
+-- Generation Time: May 20, 2026 at 04:18 AM
 -- Server version: 11.8.5-MariaDB-log
 -- PHP Version: 8.5.1
 
@@ -23,36 +23,6 @@ SET time_zone = "+00:00";
 DROP DATABASE IF EXISTS `pet_store_db`;
 CREATE DATABASE IF NOT EXISTS `pet_store_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE `pet_store_db`;
--- --------------------------------------------------------
-
---
--- Table structure for table `admins`
---
-
-CREATE TABLE `admins` (
-  `id` int(11) NOT NULL,
-  `fname` varchar(200) NOT NULL,
-  `lname` varchar(200) NOT NULL,
-  `email` text NOT NULL,
-  `hashed_pass` tinytext NOT NULL,
-  `salt` char(22) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `admins`
---
-
-INSERT INTO `admins` (`id`, `fname`, `lname`, `email`, `hashed_pass`, `salt`) VALUES
-(1, 'Alice', 'Smith', 'alice@petstore.com', 'hash1', 'salt123456789012345678'),
-(2, 'Bob', 'Jones', 'bob@petstore.com', 'hash2', 'salt223456789012345678'),
-(3, 'Charlie', 'Brown', 'charlie@petstore.com', 'hash3', 'salt323456789012345678'),
-(4, 'Diana', 'Prince', 'diana@petstore.com', 'hash4', 'salt423456789012345678'),
-(5, 'Edward', 'Norton', 'edward@petstore.com', 'hash5', 'salt523456789012345678'),
-(6, 'Fiona', 'Gallagher', 'fiona@petstore.com', 'hash6', 'salt623456789012345678'),
-(7, 'George', 'Miller', 'george@petstore.com', 'hash7', 'salt723456789012345678'),
-(8, 'Hannah', 'Abbott', 'hannah@petstore.com', 'hash8', 'salt823456789012345678'),
-(9, 'Ian', 'Wright', 'ian@petstore.com', 'hash9', 'salt923456789012345678'),
-(10, 'Jane', 'Doe', 'jane@petstore.com', 'hash10', 'salt023456789012345678');
 
 -- --------------------------------------------------------
 
@@ -62,26 +32,10 @@ INSERT INTO `admins` (`id`, `fname`, `lname`, `email`, `hashed_pass`, `salt`) VA
 
 CREATE TABLE `appointments` (
   `id` int(11) NOT NULL,
-  `customer_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `pet_id` int(11) NOT NULL,
   `service_type` enum('nail clipping','fur styling','clean up') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `appointments`
---
-
-INSERT INTO `appointments` (`id`, `customer_id`, `pet_id`, `service_type`) VALUES
-(1, 1, 1, 'nail clipping'),
-(2, 2, 2, 'fur styling'),
-(3, 3, 3, 'clean up'),
-(4, 4, 4, 'nail clipping'),
-(5, 5, 5, 'fur styling'),
-(6, 6, 6, 'clean up'),
-(7, 7, 7, 'nail clipping'),
-(8, 8, 8, 'fur styling'),
-(9, 9, 9, 'clean up'),
-(10, 10, 10, 'nail clipping');
 
 -- --------------------------------------------------------
 
@@ -91,26 +45,10 @@ INSERT INTO `appointments` (`id`, `customer_id`, `pet_id`, `service_type`) VALUE
 
 CREATE TABLE `cart_listings` (
   `id` int(11) NOT NULL,
-  `customer_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `product_amount` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `cart_listings`
---
-
-INSERT INTO `cart_listings` (`id`, `customer_id`, `product_id`, `product_amount`) VALUES
-(1, 1, 1, 2),
-(2, 2, 3, 1),
-(3, 3, 10, 5),
-(4, 4, 7, 1),
-(5, 5, 5, 1),
-(6, 6, 6, 3),
-(7, 7, 4, 1),
-(8, 8, 8, 2),
-(9, 9, 9, 4),
-(10, 10, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -139,62 +77,15 @@ INSERT INTO `categories` (`id`, `name`, `description`, `created_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customers`
---
-
-CREATE TABLE `customers` (
-  `id` int(11) NOT NULL,
-  `fname` varchar(200) NOT NULL,
-  `lname` varchar(200) NOT NULL,
-  `email` text NOT NULL,
-  `hashed_pass` varchar(72) NOT NULL,
-  `salt` char(22) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `customers`
---
-
-INSERT INTO `customers` (`id`, `fname`, `lname`, `email`, `hashed_pass`, `salt`) VALUES
-(1, 'John', 'Doe', 'john@gmail.com', 'custhash1', 'csalt12345678901234567'),
-(2, 'Mary', 'Jane', 'mary@yahoo.com', 'custhash2', 'csalt22345678901234567'),
-(3, 'Peter', 'Parker', 'spidey@dailybugle.com', 'custhash3', 'csalt32345678901234567'),
-(4, 'Bruce', 'Wayne', 'bruce@wayneent.com', 'custhash4', 'csalt42345678901234567'),
-(5, 'Clark', 'Kent', 'clark@dailyplanet.com', 'custhash5', 'csalt52345678901234567'),
-(6, 'Lois', 'Lane', 'lois@dailyplanet.com', 'custhash6', 'csalt62345678901234567'),
-(7, 'Tony', 'Stark', 'tony@stark.com', 'custhash7', 'csalt72345678901234567'),
-(8, 'Steve', 'Rogers', 'steve@shield.gov', 'custhash8', 'csalt82345678901234567'),
-(9, 'Natasha', 'Romanoff', 'nat@widow.com', 'custhash9', 'csalt92345678901234567'),
-(10, 'Wanda', 'Maximoff', 'wanda@avengers.org', 'custhash10', 'csalt02345678901234567');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `orders`
 --
 
 CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
-  `customer_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `date` date NOT NULL DEFAULT current_timestamp(),
   `retrieval_date` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `orders`
---
-
-INSERT INTO `orders` (`id`, `customer_id`, `date`, `retrieval_date`) VALUES
-(1, 1, '2026-03-20', '2026-03-22'),
-(2, 2, '2026-03-21', '2026-03-23'),
-(3, 3, '2026-03-22', '2026-03-24'),
-(4, 4, '2026-03-23', '2026-03-25'),
-(5, 5, '2026-03-24', '2026-03-26'),
-(6, 6, '2026-03-25', '2026-03-27'),
-(7, 7, '2026-03-26', '2026-03-28'),
-(8, 8, '2026-03-27', '2026-03-29'),
-(9, 9, '2026-03-27', '2026-03-30'),
-(10, 10, '2026-03-27', '2026-03-31');
 
 -- --------------------------------------------------------
 
@@ -209,22 +100,6 @@ CREATE TABLE `order_listings` (
   `product_amount` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `order_listings`
---
-
-INSERT INTO `order_listings` (`id`, `order_id`, `product_id`, `product_amount`) VALUES
-(1, 1, 3, 2),
-(2, 2, 1, 1),
-(3, 3, 8, 1),
-(4, 4, 10, 3),
-(5, 5, 2, 1),
-(6, 6, 4, 2),
-(7, 7, 6, 5),
-(8, 8, 5, 1),
-(9, 9, 9, 2),
-(10, 10, 7, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -234,25 +109,9 @@ INSERT INTO `order_listings` (`id`, `order_id`, `product_id`, `product_amount`) 
 CREATE TABLE `pets` (
   `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `customer_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `type` enum('dog','cat','bird','other') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `pets`
---
-
-INSERT INTO `pets` (`id`, `name`, `customer_id`, `type`) VALUES
-(1, 'Buddy', 1, 'dog'),
-(2, 'Misty', 2, 'cat'),
-(3, 'Goldie', 3, 'other'),
-(4, 'Tweety', 4, 'bird'),
-(5, 'Rex', 5, 'dog'),
-(6, 'Luna', 6, 'cat'),
-(7, 'Pip', 7, 'bird'),
-(8, 'Max', 8, 'dog'),
-(9, 'Bella', 9, 'cat'),
-(10, 'Shadow', 10, 'dog');
 
 -- --------------------------------------------------------
 
@@ -364,17 +223,13 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `username`, `email`, `password_hash`, `role`, `created_at`, `updated_at`) VALUES
-(1, 'Ehsan', 'Hussain', 'AdminE', 'ehsanhussain899@gmail.com', '$2y$12$ZTBJiX3/UUsASOU0wfn1Buy7rWdj2BGrIHrbKez8AZBVRlNGNXxmq', 'customer', '2026-05-19 19:35:02', '2026-05-19 19:35:02');
+(1, 'Ehsan', 'Hussain', 'AdminE', 'ehsanhussain899@gmail.com', '$2y$12$ZTBJiX3/UUsASOU0wfn1Buy7rWdj2BGrIHrbKez8AZBVRlNGNXxmq', 'admin', '2026-05-19 19:35:02', '2026-05-20 00:03:46'),
+(2, 'Iulia', 'Apintilioaie	', 'IA', 'apiiulia70@gmail.com', '$2y$12$hmBUxG/tmlUNjD23.s1NYOkei3hUi1EZIR/0PoKil8S43ipsBwyBi', 'admin', '2026-05-20 00:10:45', '2026-05-20 00:12:22'),
+(3, 'Alan', 'Telemishev', 'AT', 'deleteriouseuph@gmail.com', '$2y$12$OV6H..lGDEvtx7ecZ3y74.DYPW8G6LiQxzPEcGC2bYVREacmpx4qC', 'admin', '2026-05-20 00:16:05', '2026-05-20 00:16:49');
 
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `admins`
---
-ALTER TABLE `admins`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `appointments`
@@ -382,15 +237,16 @@ ALTER TABLE `admins`
 ALTER TABLE `appointments`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_pet_id` (`pet_id`),
-  ADD KEY `fk_appointments_customer_id` (`customer_id`);
+  ADD KEY `fk_appointments_customer_id` (`user_id`);
 
 --
 -- Indexes for table `cart_listings`
 --
 ALTER TABLE `cart_listings`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_user_id_product_id` (`product_id`,`user_id`) USING BTREE,
   ADD KEY `fk_cart_listings_products_id` (`product_id`),
-  ADD KEY `fk_cart_listings_customer_id` (`customer_id`);
+  ADD KEY `fk_cart_listings_customer_id` (`user_id`);
 
 --
 -- Indexes for table `categories`
@@ -399,17 +255,11 @@ ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `customers`
---
-ALTER TABLE `customers`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_customer_id` (`customer_id`);
+  ADD KEY `fk_customer_id` (`user_id`);
 
 --
 -- Indexes for table `order_listings`
@@ -423,7 +273,8 @@ ALTER TABLE `order_listings`
 -- Indexes for table `pets`
 --
 ALTER TABLE `pets`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_pets_user` (`user_id`);
 
 --
 -- Indexes for table `products`
@@ -468,12 +319,6 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `admins`
---
-ALTER TABLE `admins`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
 -- AUTO_INCREMENT for table `appointments`
 --
 ALTER TABLE `appointments`
@@ -490,12 +335,6 @@ ALTER TABLE `cart_listings`
 --
 ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `customers`
---
-ALTER TABLE `customers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -543,7 +382,7 @@ ALTER TABLE `two_factor_auth`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
@@ -553,20 +392,20 @@ ALTER TABLE `users`
 -- Constraints for table `appointments`
 --
 ALTER TABLE `appointments`
-  ADD CONSTRAINT `fk_appointments_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`);
+  ADD CONSTRAINT `fk_appointments_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `cart_listings`
 --
 ALTER TABLE `cart_listings`
-  ADD CONSTRAINT `fk_cart_listings_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
+  ADD CONSTRAINT `fk_cart_listing_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_cart_listings_products_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
 
 --
 -- Constraints for table `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `fk_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`);
+  ADD CONSTRAINT `fk_orders_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `order_listings`
@@ -574,6 +413,12 @@ ALTER TABLE `orders`
 ALTER TABLE `order_listings`
   ADD CONSTRAINT `fk_order_id` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
   ADD CONSTRAINT `fk_product_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+
+--
+-- Constraints for table `pets`
+--
+ALTER TABLE `pets`
+  ADD CONSTRAINT `fk_pets_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `products`
