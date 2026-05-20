@@ -211,7 +211,13 @@ class TwoFactorController extends BaseController
         $this->twoFactorModel->disable(SessionManager::get('user')['user_id']);
         // 4. Redirect to the dashboard with a success flash message.
         FlashMessage::success('You have disabled two-factor authentication');
-        return $this->redirect($request, $response, 'admin/users/2fa-dashboard');
+        if (SessionManager::get('user')['user_role'] === 'admin') {
+            FlashMessage::success("Welcome " . SessionManager::get('user')['user_name']);
+            return $this->redirect($request, $response, 'admin/users/2fa-dashboard');
+        } else {
+            FlashMessage::success("Welcome " . SessionManager::get('user')['user_name']);
+            return $this->redirect($request, $response, 'user.dashboard');
+        }
     }
 
     public function showDisable(Request $request, Response $response): Response

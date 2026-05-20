@@ -20,8 +20,7 @@ class TwoFactorAuthModel extends BaseModel
     {
         // TODO: Insert a new 2FA record with the user ID and secret.
         //       Return the ID of the created record.
-        $sql = 'INSERT INTO two_factor_auth (user_id, secret)
-                VALUES (:user_id, :secret)';
+        $sql = 'INSERT INTO two_factor_auth (user_id, secret) VALUES (:user_id, :secret) ON DUPLICATE KEY UPDATE secret = VALUES(secret)';
 
         $variables = ['user_id' => $userId, 'secret' => $secret];
 
