@@ -9,20 +9,24 @@ ViewHelper::loadHeader('Product List');
 <div class="card m-4 ">
     <h1 class="card-header text-white" style=" background-color: <?= DARKBROWNCOLOR ?>"><?= hs(trans('products.search')) ?></h1>
     <div class="card-body bg-white">
+        <form method="GET" action="<?= APP_BASE_URL ?>/search" class="d-flex align-items-center gap-2 flex-wrap">
+            <?php if (!empty($data['search_keyword'] ?? '')): ?>
+                <input type="hidden" name="search_keyword" value="<?= hs((string)($data['search_keyword'] ?? '')) ?>">
+            <?php endif; ?>
 
-        <label><?= hs(trans('products.sort_by')) ?></label>
-        <select class="btn" type="button" data-toggle="dropdown" aria-haspopup="true" id="sorting" name="sort" style=" background-color: <?= SANDCOLOR ?>">
-            <option value="name" class="dropdown-item"><?= hs(trans('products.alphabet')) ?></option>
-            <option value="price" class="dropdown-item"><?= hs(trans('products.price')) ?></option>
-            <option value="stock" class="dropdown-item"><?= hs(trans('products.stock')) ?></option>
-        </select>
-        &nbsp;&nbsp;
-        <label><?= hs(trans('products.order_by')) ?></label>
-        <select class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" id="filtering" name="order" style="background-color: <?= SANDCOLOR ?>">
-            <!-- //! Should allow multiple choices, but only allows one at a time-->
-            <option value="ASC" class="dropdown-item"><?= hs(trans('products.ascending')) ?></option>
-            <option value="DESC" class="dropdown-item"><?= hs(trans('products.descending')) ?></option>
-        </select>
+            <label><?= hs(trans('products.sort_by')) ?></label>
+            <select class="btn" id="sorting" name="sort" style=" background-color: <?= SANDCOLOR ?>" onchange="this.form.submit()">
+                <option value="name" class="dropdown-item" <?= (($data['sort'] ?? 'name') === 'name') ? 'selected' : '' ?>><?= hs(trans('products.alphabet')) ?></option>
+                <option value="price" class="dropdown-item" <?= (($data['sort'] ?? 'name') === 'price') ? 'selected' : '' ?>><?= hs(trans('products.price')) ?></option>
+                <option value="stock" class="dropdown-item" <?= (($data['sort'] ?? 'name') === 'stock') ? 'selected' : '' ?>><?= hs(trans('products.stock')) ?></option>
+            </select>
+            &nbsp;&nbsp;
+            <label><?= hs(trans('products.order_by')) ?></label>
+            <select class="btn btn-warning" id="filtering" name="order" style="background-color: <?= SANDCOLOR ?>"
+                onchange="this.form.submit()">
+                <option value="ASC" class="dropdown-item" <?= (($data['order'] ?? 'ASC') === 'ASC') ? 'selected' : '' ?>><?= hs(trans('products.ascending')) ?></option>
+                <option value="DESC" class="dropdown-item" <?= (($data['order'] ?? 'ASC') === 'DESC') ? 'selected' : '' ?>><?= hs(trans('products.descending')) ?></option>
+            </select>
         </form>
     </div>
 </div>
@@ -42,7 +46,6 @@ ViewHelper::loadHeader('Product List');
                     $thumbnailPath = PRODUCT_IMAGES_DIR_PATH . DIRECTORY_SEPARATOR . $thumbnail;
                     $hasThumbnail = $thumbnail !== '' && is_file($thumbnailPath);
                     $description = trim((string) ($product['description'] ?? ''));
-                    // Compatibility fallbacks for older column names
                     $displayType = (string) ($product['type'] ?? $product['category_name'] ?? 'Uncategorized');
                     $displayStock = is_numeric($product['stock_quantity'] ?? null)
                         ? (int)$product['stock_quantity']
@@ -52,7 +55,7 @@ ViewHelper::loadHeader('Product List');
                         <a class="card h-100 shadow-sm border-0 overflow-hidden text-decoration-none" href="/pet-store/products/<?= $product["id"]; ?>">
                             <?php if ($hasThumbnail) : ?>
                                 <img
-                                    src="<?= htmlspecialchars(base_url('/assets/images/products/' . rawurlencode($thumbnail))) ?>"
+                                    src="<?= asset_url('/images/products/' . rawurlencode($thumbnail)) ?>"
                                     class="card-img-top"
                                     alt="<?= htmlspecialchars((string) $product['name']) ?>"
                                     style="height: 220px; object-fit: cover;">

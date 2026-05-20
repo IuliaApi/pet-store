@@ -10,36 +10,37 @@ ViewHelper::loadHeader($title ?? 'Shop · Products');
 <div class="container py-4">
     <div class="d-flex flex-wrap justify-content-between align-items-end gap-2 mb-4">
         <div>
-            <h1 class="mb-1">Pet store products</h1>
-            <p class="text-muted mb-0">Browse the catalogue and check stock, brand, category, and price.</p>
+            <h1 class="mb-1"><?= hs(trans('products.title')) ?></h1>
+            <p class="text-muted mb-0"><?= hs(trans('products.catalog_description')) ?></p>
         </div>
-        <span class="badge text-bg-secondary"><?= htmlspecialchars((string) count($products)) ?> items</span>
+        <span class="badge text-bg-secondary"><?= htmlspecialchars((string) count($products)) ?> <?= hs(trans('products.items')) ?></span>
     </div>
 
-    <div class="card m-4 ">
-    <h1 class="card-header text-white" style=" background-color: <?= DARKBROWNCOLOR ?>">Search</h1>
-    <div class="card-body bg-white">
+    <div class="m-4 d-flex align-items-center gap-2 flex-wrap">
+        <form method="GET" action="<?= APP_BASE_URL ?>/products" class="d-flex align-items-center gap-2 flex-wrap">
+            <?php if (!empty($query ?? '')): ?>
+                <input type="hidden" name="q" value="<?= hs((string)($query ?? '')) ?>">
+            <?php endif; ?>
 
-        <label>Sort by:</label>
-        <select class="btn" type="button" data-toggle="dropdown" aria-haspopup="true" id="sorting" name="sort" style=" background-color: <?= SANDCOLOR ?>">
-            <option value="name" class="dropdown-item">Alphabet</option>
-            <option value="price" class="dropdown-item">Price</option>
-            <option value="stock" class="dropdown-item">Stock</option>
-        </select>
-        &nbsp;&nbsp;
-        <label>Order by:</label>
-        <select class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" id="filtering" name="order" style="background-color: <?= SANDCOLOR ?>">
-            <!-- //! Should allow multiple choices, but only allows one at a time-->
-            <option value="ASC" class="dropdown-item">Ascending</option>
-            <option value="DESC" class="dropdown-item">Descending</option>
-        </select>
+            <label>Sort by:</label>
+            <select class="btn" id="sorting" name="sort" style=" background-color: <?= SANDCOLOR ?>" onchange="this.form.submit()">
+                <option value="name" class="dropdown-item" <?= (($sort ?? 'name') === 'name') ? 'selected' : '' ?>>Alphabet</option>
+                <option value="price" class="dropdown-item" <?= (($sort ?? 'name') === 'price') ? 'selected' : '' ?>>Price</option>
+                <option value="stock" class="dropdown-item" <?= (($sort ?? 'name') === 'stock') ? 'selected' : '' ?>>Stock</option>
+            </select>
+            &nbsp;&nbsp;
+            <label>Order by:</label>
+            <select class="btn btn-warning" id="filtering" name="order" style="background-color: <?= SANDCOLOR ?>" onchange="this.form.submit()">
+                <!-- //! Should allow multiple choices, but only allows one at a time-->
+                <option value="ASC" class="dropdown-item" <?= (($order ?? 'ASC') === 'ASC') ? 'selected' : '' ?>>Ascending</option>
+                <option value="DESC" class="dropdown-item" <?= (($order ?? 'ASC') === 'DESC') ? 'selected' : '' ?>>Descending</option>
+            </select>
         </form>
     </div>
-</div>
     <div class="row g-4">
         <?php if (empty($products)) : ?>
             <div class="col-12">
-                <p class="text-muted">No products available yet. Please check back soon.</p>
+                <p class="text-muted"><?= hs(trans('products.no_products')) ?></p>
             </div>
         <?php else : ?>
             <?php foreach ($products as $product) : ?>
@@ -58,7 +59,7 @@ ViewHelper::loadHeader($title ?? 'Shop · Products');
                     <a class="card h-100 shadow-sm border-0 overflow-hidden text-decoration-none" href="/pet-store/products/<?= $product["id"]; ?>">
                         <?php if ($hasThumbnail) : ?>
                             <img
-                                src="<?= htmlspecialchars(base_url('/assets/images/products/' . rawurlencode($thumbnail))) ?>"
+                                src="<?= asset_url('/images/products/' . rawurlencode($thumbnail)) ?>"
                                 class="card-img-top"
                                 alt="<?= htmlspecialchars((string) $product['name']) ?>"
                                 style="height: 220px; object-fit: cover;">

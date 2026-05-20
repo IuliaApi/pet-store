@@ -8,7 +8,8 @@
         "logout": "Déconnexion"
     },
     "nav": {
-        "products": "Produits"
+        "products": "Produits",
+        "explore_products": "Découvrez nos produits"
     },
     "footer": {
         "eCom_watermark": "Projet d'eCommerce",
@@ -17,11 +18,18 @@
     "home": {
         "catalog": "Notre catalogue",
         "featured_products": "Produits en Vedette",
-        "featured_products_description": "Produits en vedette du catalogue."
+        "featured_products_description": "Produits en vedette du catalogue.",
+        "carousel_welcome_title": "Bienvenue",
+        "carousel_welcome_text": "Découvrez des produits pour votre animal.",
+        "carousel_selection_title": "Découvrez notre sélection",
+        "carousel_selection_text": "Des marques de qualité à prix avantageux.",
+        "carousel_delivery_title": "Livraison rapide",
+        "carousel_delivery_text": "Recevez vos produits pour animaux rapidement."
     },
     "products": {
         "title": "Produits de la boutique",
         "search": "Rechercher",
+        "catalog_description": "Parcourez le catalogue et vérifiez le stock, la marque, la catégorie et le prix.",
         "sort_by": "Trier par :",
         "order_by": "Ordre :",
         "alphabet": "Alphabétique",

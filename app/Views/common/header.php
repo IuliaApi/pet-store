@@ -61,11 +61,10 @@ $availableLocales = $translator->getAvailableLocales();
 
         <nav class="navbar navbar-expand-lg d-flex px-3 py-2" style=" background-color: <?= BROWNCOLOR ?>">
 
-            <!-- //TODO: add categories here -->
             <ul class=" navbar-nav text-white">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="">
-                        sample category
+                    <a class="nav-link active" aria-current="page" href="<?= APP_BASE_URL ?>/products">
+                        <?= hs(trans('nav.explore_products')) ?>
                     </a>
                 </li>
             </ul>

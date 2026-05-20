@@ -22,13 +22,28 @@ class Product_List_Controller extends BaseController
     //filters through the product list based on user input
     public function search(Request $request, Response $response, array $args): Response
     {
-        $keyword = $request->getQueryParams()['search_keyword'] ?? '';
-        $products = $this->productsModel->searchProducts($keyword);
+        $params = $request->getQueryParams();
+        $keyword = (string)($params['search_keyword'] ?? '');
+        $sort = (string)($params['sort'] ?? 'name');
+        $order = strtoupper((string)($params['order'] ?? 'ASC'));
+
+        $allowedSort = ['name', 'price', 'stock'];
+        if (!in_array($sort, $allowedSort, true)) {
+            $sort = 'name';
+        }
+        if (!in_array($order, ['ASC', 'DESC'], true)) {
+            $order = 'ASC';
+        }
+
+        $products = $this->productsModel->searchProducts($keyword, null, $sort, $order);
         $sum = count($products);
 
         $data = [
             'title' => (($sum > 0) ? $sum : 'No') . (($sum === 1) ? ' result ' : ' results ') . (($keyword === '') ? '' : 'for ' . '"' . $keyword . '"'),
-            'products' => $products
+            'products' => $products,
+            'sort' => $sort,
+            'order' => $order,
+            'search_keyword' => $keyword,
         ];
 
         // return $response->withHeader(HEADERS_CONTENT_TYPE, APP_MEDIA_TYPE_JSON)->withStatus(HTTP_OK);

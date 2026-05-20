@@ -24,17 +24,31 @@ class ProductsController extends BaseController
     {
         $params = $request->getQueryParams();
         $query = trim($params['q'] ?? '');
+        $sort = (string)($params['sort'] ?? 'name');
+        $order = strtoupper((string)($params['order'] ?? 'ASC'));
+
+        $allowedSort = ['name', 'price', 'stock'];
+        if (!in_array($sort, $allowedSort, true)) {
+            $sort = 'name';
+        }
+        if (!in_array($order, ['ASC', 'DESC'], true)) {
+            $order = 'ASC';
+        }
+
         $products = [];
         if ($query !== '') {
-            $products = $this->productsModel->searchProducts($query);
+            $products = $this->productsModel->searchProducts($query, null, $sort, $order);
         } else {
-            $products = $this->productsModel->getAll();
+            $products = $this->productsModel->getAll($sort, $order);
         }
         // $products = empty($query) ? $this->productsModel->getAll() : $this->productsModel->searchProducts($query);
 
         $data = [
             'title' => 'Shop · Products',
             'products' => $products,
+            'query' => $query,
+            'sort' => $sort,
+            'order' => $order,
         ];
         return $this->render($response, 'products/productIndexView.php', $data);
     }

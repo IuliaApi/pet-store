@@ -7,6 +7,47 @@ use App\Helpers\ViewHelper;
 ViewHelper::loadHeader('Pet Shop Express');
 ?>
 
+<!-- Carousel (Bootstrap 5) -->
+<div id="homeCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="<?= asset_url('/images/carousel/welcome.jpg') ?>" class="d-block w-100" alt="Welcome" style="height: 400px; object-fit: cover;">
+            <div class="carousel-caption d-none d-md-block">
+                <h5><?= hs(trans('home.carousel_welcome_title')) ?></h5>
+                <p><?= hs(trans('home.carousel_welcome_text')) ?></p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="<?= asset_url('/images/carousel/selection.jpg') ?>" class="d-block w-100" alt="Shop Our Selection" style="height: 400px; object-fit: cover;">
+            <div class="carousel-caption d-none d-md-block">
+                <h5><?= hs(trans('home.carousel_selection_title')) ?></h5>
+                <p><?= hs(trans('home.carousel_selection_text')) ?></p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="<?= asset_url('/images/carousel/fastdelivery.jpg') ?>" class="d-block w-100" alt="Fast Delivery" style="height: 400px; object-fit: cover;">
+            <div class="carousel-caption d-none d-md-block">
+                <h5><?= hs(trans('home.carousel_delivery_title')) ?></h5>
+                <p><?= hs(trans('home.carousel_delivery_text')) ?></p>
+            </div>
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#homeCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#homeCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+
 <div class="container py-4">
     <div class="card border-0 shadow-sm">
         <div class="card-header bg-transparent border-0 pb-0">

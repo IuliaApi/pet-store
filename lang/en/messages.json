@@ -8,7 +8,8 @@
         "logout": "Logout"
     },
     "nav": {
-        "products": "Products"
+        "products": "Products",
+        "explore_products": "Explore our products"
     },
     "footer": {
         "eCom_watermark": "eCommerce project",
@@ -17,11 +18,18 @@
     "home": {
         "catalog": "Our catalog",
         "featured_products": "Featured Products",
-        "featured_products_description": "Featured products from the catalogue."
+        "featured_products_description": "Featured products from the catalogue.",
+        "carousel_welcome_title": "Welcome",
+        "carousel_welcome_text": "Discover products for your pet.",
+        "carousel_selection_title": "Shop Our Selection",
+        "carousel_selection_text": "Quality brands and great prices.",
+        "carousel_delivery_title": "Fast Delivery",
+        "carousel_delivery_text": "Get your pet supplies quickly."
     },
     "products": {
         "title": "Pet store products",
         "search": "Search",
+        "catalog_description": "Browse the catalogue and check stock, brand, category, and price.",
         "sort_by": "Sort by:",
         "order_by": "Order by:",
         "alphabet": "Alphabet",
@@ -32,6 +40,7 @@
         "no_products": "No products available yet. Please check back soon.",
         "image_coming_soon": "Image coming soon",
         "no_description": "No description provided.",
+        "coming_soon": "Coming soon",
         "stock_label": "Stock:",
         "items": "items"
     },

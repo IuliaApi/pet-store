@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Models;
 
-use App\Domain\Enums\ProductCategory;
 use App\Helpers\Core\PDOService;
 
 class ProductsModel extends BaseModel
@@ -14,12 +13,20 @@ class ProductsModel extends BaseModel
         parent::__construct($db_service);
     }
 
-    public function getAll(): array
+    public function getAll(string $sort = 'name', string $order = 'ASC'): array
     {
-        return $this->selectAll('SELECT p.id, p.name, p.description, p.stock_quantity, p.category_id, p.brand, p.price, p.thumbnail, c.name AS category_name
+        $sortMap = [
+            'name' => 'p.name',
+            'price' => 'p.price',
+            'stock' => 'p.stock_quantity',
+        ];
+        $sortColumn = $sortMap[$sort] ?? 'p.name';
+        $sortDirection = strtoupper($order) === 'DESC' ? 'DESC' : 'ASC';
+
+        return $this->selectAll("SELECT p.id, p.name, p.description, p.stock_quantity, p.category_id, p.brand, p.price, p.thumbnail, c.name AS category_name
         FROM products p
         LEFT JOIN categories c ON p.category_id = c.id
-        ORDER BY p.id DESC');
+        ORDER BY {$sortColumn} {$sortDirection}, p.id DESC");
     }
 
     public function getById(int $id): array|false
@@ -87,17 +94,7 @@ class ProductsModel extends BaseModel
         ]);
     }
 
-    /**
-     * Get all allowed product category values from the enum.
-     *
-     * @return string[]
-     */
-    public function getAllowedTypes(): array
-    {
-        return ProductCategory::values();
-    }
-
-    public function searchProducts(string $searchTerm = '', ?int $categoryId = null): array
+    public function searchProducts(string $searchTerm = '', ?int $categoryId = null, string $sort = 'name', string $order = 'ASC'): array
     {
         $sql = "SELECT
             p.id,
@@ -129,8 +126,15 @@ class ProductsModel extends BaseModel
             $params['category_id'] = $categoryId;
         }
 
-        // Add GROUP BY p.id and ORDER BY p.name ASC
-        $sql .= " GROUP BY p.id ORDER BY p.name ASC";
+        $sortMap = [
+            'name' => 'p.name',
+            'price' => 'p.price',
+            'stock' => 'p.stock_quantity',
+        ];
+        $sortColumn = $sortMap[$sort] ?? 'p.name';
+        $sortDirection = strtoupper($order) === 'DESC' ? 'DESC' : 'ASC';
+
+        $sql .= " GROUP BY p.id ORDER BY {$sortColumn} {$sortDirection}, p.id DESC";
         // Return results using $this->selectAll($sql, $params)
         return $this->selectAll($sql, $params);
     }
